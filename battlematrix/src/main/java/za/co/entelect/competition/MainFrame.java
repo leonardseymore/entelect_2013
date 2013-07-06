@@ -22,11 +22,13 @@ public class MainFrame extends JFrame {
   private GameState gameState;
   private Canvas canvas;
   private boolean printHelp;
+  private double zoomFactor = 1;
 
   private Keyboard keyboard = new Keyboard();
 
-  public MainFrame(GameState gameState) {
+  public MainFrame(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
+    this.zoomFactor = zoomFactor;
 
     PlayerControlledTank p1t1 = new PlayerControlledTank(5, 2, gameState, gameState.getPlayer1(), Directed.Direction.RIGHT, keyboard);
     gameState.add(p1t1);
@@ -73,8 +75,8 @@ public class MainFrame extends JFrame {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         AffineTransform t = g.getTransform();
-        g.scale(10, 10);
-        gameState.accept(new GameElementSwingVisitor(g));
+        g.scale(zoomFactor, zoomFactor);
+        gameState.accept(new GameElementSwingVisitor(g, gameState));
         g.setTransform(t);
 
         if (printHelp) {

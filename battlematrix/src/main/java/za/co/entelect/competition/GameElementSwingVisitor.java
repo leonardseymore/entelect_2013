@@ -13,9 +13,11 @@ public class GameElementSwingVisitor implements GameElementVisitor {
   private boolean verbose = false;
 
   private Graphics2D g;
+  private GameState gameState;
 
-  public GameElementSwingVisitor(Graphics2D g) {
+  public GameElementSwingVisitor(Graphics2D g, GameState gameState) {
     this.g = g;
+    this.gameState = gameState;
   }
 
   @Override
@@ -54,9 +56,10 @@ public class GameElementSwingVisitor implements GameElementVisitor {
       logger.debug("Visiting tank [" + tank + "]");
     }
 
-    g.setColor(Constants.COLOR_SWING_TANK);
+    Color tankColor = tank.getOwner() == gameState.getPlayer1() ? Constants.COLOR_SWING_TANK_PLAYER1 : Constants.COLOR_SWING_TANK_PLAYER2;
+    g.setColor(tankColor);
     g.fillRect(tank.getX(), tank.getY(), tank.getW(), tank.getH());
-    g.setColor(Constants.COLOR_SWING_TANK.darker());
+    g.setColor(tankColor.darker());
     int [] turretPos = tank.turretPos();
     g.fillRect(turretPos[0], turretPos[1], 1, 1);
   }

@@ -2,9 +2,13 @@ package za.co.entelect.competition.domain;
 
 public class Bullet extends OwnedDirectedEntity {
 
-  public Bullet(int x, int y, GameState gameState, Player owner, Direction direction) {
+  private Tank tank;
+
+  public Bullet(int x, int y, GameState gameState, Player owner, Direction direction, Tank tank) {
     super(x, y, gameState, owner, direction);
+    this.tank = tank;
   }
+
 
   @Override
   public TYPE getType() {

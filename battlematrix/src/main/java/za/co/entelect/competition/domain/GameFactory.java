@@ -2,6 +2,7 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.DummyTank;
+import za.co.entelect.competition.RandomTank;
 
 public class GameFactory {
 
@@ -14,7 +15,10 @@ public class GameFactory {
 
     Tank p2t1 = new DummyTank(14, 14, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     gameState.add(p2t1);
-    p2t1.fire();
+
+    Tank p2t2 = new RandomTank(5, 13, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
+    gameState.add(p2t2);
+
     gameState.add(new Wall(1, 1, gameState));
     return gameState;
   }
