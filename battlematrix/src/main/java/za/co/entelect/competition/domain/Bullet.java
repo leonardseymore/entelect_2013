@@ -9,10 +9,14 @@ public class Bullet extends OwnedDirectedEntity {
     this.tank = tank;
   }
 
+  @Override
+  public BoundsAction getBoundsAction() {
+    return BoundsAction.DIE;
+  }
 
   @Override
-  public TYPE getType() {
-    return TYPE.BULLET;
+  public Type getType() {
+    return Type.BULLET;
   }
 
   @Override

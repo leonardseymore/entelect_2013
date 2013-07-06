@@ -53,8 +53,8 @@ public abstract class Tank extends OwnedDirectedEntity {
   }
 
   @Override
-  public TYPE getType() {
-    return TYPE.TANK;
+  public Type getType() {
+    return Type.TANK;
   }
 
   @Override

@@ -102,6 +102,11 @@ public class GameState {
     entities.add(entity);
   }
 
+  private void removeEntity(Entity entity) {
+    logger.debug("Removed entity [" + entity + "]");
+    entities.remove(entity);
+  }
+
   public Entity getEntityAt(int x, int y) {
     for (Entity entity : entities) {
       if (entity.isAt(x, y)) {
@@ -126,11 +131,61 @@ public class GameState {
 
     for (Entity entity : entities) {
       entity.update();
+      keepEntityInBounds(entity);
+
+      int oldX = entity.getX();
+      int oldY = entity.getY();
+      checkEntityCollision(entity);
     }
 
     for (GameStateListener listener : listeners) {
       listener.updated();
     }
+  }
+
+  private void keepEntityInBounds(Entity entity) {
+    Entity.BoundsAction boundsAction = entity.getBoundsAction();
+    if (boundsAction == Entity.BoundsAction.BOUNCE) {
+      if (entity.getX() < 0) {
+        entity.setX(0);
+      }
+
+      if (entity.getX() + entity.getW() > w) {
+        entity.setX(w - entity.getW());
+      }
+
+      if (entity.getY() < 0) {
+        entity.setY(0);
+      }
+
+      if (entity.getY() + entity.getH() > h) {
+        entity.setY(h - entity.getH());
+      }
+    } else if(boundsAction == Entity.BoundsAction.DIE) {
+      if (entity.getX() < 0) {
+        removeEntity(entity);
+        return;
+      }
+
+      if (entity.getX() + entity.getW() > w) {
+        removeEntity(entity);
+        return;
+      }
+
+      if (entity.getY() < 0) {
+        removeEntity(entity);
+        return;
+      }
+
+      if (entity.getY() + entity.getH() > h) {
+        removeEntity(entity);
+        return;
+      }
+    }
+  }
+
+  private void checkEntityCollision(Entity entity) {
+
   }
 
   public String toAscii() {

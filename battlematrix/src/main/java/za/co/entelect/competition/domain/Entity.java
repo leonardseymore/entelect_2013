@@ -9,8 +9,12 @@ public abstract class Entity {
   private static final int DEFAULT_WIDTH = 1;
   private static final int DEFAULT_HEIGHT = 1;
 
-  public static enum TYPE {
+  public static enum Type {
     BASE, BULLET, TANK, WALL
+  }
+
+  public static enum BoundsAction {
+    BOUNCE, DIE
   }
 
   protected int x;
@@ -59,7 +63,11 @@ public abstract class Entity {
       && y >= this.y && y < this.y + h;
   }
 
-  public abstract TYPE getType();
+  public BoundsAction getBoundsAction() {
+    return BoundsAction.BOUNCE;
+  }
+
+  public abstract Type getType();
 
   public abstract void accept(GameElementVisitor visitor);
 

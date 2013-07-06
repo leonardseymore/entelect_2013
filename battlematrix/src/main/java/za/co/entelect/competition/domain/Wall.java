@@ -6,8 +6,8 @@ public class Wall extends Entity {
   }
 
   @Override
-  public TYPE getType() {
-    return TYPE.WALL;
+  public Type getType() {
+    return Type.WALL;
   }
 
   @Override

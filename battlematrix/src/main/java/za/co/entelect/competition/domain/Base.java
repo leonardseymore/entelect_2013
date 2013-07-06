@@ -19,8 +19,8 @@ public class Base extends Entity implements Owned {
   }
 
   @Override
-  public TYPE getType() {
-    return TYPE.BASE;
+  public Type getType() {
+    return Type.BASE;
   }
 
   @Override
