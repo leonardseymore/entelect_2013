@@ -42,4 +42,18 @@ public abstract class OwnedDirectedEntity extends Entity implements Owned, Direc
         break;
     }
   }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("OwnedDirectedEntity{");
+    sb.append("x=").append(x);
+    sb.append(", y=").append(y);
+    sb.append(", w=").append(w);
+    sb.append(", h=").append(h);
+    sb.append(", type=").append(getType());
+    sb.append(", owner=").append(owner);
+    sb.append(", direction=").append(direction);
+    sb.append('}');
+    return sb.toString();
+  }
 }

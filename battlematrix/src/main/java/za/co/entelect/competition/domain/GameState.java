@@ -130,12 +130,15 @@ public class GameState {
     }
 
     for (Entity entity : entities) {
+      int oldX = entity.getX();
+      int oldY = entity.getY();
       entity.update();
       keepEntityInBounds(entity);
 
-      int oldX = entity.getX();
-      int oldY = entity.getY();
-      checkEntityCollision(entity);
+      if (checkEntityCollision(entity)) {
+        entity.setX(oldX);
+        entity.setY(oldY);
+      }
     }
 
     for (GameStateListener listener : listeners) {
@@ -184,8 +187,65 @@ public class GameState {
     }
   }
 
-  private void checkEntityCollision(Entity entity) {
+  private boolean checkEntityCollision(Entity s) {
+    for (Entity t : entities) {
+      if (s != t) {
+        if (s.getX() < (t.getX() + t.getW()) && (s.getX() + s.getW()) > t.getX() &&
+          s.getY() < (t.getY() + t.getH()) && (s.getY() + s.getH()) > t.getY()) {
+          return handleCollision(s, t);
+        }
+      }
+    }
+    return false;
+  }
 
+  private boolean handleCollision(Entity s, Entity t) {
+    if (verbose) {
+      logger.debug("Collision " + s.getType() + " [" + s + "] --> " + t.getType() + " [" + t + "]");
+    }
+
+    if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BASE) {
+      removeEntity(s);
+      removeEntity(t);
+      logger.debug("Base [" + t + "] destroyed by [" + ((Bullet)s).getTank() + "]");
+    } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.TANK) {
+      removeEntity(s);
+      removeEntity(t);
+      logger.debug("Tank [" + t + "] destroyed by [" + ((Bullet)s).getTank() + "]");
+    } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BULLET) {
+      removeEntity(s);
+      removeEntity(t);
+      logger.debug("Bullet [" + t + "] destroyed by [" + s + "]");
+    } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.WALL) {
+      destroyWalls((Bullet)s, (Wall)t);
+    }
+
+    return true;
+  }
+
+  private void destroyWalls(Bullet b, Wall w) {
+    removeEntity(b);
+    removeEntity(w);
+    logger.debug("Wall [" + w + "] destroyed by [" + b + "]");
+
+    if (b.getDirection() == Directed.Direction.UP || b.getDirection() == Directed.Direction.DOWN) {
+      destroyIfNeighborWall(w.getX() - 2, w.getY());
+      destroyIfNeighborWall(w.getX() - 1, w.getY());
+      destroyIfNeighborWall(w.getX() + 1, w.getY());
+      destroyIfNeighborWall(w.getX() + 2, w.getY());
+    } else {
+      destroyIfNeighborWall(w.getX(), w.getY() - 2);
+      destroyIfNeighborWall(w.getX(), w.getY() - 1);
+      destroyIfNeighborWall(w.getX(), w.getY() + 1);
+      destroyIfNeighborWall(w.getX(), w.getY() + 2);
+    }
+  }
+
+  private void destroyIfNeighborWall(int x, int y) {
+    Entity e = getEntityAt(x, y);
+    if (e != null && e.getType() == Entity.Type.WALL) {
+      removeEntity(e);
+    }
   }
 
   public String toAscii() {

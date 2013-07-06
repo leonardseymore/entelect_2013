@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
     this.gameState = gameState;
     this.zoomFactor = zoomFactor;
 
-    PlayerControlledTank p1t1 = new PlayerControlledTank(5, 2, gameState, gameState.getPlayer1(), Directed.Direction.RIGHT, keyboard);
+    PlayerControlledTank p1t1 = new PlayerControlledTank(60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT, keyboard);
     gameState.add(p1t1);
 
     setIgnoreRepaint(true);

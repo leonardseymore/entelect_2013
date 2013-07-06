@@ -44,6 +44,7 @@ public abstract class Tank extends OwnedDirectedEntity {
   public void fire() {
     int [] bulletPos = turretPos();
     Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], gameState, owner, direction, this);
+    bullet.updatePos();
     gameState.add(bullet);
   }
 

@@ -9,17 +9,21 @@ public class GameFactory {
   private static final Logger logger = Logger.getLogger(GameFactory.class);
 
   public static GameState smallBoard(long tickInterval) {
-    GameState gameState = new GameState(20, 20, tickInterval);
-    gameState.add(new Base(10, 0, gameState, gameState.getPlayer1()));
-    gameState.add(new Base(10, 19, gameState, gameState.getPlayer2()));
+    GameState gameState = new GameState(100, 100, tickInterval);
+    gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
+    gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
 
-    Tank p2t1 = new DummyTank(14, 14, gameState, gameState.getPlayer2(), Directed.Direction.UP);
+    Tank p2t1 = new DummyTank(24, 12, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     gameState.add(p2t1);
 
-    Tank p2t2 = new RandomTank(5, 13, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
+    Tank p2t2 = new RandomTank(50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
     gameState.add(p2t2);
 
-    gameState.add(new Wall(1, 1, gameState));
+    for (int i = 1; i < gameState.getW() - 1; i++) {
+      gameState.add(new Wall(i, 5, gameState));
+      gameState.add(new Wall(i, gameState.getH() - 6, gameState));
+    }
+
     return gameState;
   }
 

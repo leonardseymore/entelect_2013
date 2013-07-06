@@ -9,6 +9,10 @@ public class Bullet extends OwnedDirectedEntity {
     this.tank = tank;
   }
 
+  public Tank getTank() {
+    return tank;
+  }
+
   @Override
   public BoundsAction getBoundsAction() {
     return BoundsAction.DIE;
@@ -41,4 +45,5 @@ public class Bullet extends OwnedDirectedEntity {
         break;
     }
   }
+
 }
