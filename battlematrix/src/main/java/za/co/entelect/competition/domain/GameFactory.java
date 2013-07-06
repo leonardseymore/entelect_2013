@@ -1,8 +1,8 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.DummyTank;
-import za.co.entelect.competition.RandomTank;
+import za.co.entelect.competition.bots.DummyTank;
+import za.co.entelect.competition.bots.RandomTank;
 
 public class GameFactory {
 

@@ -1,9 +1,10 @@
 package za.co.entelect.competition;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.bots.KeyboardControlledTank;
+import za.co.entelect.competition.bots.MouseControlledTank;
 import za.co.entelect.competition.domain.Directed;
 import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.GameStateListener;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -24,14 +25,12 @@ public class MainFrame extends JFrame {
   private boolean printHelp;
   private double zoomFactor = 1;
 
-  private Keyboard keyboard = new Keyboard();
+  private Keyboard keyboard;
+  private Mouse mouse;
 
   public MainFrame(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
     this.zoomFactor = zoomFactor;
-
-    PlayerControlledTank p1t1 = new PlayerControlledTank(60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT, keyboard);
-    gameState.add(p1t1);
 
     setIgnoreRepaint(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,8 +42,21 @@ public class MainFrame extends JFrame {
     add(canvas);
     pack();
 
+    keyboard = new Keyboard();
     addKeyListener(keyboard);
     canvas.addKeyListener(keyboard);
+
+    mouse = new Mouse(canvas, zoomFactor);
+    addMouseListener(mouse);
+    addMouseMotionListener(mouse);
+    canvas.addMouseListener(mouse);
+    canvas.addMouseMotionListener(mouse);
+
+    KeyboardControlledTank p1t1 = new KeyboardControlledTank(60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT, keyboard);
+    gameState.add(p1t1);
+
+    MouseControlledTank p1t2 = new MouseControlledTank(40, 60, gameState, gameState.getPlayer1(), Directed.Direction.DOWN, mouse);
+    gameState.add(p1t2);
   }
 
   public void run() {
@@ -59,13 +71,15 @@ public class MainFrame extends JFrame {
     Graphics graphics = null;
     Graphics2D g = null;
 
-    while(true) {
+    while (true) {
       try {
         keyboard.poll();
-        if(keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
+        mouse.poll();
+
+        if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
           break;
         }
-        if(keyboard.keyDownOnce(KeyEvent.VK_H)) {
+        if (keyboard.keyDownOnce(KeyEvent.VK_H)) {
           printHelp = !printHelp;
         }
 
@@ -88,7 +102,7 @@ public class MainFrame extends JFrame {
 
         graphics = buffer.getDrawGraphics();
         graphics.drawImage(bi, 0, 0, null);
-        if(!buffer.contentsLost()) {
+        if (!buffer.contentsLost()) {
           buffer.show();
         }
 
@@ -98,11 +112,11 @@ public class MainFrame extends JFrame {
           logger.warn("Thread interrupted", ex);
         }
       } finally {
-        if( graphics != null ) {
+        if (graphics != null) {
           graphics.dispose();
         }
 
-        if( g != null ) {
+        if (g != null) {
           g.dispose();
         }
       }

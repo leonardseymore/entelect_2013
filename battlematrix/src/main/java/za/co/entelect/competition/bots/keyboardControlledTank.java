@@ -1,19 +1,20 @@
-package za.co.entelect.competition;
+package za.co.entelect.competition.bots;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.Keyboard;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Player;
 import za.co.entelect.competition.domain.Tank;
 
 import java.awt.event.KeyEvent;
 
-public class PlayerControlledTank extends Tank {
+public class KeyboardControlledTank extends Tank {
 
-  private static final Logger logger = Logger.getLogger(PlayerControlledTank.class);
+  private static final Logger logger = Logger.getLogger(KeyboardControlledTank.class);
 
   private Keyboard keyboard;
 
-  public PlayerControlledTank(int x, int y, GameState gameState, Player owner, Direction direction, Keyboard keyboard) {
+  public KeyboardControlledTank(int x, int y, GameState gameState, Player owner, Direction direction, Keyboard keyboard) {
     super(x, y, gameState, owner, direction);
     this.keyboard = keyboard;
   }
