@@ -48,11 +48,11 @@ public class GameState {
     this.verbose = verbose;
   }
 
-  public synchronized void addEventListener(GameStateListener listener)  {
+  public synchronized void addEventListener(GameStateListener listener) {
     listeners.add(listener);
   }
 
-  public synchronized void removeEventListener(GameStateListener listener)   {
+  public synchronized void removeEventListener(GameStateListener listener) {
     listeners.remove(listener);
   }
 
@@ -86,6 +86,7 @@ public class GameState {
   public void add(Bullet bullet) {
     addEntity(bullet);
     logger.debug("Added bullet [" + bullet + "]");
+    checkEntityCollision(bullet);
   }
 
   public void add(Tank tank) {
@@ -97,7 +98,7 @@ public class GameState {
     addEntity(wall);
     logger.debug("Added wall [" + wall + "]");
   }
-  
+
   private void addEntity(Entity entity) {
     entities.add(entity);
   }
@@ -128,6 +129,11 @@ public class GameState {
     if (verbose) {
       logger.debug("Update called");
     }
+
+    // Bullets that have been fired are moved and collisions are checked for.
+    // Bullets and tanks are moved and collision are checked for.
+    // All tanks in the firing state are fired and their bullets are added to the field.
+    // Collisions are checked for.
 
     for (Entity entity : entities) {
       int oldX = entity.getX();
@@ -164,7 +170,7 @@ public class GameState {
       if (entity.getY() + entity.getH() > h) {
         entity.setY(h - entity.getH());
       }
-    } else if(boundsAction == Entity.BoundsAction.DIE) {
+    } else if (boundsAction == Entity.BoundsAction.DIE) {
       if (entity.getX() < 0) {
         removeEntity(entity);
         return;
@@ -207,17 +213,21 @@ public class GameState {
     if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BASE) {
       removeEntity(s);
       removeEntity(t);
-      logger.debug("Base [" + t + "] destroyed by [" + ((Bullet)s).getTank() + "]");
+      logger.debug("Base [" + t + "] destroyed by [" + ((Bullet) s).getTank() + "]");
+    } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BASE) {
+      removeEntity(s);
+      removeEntity(t);
+      logger.debug("TANKED Base [" + t + "] destroyed by [" + s + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.TANK) {
       removeEntity(s);
       removeEntity(t);
-      logger.debug("Tank [" + t + "] destroyed by [" + ((Bullet)s).getTank() + "]");
+      logger.debug("Tank [" + t + "] destroyed by [" + ((Bullet) s).getTank() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BULLET) {
       removeEntity(s);
       removeEntity(t);
       logger.debug("Bullet [" + t + "] destroyed by [" + s + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.WALL) {
-      destroyWalls((Bullet)s, (Wall)t);
+      destroyWalls((Bullet) s, (Wall) t);
     }
 
     return true;
@@ -264,7 +274,7 @@ public class GameState {
               buffer.append(Constants.SYMBOL_BULLET);
               break;
             case TANK:
-              buffer.append(((Tank)e).getOwner().getId());
+              buffer.append(((Tank) e).getOwner().getId());
               break;
             case WALL:
               buffer.append(Constants.SYMBOL_WALL);

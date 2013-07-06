@@ -21,7 +21,11 @@ public class GameFactory {
 
     for (int i = 1; i < gameState.getW() - 1; i++) {
       gameState.add(new Wall(i, 5, gameState));
+      gameState.add(new Wall(i, 6, gameState));
+      gameState.add(new Wall(i, 7, gameState));
       gameState.add(new Wall(i, gameState.getH() - 6, gameState));
+      gameState.add(new Wall(i, gameState.getH() - 7, gameState));
+      gameState.add(new Wall(i, gameState.getH() - 8, gameState));
     }
 
     return gameState;
