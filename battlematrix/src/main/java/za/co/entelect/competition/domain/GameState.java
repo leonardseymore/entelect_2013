@@ -29,6 +29,8 @@ public class GameState {
 
   private Collection<GameStateListener> listeners = new ArrayList<>();
 
+  private MapNode[][] map;
+
   public GameState(int w, int h, long tickInterval) {
     this.w = w;
     this.h = h;
@@ -59,7 +61,26 @@ public class GameState {
     listeners.remove(listener);
   }
 
+  public MapNode[][] getMap() {
+    return map;
+  }
+
   public void start() {
+    map = new MapNode[w][h];
+    for (int y = 0; y < h; y++) {
+      nextCell:for (int x  = 0; x < w; x++) {
+        Iterator<Entity> it = new EntityIterator();
+        while (it.hasNext()) {
+          Entity entity = it.next();
+          if (entity.isAt(x, y)) {
+            map[x][y] = new MapNode(entity);
+            continue nextCell;
+          }
+        }
+        map[x][y] = new MapNode();
+      }
+    }
+
     timer = new Timer();
     timer.scheduleAtFixedRate(new TimerTask() {
       @Override
@@ -378,6 +399,45 @@ public class GameState {
     @Override
     public void remove() {
       currentCollection.remove();
+    }
+  }
+
+  public static class MapNode {
+    private Entity entity;
+    private int clearance = 1;
+
+    private MapNode() {
+      setEntity(null);
+    }
+
+    public MapNode(Entity entity) {
+      setEntity(entity);
+    }
+
+    public void setEntity(Entity entity) {
+      clearance = entity == null ? 1 : 0;
+      this.entity = entity;
+    }
+
+    public Entity getEntity() {
+      return entity;
+    }
+
+    public void setClearance(int clearance) {
+      this.clearance = clearance;
+    }
+
+    public int getClearance() {
+      return clearance;
+    }
+
+    @Override
+    public String toString() {
+      final StringBuilder sb = new StringBuilder("MapNode{");
+      sb.append("entity=").append(entity);
+      sb.append(", clearance=").append(clearance);
+      sb.append('}');
+      return sb.toString();
     }
   }
 }

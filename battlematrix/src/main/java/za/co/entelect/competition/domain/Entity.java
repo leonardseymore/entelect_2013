@@ -2,12 +2,16 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public abstract class Entity {
 
   private static Logger logger = Logger.getLogger(Entity.class);
 
   private static final int DEFAULT_WIDTH = 1;
   private static final int DEFAULT_HEIGHT = 1;
+
+  private static final AtomicLong ID_GEN = new AtomicLong();
 
   public static enum Type {
     BASE, BULLET, TANK, WALL
@@ -17,6 +21,7 @@ public abstract class Entity {
     BOUNCE, DIE
   }
 
+  private long id;
   protected int x;
   protected int y;
   protected int w = DEFAULT_WIDTH;
@@ -25,6 +30,7 @@ public abstract class Entity {
   protected GameState gameState;
 
   protected Entity(int x, int y, GameState gameState) {
+    this.id = ID_GEN.incrementAndGet();
     this.x = x;
     this.y = y;
     this.gameState = gameState;
@@ -54,6 +60,10 @@ public abstract class Entity {
     return h;
   }
 
+  public long getId() {
+    return id;
+  }
+
   public GameState getGameState() {
     return gameState;
   }
@@ -74,6 +84,7 @@ public abstract class Entity {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Entity{");
+    sb.append("id=").append(id);
     sb.append("x=").append(x);
     sb.append(", y=").append(y);
     sb.append(", w=").append(w);
