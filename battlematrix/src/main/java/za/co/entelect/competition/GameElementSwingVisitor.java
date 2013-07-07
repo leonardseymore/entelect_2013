@@ -1,10 +1,13 @@
 package za.co.entelect.competition;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.bots.MouseControlledTank;
+import za.co.entelect.competition.bots.movement.PathFinder;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.GameState;
 
 import java.awt.*;
+import java.util.*;
 
 public class GameElementSwingVisitor implements GameElementVisitor {
 
@@ -62,6 +65,16 @@ public class GameElementSwingVisitor implements GameElementVisitor {
     g.setColor(tankColor.darker());
     int [] turretPos = tank.turretPos();
     g.fillRect(turretPos[0], turretPos[1], 1, 1);
+
+    if (tank instanceof MouseControlledTank) {
+      Stack<PathFinder.Node> path = ((MouseControlledTank)tank).getPath();
+      if (path != null) {
+        for (PathFinder.Node node : path) {
+          g.setColor(tankColor);
+          g.fillRect(node.getX(), node.getY(), 1, 1);
+        }
+      }
+    }
   }
 
   @Override

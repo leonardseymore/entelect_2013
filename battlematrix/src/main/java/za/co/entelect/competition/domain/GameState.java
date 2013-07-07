@@ -118,6 +118,10 @@ public class GameState {
     return null;
   }
 
+  public boolean isInbounds(int x, int y) {
+    return x >= 0 && x < w && y >= 0 && y < h;
+  }
+
   public void accept(GameElementVisitor visitor) {
     visitor.visit(this);
     for (Entity entity : entities) {
@@ -222,6 +226,10 @@ public class GameState {
       removeEntity(s);
       removeEntity(t);
       logger.debug("Tank [" + t + "] destroyed by [" + ((Bullet) s).getTank() + "]");
+    } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BULLET) {
+      removeEntity(s);
+      removeEntity(t);
+      logger.debug("Tank [" + s + "] destroyed by [" + ((Bullet) t).getTank() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BULLET) {
       removeEntity(s);
       removeEntity(t);

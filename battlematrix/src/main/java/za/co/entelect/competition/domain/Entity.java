@@ -54,6 +54,10 @@ public abstract class Entity {
     return h;
   }
 
+  public GameState getGameState() {
+    return gameState;
+  }
+
   public void update() {
     // default do nothing
   };
