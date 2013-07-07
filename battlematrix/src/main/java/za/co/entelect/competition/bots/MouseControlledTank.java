@@ -43,7 +43,9 @@ public class MouseControlledTank extends Tank {
       targetX = (int)(mouse.getPosition().getX() / mouse.getZoomFactor());
       targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
       logger.debug("New target set (" + x + "," + y + ")");
+      long start = System.currentTimeMillis();
       path = PathFinder.closestPathAStar(gameState, x, y, targetX, targetY);
+      logger.debug("Path finding took [" + (System.currentTimeMillis() - start) + "ms]");
     }
 
     return Seek.seekPath(this, path);

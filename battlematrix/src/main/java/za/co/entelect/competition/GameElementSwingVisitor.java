@@ -69,7 +69,7 @@ public class GameElementSwingVisitor implements GameElementVisitor {
     if (tank instanceof MouseControlledTank) {
       Stack<PathFinder.Node> path = ((MouseControlledTank)tank).getPath();
       if (path != null) {
-        for (PathFinder.Node node : path) {
+        for (PathFinder.Node node : (Stack<PathFinder.Node>)path.clone()) {
           g.setColor(tankColor);
           g.fillRect(node.getX(), node.getY(), 1, 1);
         }
