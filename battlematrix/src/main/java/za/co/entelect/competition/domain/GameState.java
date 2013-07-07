@@ -151,14 +151,7 @@ public class GameState {
   }
 
   public Entity getEntityAt(int x, int y) {
-    Iterator<Entity> it = new EntityIterator();
-    while (it.hasNext()) {
-      Entity entity = it.next();
-      if (entity.isAt(x, y)) {
-        return entity;
-      }
-    }
-    return null;
+    return map[x][y].entity;
   }
 
   public int getClearanceAt(int x, int y) {

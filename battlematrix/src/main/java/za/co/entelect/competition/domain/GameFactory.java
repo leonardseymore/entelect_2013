@@ -16,7 +16,7 @@ public class GameFactory {
     Tank p2t1 = new DummyTank("p2t1", 24, 12, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     gameState.add(p2t1);
 
-    Tank p2t2 = new DummyTank("p2t1", 50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
+    Tank p2t2 = new RandomTank("p2t1", 50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
     gameState.add(p2t2);
 
     for (int i = 1; i < gameState.getW() - 1; i++) {
