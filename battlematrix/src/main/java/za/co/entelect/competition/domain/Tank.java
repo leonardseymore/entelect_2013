@@ -16,6 +16,8 @@ public abstract class Tank extends OwnedDirectedEntity {
   private int prevX;
   private int prevY;
 
+  private TankAction lastAction;
+
   public Tank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
     super(x, y, gameState, owner, direction);
     this.w = TANK_WIDTH;
@@ -77,7 +79,7 @@ public abstract class Tank extends OwnedDirectedEntity {
   public void move() {
     prevX = x;
     prevY = y;
-    switch (getAction()) {
+    switch (lastAction) {
       case UP:
         direction = Direction.UP;
         y--;
@@ -97,7 +99,16 @@ public abstract class Tank extends OwnedDirectedEntity {
     }
   }
 
-  public abstract TankAction getAction();
+  public TankAction getLastAction() {
+    return lastAction;
+  }
+
+  public TankAction performAction() {
+    lastAction = doGetAction();
+    return lastAction;
+  }
+
+  protected abstract TankAction doGetAction();
 
   @Override
   public String toString() {

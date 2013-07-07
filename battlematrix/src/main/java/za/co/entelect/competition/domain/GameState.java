@@ -120,6 +120,7 @@ public class GameState {
 
   public void remove(Bullet bullet) {
     bullets.remove(bullet);
+    map[bullet.getPrevX()][bullet.getPrevY()].setEntity(null);
     logger.debug("Removed bullet [" + bullet + "]");
   }
 
@@ -201,6 +202,7 @@ public class GameState {
     for (Tank tank : tanks) {
       int oldX = tank.getX();
       int oldY = tank.getY();
+      tank.performAction();
       tank.move();
       if (tank.getX() < 0) {
         tank.setX(0);
@@ -229,7 +231,7 @@ public class GameState {
         int newX = tank.getX();
         int newY = tank.getY();
 
-        switch (tank.getAction()) {
+        switch (tank.getLastAction()) {
           case UP:
             for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
               map[x][oldY + tank.getH() - 1].setEntity(null);
@@ -260,7 +262,7 @@ public class GameState {
 
     // All tanks in the firing state are fired and their bullets are added to the field.
     for (Tank tank : tanks) {
-      if (tank.getAction() == Tank.TankAction.FIRE) {
+      if (tank.getLastAction() == Tank.TankAction.FIRE) {
         int [] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], this, tank.getOwner(), tank.getDirection(), tank);
         bullet.move();

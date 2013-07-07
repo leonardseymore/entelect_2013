@@ -4,9 +4,20 @@ public class Bullet extends OwnedDirectedEntity {
 
   private Tank tank;
 
+  private int prevX;
+  private int prevY;
+
   public Bullet(int x, int y, GameState gameState, Player owner, Direction direction, Tank tank) {
     super(x, y, gameState, owner, direction);
     this.tank = tank;
+  }
+
+  public int getPrevX() {
+    return prevX;
+  }
+
+  public int getPrevY() {
+    return prevY;
   }
 
   public Tank getTank() {
@@ -29,6 +40,9 @@ public class Bullet extends OwnedDirectedEntity {
   }
 
   public void move() {
+    prevX = x;
+    prevY = y;
+
     switch (direction) {
       case UP:
         y--;

@@ -11,7 +11,7 @@ public class DummyTank extends Tank {
   }
 
   @Override
-  public TankAction getAction() {
+  public TankAction doGetAction() {
     return TankAction.NONE;
   }
 }

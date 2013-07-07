@@ -20,7 +20,7 @@ public class KeyboardControlledTank extends Tank {
   }
 
   @Override
-  public TankAction getAction() {
+  public TankAction doGetAction() {
     if (keyboard.keyDown(KeyEvent.VK_SPACE)) {
       return TankAction.FIRE;
     }

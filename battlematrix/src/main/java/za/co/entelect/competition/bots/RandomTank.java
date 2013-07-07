@@ -16,7 +16,7 @@ public class RandomTank extends Tank {
   }
 
   @Override
-  public TankAction getAction() {
+  public TankAction doGetAction() {
     switch (random.nextInt(100)) {
       case 1:
         return TankAction.UP;
