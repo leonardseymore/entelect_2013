@@ -3,7 +3,7 @@ package za.co.entelect.competition.domain;
 public abstract class Tank extends OwnedDirectedEntity {
 
   public static enum TankAction {
-    UP,RIGHT,DOWN,LEFT,FIRE,NONE
+    UP, RIGHT, DOWN, LEFT, FIRE, NONE
   }
 
   private static final int TANK_WIDTH = 5;
@@ -18,7 +18,7 @@ public abstract class Tank extends OwnedDirectedEntity {
   }
 
   public int[] turretPos() {
-    int [] bulletPos = new int[2];
+    int[] bulletPos = new int[2];
 
     switch (direction) {
       case UP:
@@ -41,13 +41,6 @@ public abstract class Tank extends OwnedDirectedEntity {
     return bulletPos;
   }
 
-  public void fire() {
-    int [] bulletPos = turretPos();
-    Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], gameState, owner, direction, this);
-    bullet.updatePos();
-    gameState.add(bullet);
-  }
-
   @Override
   public Direction getDirection() {
     return direction;
@@ -63,8 +56,7 @@ public abstract class Tank extends OwnedDirectedEntity {
     visitor.visit(this);
   }
 
-  @Override
-  public void update() {
+  public void move() {
     switch (getAction()) {
       case UP:
         direction = Direction.UP;
@@ -82,13 +74,8 @@ public abstract class Tank extends OwnedDirectedEntity {
         direction = Direction.LEFT;
         x--;
         break;
-      case FIRE:
-        fire();
-        break;
-      case NONE:
-        break;
     }
   }
 
-  protected abstract TankAction getAction();
+  public abstract TankAction getAction();
 }

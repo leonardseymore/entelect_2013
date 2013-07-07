@@ -5,7 +5,7 @@ import za.co.entelect.competition.domain.GameState;
 
 public class AppSwing {
   public static void main(String [] args) throws Exception {
-    final GameState gameState = GameFactory.smallBoard(20);
+    final GameState gameState = GameFactory.smallBoard(100);
     MainFrame app = new MainFrame(gameState, 4);
     app.setVisible(true);
     gameState.start();

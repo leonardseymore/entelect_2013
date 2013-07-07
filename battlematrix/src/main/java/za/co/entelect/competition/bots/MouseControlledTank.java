@@ -34,7 +34,7 @@ public class MouseControlledTank extends Tank {
   }
 
   @Override
-  protected TankAction getAction() {
+  public TankAction getAction() {
     if (mouse.buttonDown(2)) {
       return TankAction.FIRE;
     }

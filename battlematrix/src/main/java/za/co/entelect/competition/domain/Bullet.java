@@ -28,8 +28,7 @@ public class Bullet extends OwnedDirectedEntity {
     visitor.visit(this);
   }
 
-  @Override
-  public void update() {
+  public void move() {
     switch (direction) {
       case UP:
         y--;
@@ -45,5 +44,4 @@ public class Bullet extends OwnedDirectedEntity {
         break;
     }
   }
-
 }

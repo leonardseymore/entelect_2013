@@ -22,7 +22,10 @@ public class GameState {
   private long tickInterval;
   private Timer timer;
 
-  private Collection<Entity> entities = new CopyOnWriteArrayList<>();
+  private Collection<Base> bases = new CopyOnWriteArrayList<>();
+  private Collection<Bullet> bullets = new CopyOnWriteArrayList<>();
+  private Collection<Tank> tanks = new CopyOnWriteArrayList<>();
+  private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
   private Collection<GameStateListener> listeners = new ArrayList<>();
 
@@ -79,43 +82,58 @@ public class GameState {
   }
 
   public void add(Base base) {
-    addEntity(base);
+    bases.add(base);
     logger.debug("Added base [" + base + "]");
   }
 
+  public void remove(Base base) {
+    bases.remove(base);
+    logger.debug("Removed base [" + base + "]");
+  }
+
   public void add(Bullet bullet) {
-    addEntity(bullet);
+    bullets.add(bullet);
     logger.debug("Added bullet [" + bullet + "]");
-    checkEntityCollision(bullet);
+  }
+
+  public void remove(Bullet bullet) {
+    bullets.remove(bullet);
+    logger.debug("Removed bullet [" + bullet + "]");
   }
 
   public void add(Tank tank) {
-    addEntity(tank);
+    tanks.add(tank);
     logger.debug("Added tank [" + tank + "]");
   }
 
+  public void remove(Tank tank) {
+    tanks.remove(tank);
+    logger.debug("Removed tank [" + tank + "]");
+  }
+
   public void add(Wall wall) {
-    addEntity(wall);
+    walls.add(wall);
     logger.debug("Added wall [" + wall + "]");
   }
 
-  private void addEntity(Entity entity) {
-    entities.add(entity);
-  }
-
-  private void removeEntity(Entity entity) {
-    logger.debug("Removed entity [" + entity + "]");
-    entities.remove(entity);
+  public void remove(Wall wall) {
+    walls.remove(wall);
+    logger.debug("Removed wall [" + wall + "]");
   }
 
   public Entity getEntityAt(int x, int y) {
-    for (Entity entity : entities) {
+    Iterator<Entity> it = new EntityIterator();
+    while (it.hasNext()) {
+      Entity entity = it.next();
       if (entity.isAt(x, y)) {
         return entity;
       }
     }
-
     return null;
+  }
+
+  public int getClearanceAt(int x, int y) {
+    return getEntityAt(x, y) == null ? 1 : 0;
   }
 
   public boolean isInbounds(int x, int y) {
@@ -124,7 +142,9 @@ public class GameState {
 
   public void accept(GameElementVisitor visitor) {
     visitor.visit(this);
-    for (Entity entity : entities) {
+    Iterator<Entity> it = new EntityIterator();
+    while (it.hasNext()) {
+      Entity entity = it.next();
       entity.accept(visitor);
     }
   }
@@ -135,20 +155,54 @@ public class GameState {
     }
 
     // Bullets that have been fired are moved and collisions are checked for.
-    // Bullets and tanks are moved and collision are checked for.
-    // All tanks in the firing state are fired and their bullets are added to the field.
-    // Collisions are checked for.
+    for (Bullet bullet : bullets) {
+      bullet.move();
 
-    for (Entity entity : entities) {
-      int oldX = entity.getX();
-      int oldY = entity.getY();
-      entity.update();
-      keepEntityInBounds(entity);
-
-      if (checkEntityCollision(entity)) {
-        entity.setX(oldX);
-        entity.setY(oldY);
+      if (bullet.getX() < 0 || bullet.getY() < 0 || bullet.getX() > w || bullet.getY() > h) {
+        remove(bullet);
+      } else {
+        checkEntityCollision(bullet);
       }
+    }
+
+    // Bullets and tanks are moved and collision are checked for.
+    for (Tank tank : tanks) {
+      int oldX = tank.getX();
+      int oldY = tank.getY();
+
+      tank.move();
+
+      if (tank.getX() < 0) {
+        tank.setX(0);
+      }
+
+      if (tank.getX() + tank.getW() > w) {
+        tank.setX(w - tank.getW());
+      }
+
+      if (tank.getY() < 0) {
+        tank.setY(0);
+      }
+
+      if (tank.getY() + tank.getH() > h) {
+        tank.setY(h - tank.getH());
+      }
+
+      if (checkEntityCollision(tank)) {
+        tank.setX(oldX);
+        tank.setY(oldY);
+      }
+    }
+
+    // All tanks in the firing state are fired and their bullets are added to the field.
+    for (Tank tank : tanks) {
+      if (tank.getAction() == Tank.TankAction.FIRE) {
+        int [] bulletPos = tank.turretPos();
+        Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], this, tank.getOwner(), tank.getDirection(), tank);
+        bullet.move();
+        add(bullet);
+      }
+      checkEntityCollision(tank);
     }
 
     for (GameStateListener listener : listeners) {
@@ -156,49 +210,10 @@ public class GameState {
     }
   }
 
-  private void keepEntityInBounds(Entity entity) {
-    Entity.BoundsAction boundsAction = entity.getBoundsAction();
-    if (boundsAction == Entity.BoundsAction.BOUNCE) {
-      if (entity.getX() < 0) {
-        entity.setX(0);
-      }
-
-      if (entity.getX() + entity.getW() > w) {
-        entity.setX(w - entity.getW());
-      }
-
-      if (entity.getY() < 0) {
-        entity.setY(0);
-      }
-
-      if (entity.getY() + entity.getH() > h) {
-        entity.setY(h - entity.getH());
-      }
-    } else if (boundsAction == Entity.BoundsAction.DIE) {
-      if (entity.getX() < 0) {
-        removeEntity(entity);
-        return;
-      }
-
-      if (entity.getX() + entity.getW() > w) {
-        removeEntity(entity);
-        return;
-      }
-
-      if (entity.getY() < 0) {
-        removeEntity(entity);
-        return;
-      }
-
-      if (entity.getY() + entity.getH() > h) {
-        removeEntity(entity);
-        return;
-      }
-    }
-  }
-
   private boolean checkEntityCollision(Entity s) {
-    for (Entity t : entities) {
+    Iterator<Entity> it = new EntityIterator();
+    while (it.hasNext()) {
+      Entity t = it.next();
       if (s != t) {
         if (s.getX() < (t.getX() + t.getW()) && (s.getX() + s.getW()) > t.getX() &&
           s.getY() < (t.getY() + t.getH()) && (s.getY() + s.getH()) > t.getY()) {
@@ -215,24 +230,24 @@ public class GameState {
     }
 
     if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BASE) {
-      removeEntity(s);
-      removeEntity(t);
+      remove((Bullet)s);
+      remove((Base)t);
       logger.debug("Base [" + t + "] destroyed by [" + ((Bullet) s).getTank() + "]");
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BASE) {
-      removeEntity(s);
-      removeEntity(t);
+      remove((Tank)s);
+      remove((Base)t);
       logger.debug("TANKED Base [" + t + "] destroyed by [" + s + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.TANK) {
-      removeEntity(s);
-      removeEntity(t);
+      remove((Bullet)s);
+      remove((Tank)t);
       logger.debug("Tank [" + t + "] destroyed by [" + ((Bullet) s).getTank() + "]");
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BULLET) {
-      removeEntity(s);
-      removeEntity(t);
+      remove((Tank)s);
+      remove((Bullet)t);
       logger.debug("Tank [" + s + "] destroyed by [" + ((Bullet) t).getTank() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BULLET) {
-      removeEntity(s);
-      removeEntity(t);
+      remove((Bullet)s);
+      remove((Tank)t);
       logger.debug("Bullet [" + t + "] destroyed by [" + s + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.WALL) {
       destroyWalls((Bullet) s, (Wall) t);
@@ -242,8 +257,8 @@ public class GameState {
   }
 
   private void destroyWalls(Bullet b, Wall w) {
-    removeEntity(b);
-    removeEntity(w);
+    remove(b);
+    remove(w);
     logger.debug("Wall [" + w + "] destroyed by [" + b + "]");
 
     if (b.getDirection() == Directed.Direction.UP || b.getDirection() == Directed.Direction.DOWN) {
@@ -262,7 +277,7 @@ public class GameState {
   private void destroyIfNeighborWall(int x, int y) {
     Entity e = getEntityAt(x, y);
     if (e != null && e.getType() == Entity.Type.WALL) {
-      removeEntity(e);
+      remove((Wall)e);
     }
   }
 
@@ -327,5 +342,42 @@ public class GameState {
     }
 
     return buffer.toString();
+  }
+
+  private class EntityIterator implements Iterator<Entity> {
+
+    private Entity.Type currentCollectionType = Entity.Type.BASE;
+    private Iterator<? extends Entity> currentCollection = bases.iterator();
+
+    @Override
+    public boolean hasNext() {
+      if (currentCollection.hasNext()) {
+        return true;
+      } else {
+        if (currentCollectionType == Entity.Type.BASE) {
+          currentCollection = walls.iterator();
+          currentCollectionType = Entity.Type.WALL;
+        } else if (currentCollectionType == Entity.Type.WALL) {
+          currentCollection = tanks.iterator();
+          currentCollectionType = Entity.Type.TANK;
+        } else if (currentCollectionType == Entity.Type.TANK) {
+          currentCollection = bullets.iterator();
+          currentCollectionType = Entity.Type.BULLET;
+        } else {
+          return false;
+        }
+        return currentCollection.hasNext();
+      }
+    }
+
+    @Override
+    public Entity next() {
+      return currentCollection.next();
+    }
+
+    @Override
+    public void remove() {
+      currentCollection.remove();
+    }
   }
 }

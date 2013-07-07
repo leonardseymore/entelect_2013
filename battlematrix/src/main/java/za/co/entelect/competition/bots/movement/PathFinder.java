@@ -58,8 +58,7 @@ public class PathFinder {
         }
 
         if (gameState.isInbounds(x, y)) {
-          Entity entity = gameState.getEntityAt(x, y);
-          if (entity == null || !entity.getType().equals(Entity.Type.WALL)) {
+          if (gameState.getClearanceAt(x, y) > 0 /* || !entity.getType().equals(Entity.Type.WALL)*/) {
             neighbors.add(new Node(x, y));
           }
         }
