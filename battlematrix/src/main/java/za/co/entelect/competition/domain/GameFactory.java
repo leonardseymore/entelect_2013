@@ -13,10 +13,10 @@ public class GameFactory {
     gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
     gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
 
-    Tank p2t1 = new DummyTank(24, 12, gameState, gameState.getPlayer2(), Directed.Direction.UP);
+    Tank p2t1 = new DummyTank("p2t1", 24, 12, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     gameState.add(p2t1);
 
-    Tank p2t2 = new RandomTank(50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
+    Tank p2t2 = new DummyTank("p2t1", 50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
     gameState.add(p2t2);
 
     for (int i = 1; i < gameState.getW() - 1; i++) {

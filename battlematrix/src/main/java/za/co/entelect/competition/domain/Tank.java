@@ -11,10 +11,24 @@ public abstract class Tank extends OwnedDirectedEntity {
   private static final int TANK_HEIGHT = 5;
   private static final int TANK_HALF_HEIGHT = 2;
 
-  public Tank(int x, int y, GameState gameState, Player owner, Direction direction) {
+  private String name;
+
+  private int prevX;
+  private int prevY;
+
+  public Tank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
     super(x, y, gameState, owner, direction);
     this.w = TANK_WIDTH;
     this.h = TANK_HEIGHT;
+    this.name = name;
+  }
+
+  public int getPrevX() {
+    return prevX;
+  }
+
+  public int getPrevY() {
+    return prevY;
   }
 
   public int[] turretPos() {
@@ -41,6 +55,10 @@ public abstract class Tank extends OwnedDirectedEntity {
     return bulletPos;
   }
 
+  public String getName() {
+    return name;
+  }
+
   @Override
   public Direction getDirection() {
     return direction;
@@ -57,6 +75,8 @@ public abstract class Tank extends OwnedDirectedEntity {
   }
 
   public void move() {
+    prevX = x;
+    prevY = y;
     switch (getAction()) {
       case UP:
         direction = Direction.UP;
@@ -78,4 +98,13 @@ public abstract class Tank extends OwnedDirectedEntity {
   }
 
   public abstract TankAction getAction();
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Tank{");
+    sb.append("name='").append(name).append('\'');
+    sb.append("entity='").append(super.toString()).append('\'');
+    sb.append('}');
+    return sb.toString();
+  }
 }

@@ -109,6 +109,7 @@ public class GameState {
 
   public void remove(Base base) {
     bases.remove(base);
+    map[base.getX()][base.getY()].setEntity(null);
     logger.debug("Removed base [" + base + "]");
   }
 
@@ -129,6 +130,11 @@ public class GameState {
 
   public void remove(Tank tank) {
     tanks.remove(tank);
+    for (int y = tank.getPrevY(); y < tank.getPrevY() + tank.getH(); y++) {
+      for (int x = tank.getPrevX(); x < tank.getPrevX() + tank.getW(); x++) {
+        map[x][y].setEntity(null);
+      }
+    }
     logger.debug("Removed tank [" + tank + "]");
   }
 
@@ -139,6 +145,7 @@ public class GameState {
 
   public void remove(Wall wall) {
     walls.remove(wall);
+    map[wall.getX()][wall.getY()].setEntity(null);
     logger.debug("Removed wall [" + wall + "]");
   }
 
@@ -177,12 +184,16 @@ public class GameState {
 
     // Bullets that have been fired are moved and collisions are checked for.
     for (Bullet bullet : bullets) {
+      map[bullet.getX()][bullet.getY()].setEntity(null);
       bullet.move();
 
-      if (bullet.getX() < 0 || bullet.getY() < 0 || bullet.getX() > w || bullet.getY() > h) {
+
+      if (bullet.getX() < 0 || bullet.getY() < 0 || bullet.getX() > w - 1 || bullet.getY() > h - 1) {
         remove(bullet);
       } else {
-        checkEntityCollision(bullet);
+        if (!checkEntityCollision(bullet)) {
+          map[bullet.getX()][bullet.getY()].setEntity(bullet);
+        }
       }
     }
 
@@ -190,9 +201,7 @@ public class GameState {
     for (Tank tank : tanks) {
       int oldX = tank.getX();
       int oldY = tank.getY();
-
       tank.move();
-
       if (tank.getX() < 0) {
         tank.setX(0);
       }
@@ -210,8 +219,42 @@ public class GameState {
       }
 
       if (checkEntityCollision(tank)) {
-        tank.setX(oldX);
-        tank.setY(oldY);
+        if (tanks.contains(tank)) {
+          tank.setX(oldX);
+          tank.setY(oldY);
+        } else {
+          remove(tank);
+        }
+      } else {
+        int newX = tank.getX();
+        int newY = tank.getY();
+
+        switch (tank.getAction()) {
+          case UP:
+            for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
+              map[x][oldY + tank.getH() - 1].setEntity(null);
+              map[x][newY].setEntity(tank);
+            }
+            break;
+          case RIGHT:
+            for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
+              map[oldX][y].setEntity(null);
+              map[newX + tank.getW() - 1][y].setEntity(tank);
+            }
+            break;
+          case DOWN:
+            for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
+              map[x][oldY].setEntity(null);
+              map[x][newY + tank.getH() - 1].setEntity(tank);
+            }
+            break;
+          case LEFT:
+            for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
+              map[oldX + tank.getW() - 1][y].setEntity(null);
+              map[newX][y].setEntity(tank);
+            }
+            break;
+        }
       }
     }
 
@@ -251,27 +294,40 @@ public class GameState {
     }
 
     if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BASE) {
-      remove((Bullet)s);
-      remove((Base)t);
-      logger.debug("Base [" + t + "] destroyed by [" + ((Bullet) s).getTank() + "]");
+      Bullet bullet = (Bullet)s;
+      Base base = (Base)t;
+      remove(bullet);
+      remove(base);
+      logger.debug("Base [" + t + "] destroyed by [" + bullet.getTank().getName() + "]");
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BASE) {
-      remove((Tank)s);
-      remove((Base)t);
-      logger.debug("TANKED Base [" + t + "] destroyed by [" + s + "]");
+      Tank tank = (Tank)s;
+      Base base = (Base)t;
+      remove(tank);
+      remove(base);
+      logger.debug("TANKED Base [" + t + "] destroyed by [" + tank.getName() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.TANK) {
-      remove((Bullet)s);
-      remove((Tank)t);
-      logger.debug("Tank [" + t + "] destroyed by [" + ((Bullet) s).getTank() + "]");
+      Bullet bullet = (Bullet)s;
+      Tank tank = (Tank)t;
+      remove(bullet);
+      remove(tank);
+      logger.debug("Tank [" + tank.getName() + "] destroyed by [" + bullet.getTank().getName() + "]");
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BULLET) {
-      remove((Tank)s);
-      remove((Bullet)t);
-      logger.debug("Tank [" + s + "] destroyed by [" + ((Bullet) t).getTank() + "]");
+      Tank tank = (Tank)s;
+      Bullet bullet = (Bullet)t;
+      remove(tank);
+      remove(bullet);
+      logger.debug("Tank [" + tank.getName() + "] destroyed by [" + bullet.getTank().getName() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BULLET) {
-      remove((Bullet)s);
-      remove((Tank)t);
-      logger.debug("Bullet [" + t + "] destroyed by [" + s + "]");
+      Bullet bulletS = (Bullet)s;
+      Bullet bulletT = (Bullet)s;
+      remove(bulletS);
+      remove(bulletT);
+      logger.debug("Bullet [" + bulletS.getTank().getName() + "] destroyed by [" + bulletT.getTank().getName() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.WALL) {
-      destroyWalls((Bullet) s, (Wall) t);
+      Bullet bullet = (Bullet) s;
+      Wall wall = (Wall) t;
+      destroyWalls(bullet, wall);
+      logger.debug("Wall [" + wall.getX() + ":" + wall.getY() + "] destroyed by [" + bullet.getTank().getName() + "]");
     }
 
     return true;

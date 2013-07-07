@@ -24,8 +24,8 @@ public class MouseControlledTank extends Tank {
   private int targetX = -1;
   private int targetY = -1;
 
-  public MouseControlledTank(int x, int y, GameState gameState, Player owner, Direction direction, Mouse mouse) {
-    super(x, y, gameState, owner, direction);
+  public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Mouse mouse) {
+    super(name, x, y, gameState, owner, direction);
     this.mouse = mouse;
   }
 

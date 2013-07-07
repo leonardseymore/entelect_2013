@@ -17,8 +17,8 @@ public class MainFrame extends JFrame {
 
   private static final Logger logger = Logger.getLogger(MainFrame.class);
 
-  public static final int DEFAULT_WIDTH = 640;
-  public static final int DEFAULT_HEIGHT = 480;
+  public static final int DEFAULT_WIDTH = 800;
+  public static final int DEFAULT_HEIGHT = 700;
 
   private GameState gameState;
   private Canvas canvas;
@@ -52,10 +52,10 @@ public class MainFrame extends JFrame {
     canvas.addMouseListener(mouse);
     canvas.addMouseMotionListener(mouse);
 
-    KeyboardControlledTank p1t1 = new KeyboardControlledTank(60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT, keyboard);
+    KeyboardControlledTank p1t1 = new KeyboardControlledTank("p1t1", 60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT, keyboard);
     gameState.add(p1t1);
 
-    MouseControlledTank p1t2 = new MouseControlledTank(40, 60, gameState, gameState.getPlayer1(), Directed.Direction.DOWN, mouse);
+    MouseControlledTank p1t2 = new MouseControlledTank("p1t2", 40, 60, gameState, gameState.getPlayer1(), Directed.Direction.DOWN, mouse);
     gameState.add(p1t2);
   }
 

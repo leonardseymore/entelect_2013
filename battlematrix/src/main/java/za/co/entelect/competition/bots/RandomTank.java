@@ -10,8 +10,8 @@ public class RandomTank extends Tank {
 
   private Random random;
 
-  public RandomTank(int x, int y, GameState gameState, Player owner, Direction direction) {
-    super(x, y, gameState, owner, direction);
+  public RandomTank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
+    super(name, x, y, gameState, owner, direction);
     random = new Random(System.currentTimeMillis());
   }
 

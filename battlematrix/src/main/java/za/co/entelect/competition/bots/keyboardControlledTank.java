@@ -14,8 +14,8 @@ public class KeyboardControlledTank extends Tank {
 
   private Keyboard keyboard;
 
-  public KeyboardControlledTank(int x, int y, GameState gameState, Player owner, Direction direction, Keyboard keyboard) {
-    super(x, y, gameState, owner, direction);
+  public KeyboardControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Keyboard keyboard) {
+    super(name, x, y, gameState, owner, direction);
     this.keyboard = keyboard;
   }
 
