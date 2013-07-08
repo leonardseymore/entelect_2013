@@ -151,11 +151,11 @@ public class GameState {
   }
 
   public Entity getEntityAt(int x, int y) {
-    return map[x][y].entity;
+    return map[x][y].getEntity();
   }
 
   public int getClearanceAt(int x, int y) {
-    return getEntityAt(x, y) == null ? 1 : 0;
+    return map[x][y].getClearance();
   }
 
   public boolean isInbounds(int x, int y) {
@@ -260,12 +260,45 @@ public class GameState {
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], this, tank.getOwner(), tank.getDirection(), tank);
         bullet.move();
         add(bullet);
+        checkEntityCollision(bullet);
       }
-      checkEntityCollision(tank);
     }
 
     for (GameStateListener listener : listeners) {
       listener.updated();
+    }
+
+    sweepClearanceMap();
+  }
+
+  private void sweepClearanceMap() {
+    int runningTotal = 0;
+    // sweep right to left
+    for (int y = 0; y < h; y++) {
+      for (int x = w - 1; x >= 0; x--) {
+        Entity entity = getEntityAt(x, y);
+        if (x == w - 1 || entity != null && entity.getType() == Entity.Type.WALL) {
+          runningTotal = 0;
+        } else {
+          runningTotal++;
+        }
+
+        map[x][y].setClearance(runningTotal);
+      }
+    }
+
+    // sweep bottom to top
+    for (int x = 0; x < w; x++) {
+      for (int y = h - 1; y >= 0; y--) {
+        Entity entity = getEntityAt(x, y);
+        if (y == h - 1 || entity != null && entity.getType() == Entity.Type.WALL) {
+          runningTotal = 0;
+        } else {
+          runningTotal = Math.min(runningTotal + 1, map[x][y].clearance);
+        }
+
+        map[x][y].setClearance(runningTotal);
+      }
     }
   }
 
@@ -349,7 +382,7 @@ public class GameState {
   private void destroyIfNeighborWall(int x, int y) {
     Entity e = getEntityAt(x, y);
     if (e != null && e.getType() == Entity.Type.WALL) {
-      remove((Wall)e);
+      remove((Wall) e);
     }
   }
 

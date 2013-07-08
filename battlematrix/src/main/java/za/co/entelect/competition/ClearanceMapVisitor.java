@@ -35,10 +35,13 @@ public class ClearanceMapVisitor implements GameElementVisitor {
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
         GameState.MapNode node = map[x][y];
-        if (node.getClearance() > 0) {
-          g.setColor(Color.blue);
+        int clearance = node.getClearance();
+        Entity entity = node.getEntity();
+        if (clearance > 0 && entity == null) {
+          Color c = Color.getHSBColor(1f, 5.0f / Math.min(5, clearance), Math.min(5, clearance) / 6.0f);
+          g.setColor(c);
         } else {
-          g.setColor(Color.red);
+          g.setColor(Color.green);
         }
         g.fillRect(x, y, 1, 1);
       }
@@ -63,6 +66,16 @@ public class ClearanceMapVisitor implements GameElementVisitor {
   public void visit(Tank tank) {
     if (verbose) {
       logger.debug("Visiting tank [" + tank + "]");
+    }
+    Color tankColor = Color.magenta;
+    if (tank instanceof MouseControlledTank) {
+      Stack<PathFinder.Node> path = ((MouseControlledTank)tank).getPath();
+      if (path != null) {
+        for (PathFinder.Node node : (Stack<PathFinder.Node>)path.clone()) {
+          g.setColor(tankColor);
+          g.fillRect(node.getX(), node.getY(), 1, 1);
+        }
+      }
     }
   }
 

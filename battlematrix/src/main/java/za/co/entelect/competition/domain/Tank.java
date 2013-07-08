@@ -6,9 +6,9 @@ public abstract class Tank extends OwnedDirectedEntity {
     UP, RIGHT, DOWN, LEFT, FIRE, NONE
   }
 
-  private static final int TANK_WIDTH = 5;
+  public static final int TANK_WIDTH = 5;
   private static final int TANK_HALF_WIDTH = 2;
-  private static final int TANK_HEIGHT = 5;
+  public static final int TANK_HEIGHT = 5;
   private static final int TANK_HALF_HEIGHT = 2;
 
   private String name;

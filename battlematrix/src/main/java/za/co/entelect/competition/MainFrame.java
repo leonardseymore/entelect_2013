@@ -90,8 +90,8 @@ public class MainFrame extends JFrame {
 
         AffineTransform t = g.getTransform();
         g.scale(zoomFactor, zoomFactor);
-        //gameState.accept(new GameElementSwingVisitor(g, gameState));
-        gameState.accept(new ClearanceMapVisitor(g, gameState));
+        gameState.accept(new GameElementSwingVisitor(g, gameState));
+        //gameState.accept(new ClearanceMapVisitor(g, gameState));
         g.setTransform(t);
 
         if (printHelp) {

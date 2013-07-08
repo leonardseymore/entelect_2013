@@ -2,6 +2,7 @@ package za.co.entelect.competition.bots.movement;
 
 import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.domain.Tank;
 
 import java.util.*;
 
@@ -58,7 +59,7 @@ public class PathFinder {
         }
 
         if (gameState.isInbounds(x, y)) {
-          if (gameState.getClearanceAt(x, y) > 0 /* || !entity.getType().equals(Entity.Type.WALL)*/) {
+          if (gameState.getClearanceAt(x, y) >= Tank.TANK_WIDTH) {
             neighbors.add(new Node(x, y));
           }
         }
