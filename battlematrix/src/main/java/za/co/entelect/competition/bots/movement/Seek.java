@@ -2,7 +2,6 @@ package za.co.entelect.competition.bots.movement;
 
 import za.co.entelect.competition.domain.Tank;
 
-import java.util.Queue;
 import java.util.Stack;
 
 public class Seek {

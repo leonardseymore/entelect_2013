@@ -80,6 +80,7 @@ public class GameState {
         map[x][y] = new MapNode();
       }
     }
+    generateClearanceMap();
 
     timer = new Timer();
     timer.scheduleAtFixedRate(new TimerTask() {
@@ -267,37 +268,31 @@ public class GameState {
     for (GameStateListener listener : listeners) {
       listener.updated();
     }
-
-    sweepClearanceMap();
   }
 
-  private void sweepClearanceMap() {
+  private void generateClearanceMap() { // TODO: only after walls change
     int runningTotal = 0;
-    // sweep right to left
-    for (int y = 0; y < h; y++) {
-      for (int x = w - 1; x >= 0; x--) {
-        Entity entity = getEntityAt(x, y);
-        if (x == w - 1 || entity != null && entity.getType() == Entity.Type.WALL) {
-          runningTotal = 0;
+    for (int x = 0; x < w; x++) {
+      for (int y = h - 1; y >= 0; y--) {
+        Entity entity = map[x][y].getEntity();
+        if (y == h - 1 || entity != null && entity.getType() == Entity.Type.WALL) {
+          runningTotal = y == h - 1 ? 1 : 0;
         } else {
           runningTotal++;
         }
-
-        map[x][y].setClearance(runningTotal);
+        map[x][y].setClearance(runningTotal >= Tank.TANK_WIDTH ? 1 : 0);
       }
     }
 
-    // sweep bottom to top
-    for (int x = 0; x < w; x++) {
-      for (int y = h - 1; y >= 0; y--) {
-        Entity entity = getEntityAt(x, y);
-        if (y == h - 1 || entity != null && entity.getType() == Entity.Type.WALL) {
-          runningTotal = 0;
+    for (int y = 0; y < h; y++) {
+      for (int x = w - 1; x >= 0; x--) {
+        int v = map[x][y].getClearance();
+        if (x == w - 1 || v == 0) {
+          runningTotal = x == w - 1 ? 1 : 0;
         } else {
-          runningTotal = Math.min(runningTotal + 1, map[x][y].clearance);
+          runningTotal++;
         }
-
-        map[x][y].setClearance(runningTotal);
+        map[x][y].setClearance(runningTotal >= Tank.TANK_WIDTH ? 1 : 0);
       }
     }
   }
@@ -377,6 +372,7 @@ public class GameState {
       destroyIfNeighborWall(w.getX(), w.getY() + 1);
       destroyIfNeighborWall(w.getX(), w.getY() + 2);
     }
+    generateClearanceMap();
   }
 
   private void destroyIfNeighborWall(int x, int y) {
@@ -499,7 +495,6 @@ public class GameState {
     }
 
     public void setEntity(Entity entity) {
-      clearance = entity == null ? 1 : 0;
       this.entity = entity;
     }
 

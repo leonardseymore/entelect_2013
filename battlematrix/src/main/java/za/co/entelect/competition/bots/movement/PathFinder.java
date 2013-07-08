@@ -59,7 +59,7 @@ public class PathFinder {
         }
 
         if (gameState.isInbounds(x, y)) {
-          if (gameState.getClearanceAt(x, y) >= Tank.TANK_WIDTH) {
+          if (gameState.getClearanceAt(x, y) > 0) {
             neighbors.add(new Node(x, y));
           }
         }

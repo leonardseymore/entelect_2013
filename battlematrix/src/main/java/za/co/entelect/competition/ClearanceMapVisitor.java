@@ -27,7 +27,6 @@ public class ClearanceMapVisitor implements GameElementVisitor {
     if (verbose) {
       logger.debug("Visiting gameState [" + gameState + "]");
     }
-
     g.setColor(Constants.COLOR_SWING_BOARD);
     g.fillRect(0, 0, gameState.getW(), gameState.getH());
 
@@ -37,11 +36,14 @@ public class ClearanceMapVisitor implements GameElementVisitor {
         GameState.MapNode node = map[x][y];
         int clearance = node.getClearance();
         Entity entity = node.getEntity();
-        if (clearance > 0 && entity == null) {
-          Color c = Color.getHSBColor(1f, 5.0f / Math.min(5, clearance), Math.min(5, clearance) / 6.0f);
-          g.setColor(c);
+        if (clearance > 0) {
+          if (entity == null) {
+            g.setColor(Color.green);
+          } else {
+            g.setColor(Color.green.darker());
+          }
         } else {
-          g.setColor(Color.green);
+          g.setColor(Color.gray);
         }
         g.fillRect(x, y, 1, 1);
       }
