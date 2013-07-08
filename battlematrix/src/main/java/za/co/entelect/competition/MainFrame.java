@@ -23,6 +23,7 @@ public class MainFrame extends JFrame {
   private GameState gameState;
   private Canvas canvas;
   private boolean printHelp;
+  private boolean clearanceMap;
   private double zoomFactor = 1;
 
   private Keyboard keyboard;
@@ -82,6 +83,9 @@ public class MainFrame extends JFrame {
         if (keyboard.keyDownOnce(KeyEvent.VK_H)) {
           printHelp = !printHelp;
         }
+        if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
+          clearanceMap = !clearanceMap;
+        }
 
         g = bi.createGraphics();
 
@@ -91,14 +95,20 @@ public class MainFrame extends JFrame {
         AffineTransform t = g.getTransform();
         g.scale(zoomFactor, zoomFactor);
         gameState.accept(new GameElementSwingVisitor(g, gameState));
-        gameState.accept(new ClearanceMapVisitor(g, gameState));
+        if (clearanceMap) {
+          gameState.accept(new ClearanceMapVisitor(g, gameState));
+        }
         g.setTransform(t);
 
         if (printHelp) {
           g.setColor(Color.green);
-          g.drawString("Use arrow keys to move tank", 20, 20);
-          g.drawString("Press SPACE to fire", 20, 32);
-          g.drawString("Press ESC to exit", 20, 44);
+          int y = 20;
+          g.drawString("Press h for help", 20, y);
+          g.drawString("Use arrow keys to move tank", 20, y += 12);
+          g.drawString("Press SPACE to fire", 20, y += 12);
+          g.drawString("Press c for clearance map", 20, y += 12);
+          g.drawString("Press ESC to exit", 20, y += 12);
+
         }
 
         graphics = buffer.getDrawGraphics();
