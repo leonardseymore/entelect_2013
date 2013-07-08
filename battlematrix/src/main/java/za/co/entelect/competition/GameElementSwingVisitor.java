@@ -1,7 +1,9 @@
 package za.co.entelect.competition;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.bots.ApproachTank;
 import za.co.entelect.competition.bots.MouseControlledTank;
+import za.co.entelect.competition.bots.behavior.Approach;
 import za.co.entelect.competition.bots.movement.PathFinder;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.GameState;
@@ -68,11 +70,19 @@ public class GameElementSwingVisitor implements GameElementVisitor {
 
     if (tank instanceof MouseControlledTank) {
       Stack<PathFinder.Node> path = ((MouseControlledTank)tank).getPath();
-      if (path != null) {
-        for (PathFinder.Node node : (Stack<PathFinder.Node>)path.clone()) {
-          g.setColor(tankColor);
-          g.fillRect(node.getX(), node.getY(), 1, 1);
-        }
+      g.setColor(tankColor);
+      drawPath(g, path);
+    } else if (tank instanceof ApproachTank) {
+      Stack<PathFinder.Node> path = ((ApproachTank)tank).getPath();
+      g.setColor(tankColor);
+      drawPath(g, path);
+    }
+  }
+
+  private void drawPath(Graphics2D g, Stack<PathFinder.Node> path) {
+    if (path != null) {
+      for (PathFinder.Node node : (Stack<PathFinder.Node>)path.clone()) {
+        g.fillRect(node.getX(), node.getY(), 1, 1);
       }
     }
   }

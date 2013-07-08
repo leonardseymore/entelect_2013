@@ -1,8 +1,11 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.bots.ApproachTank;
 import za.co.entelect.competition.bots.DummyTank;
 import za.co.entelect.competition.bots.RandomTank;
+
+import java.util.Random;
 
 public class GameFactory {
 
@@ -12,9 +15,6 @@ public class GameFactory {
     GameState gameState = new GameState(100, 100, tickInterval);
     gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
     gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
-
-    Tank p2t1 = new DummyTank("p2t1", 24, 12, gameState, gameState.getPlayer2(), Directed.Direction.UP);
-    gameState.add(p2t1);
 
     Tank p2t2 = new RandomTank("p2t1", 50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
     gameState.add(p2t2);
@@ -26,6 +26,38 @@ public class GameFactory {
       gameState.add(new Wall(i, gameState.getH() - 6, gameState));
       gameState.add(new Wall(i, gameState.getH() - 7, gameState));
       gameState.add(new Wall(i, gameState.getH() - 8, gameState));
+    }
+
+    for (int i = 1; i < gameState.getH() - 1; i++) {
+      gameState.add(new Wall(15, i, gameState));
+      gameState.add(new Wall(16, i, gameState));
+      gameState.add(new Wall(17, i, gameState));
+
+      gameState.add(new Wall(gameState.getW() - 15, i, gameState));
+      gameState.add(new Wall(gameState.getW() - 16, i, gameState));
+      gameState.add(new Wall(gameState.getW() - 17, i, gameState));
+    }
+
+    return gameState;
+  }
+
+  public static GameState smallRandomBoard(long tickInterval, int odds) {
+    GameState gameState = new GameState(100, 100, tickInterval);
+    gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
+    gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
+
+    Tank p2t2 = new RandomTank("p2t1", 50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
+    gameState.add(p2t2);
+
+    Random random = new Random();
+    for (int i = 1; i < gameState.getW(); i++) {
+      for (int j = 0; j < gameState.getH(); j++) {
+        //if (gameState.getEntityAt(i, j) == null) {
+          if (random.nextInt(odds) == 1) {
+            gameState.add(new Wall(i, j, gameState));
+          }
+        //}
+      }
     }
 
     return gameState;

@@ -1,5 +1,6 @@
 package za.co.entelect.competition.bots.movement;
 
+import za.co.entelect.competition.Util;
 import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
@@ -15,7 +16,7 @@ public class PathFinder {
     Collection<Node> closed = new ArrayList<>();
 
     Node start = new Node(startX, startY);
-    start.goalCost = manhattanDist(start.x, start.y, endX, endY);
+    start.goalCost = Util.manhattanDist(start.x, start.y, endX, endY);
     open.add(start);
 
     while (!open.isEmpty()) {
@@ -28,7 +29,7 @@ public class PathFinder {
       open.remove(currentNode);
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(gameState, currentNode)) {
-        toNode.goalCost = manhattanDist(toNode.x, toNode.y, endX, endY);
+        toNode.goalCost = Util.manhattanDist(toNode.x, toNode.y, endX, endY);
         toNode.parent = currentNode;
 
         if (closed.contains(toNode)) {
@@ -76,10 +77,6 @@ public class PathFinder {
       currentNode = currentNode.parent;
     } while (currentNode != null);
     return path;
-  }
-
-  private static int manhattanDist(int startX, int startY, int endX, int endY) {
-    return Math.abs(startX - endX) + Math.abs(startY - endY);
   }
 
   public static class Node implements Comparable<Node> {

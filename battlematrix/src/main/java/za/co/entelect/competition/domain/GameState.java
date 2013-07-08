@@ -260,8 +260,10 @@ public class GameState {
         int [] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], this, tank.getOwner(), tank.getDirection(), tank);
         bullet.move();
-        add(bullet);
-        checkEntityCollision(bullet);
+        if (isInbounds(bullet.getX(), bullet.getY())) {
+          add(bullet);
+          checkEntityCollision(bullet);
+        }
       }
     }
 
