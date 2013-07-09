@@ -57,7 +57,7 @@ public class MainFrame extends JFrame {
     KeyboardControlledTank p1t1 = new KeyboardControlledTank("p1t1", 60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT, keyboard);
     gameState.add(p1t1);
 
-    ApproachTank p2t1 = new ApproachTank("p2t1", 24, 12, gameState, gameState.getPlayer2(), Directed.Direction.UP);
+    ApproachTank p2t1 = new ApproachTank("p2t1", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     p2t1.setFollowTank(p1t1);
     gameState.add(p2t1);
 

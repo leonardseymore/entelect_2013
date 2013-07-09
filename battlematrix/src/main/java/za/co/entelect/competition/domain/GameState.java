@@ -364,24 +364,30 @@ public class GameState {
     logger.debug("Wall [" + w + "] destroyed by [" + b + "]");
 
     if (b.getDirection() == Directed.Direction.UP || b.getDirection() == Directed.Direction.DOWN) {
-      destroyIfNeighborWall(w.getX() - 2, w.getY());
-      destroyIfNeighborWall(w.getX() - 1, w.getY());
-      destroyIfNeighborWall(w.getX() + 1, w.getY());
-      destroyIfNeighborWall(w.getX() + 2, w.getY());
+      if (destroyIfNeighborWall(w.getX() - 1, w.getY())) {
+        destroyIfNeighborWall(w.getX() - 2, w.getY());
+      }
+      if (destroyIfNeighborWall(w.getX() + 1, w.getY())) {
+        destroyIfNeighborWall(w.getX() + 2, w.getY());
+      }
     } else {
-      destroyIfNeighborWall(w.getX(), w.getY() - 2);
-      destroyIfNeighborWall(w.getX(), w.getY() - 1);
-      destroyIfNeighborWall(w.getX(), w.getY() + 1);
-      destroyIfNeighborWall(w.getX(), w.getY() + 2);
+      if (destroyIfNeighborWall(w.getX(), w.getY() - 1)) {
+        destroyIfNeighborWall(w.getX(), w.getY() - 2);
+      }
+      if (destroyIfNeighborWall(w.getX(), w.getY() + 1)) {
+        destroyIfNeighborWall(w.getX(), w.getY() + 2);
+      }
     }
     generateClearanceMap();
   }
 
-  private void destroyIfNeighborWall(int x, int y) {
+  private boolean destroyIfNeighborWall(int x, int y) {
     Entity e = getEntityAt(x, y);
     if (e != null && e.getType() == Entity.Type.WALL) {
       remove((Wall) e);
+      return true;
     }
+    return false;
   }
 
   public String toAscii() {

@@ -16,7 +16,7 @@ public class GameFactory {
     gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
     gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
 
-    Tank p2t2 = new RandomTank("p2t1", 50, 80, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
+    Tank p2t2 = new RandomTank("p2t1", 50, 75, gameState, gameState.getPlayer2(), Directed.Direction.RIGHT);
     gameState.add(p2t2);
 
     for (int i = 1; i < gameState.getW() - 1; i++) {
@@ -26,6 +26,13 @@ public class GameFactory {
       gameState.add(new Wall(i, gameState.getH() - 6, gameState));
       gameState.add(new Wall(i, gameState.getH() - 7, gameState));
       gameState.add(new Wall(i, gameState.getH() - 8, gameState));
+
+      gameState.add(new Wall(i, 15, gameState));
+      gameState.add(new Wall(i, 16, gameState));
+      gameState.add(new Wall(i, 17, gameState));
+      gameState.add(new Wall(i, gameState.getH() - 16, gameState));
+      gameState.add(new Wall(i, gameState.getH() - 17, gameState));
+      gameState.add(new Wall(i, gameState.getH() - 18, gameState));
     }
 
     for (int i = 1; i < gameState.getH() - 1; i++) {
