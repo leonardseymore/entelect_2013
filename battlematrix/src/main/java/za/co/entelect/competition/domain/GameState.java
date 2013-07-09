@@ -155,8 +155,8 @@ public class GameState {
     return map[x][y].getEntity();
   }
 
-  public int getClearanceAt(int x, int y) {
-    return map[x][y].getClearance();
+  public MapNode getMapNode(int x, int y) {
+    return map[x][y];
   }
 
   public boolean isInbounds(int x, int y) {

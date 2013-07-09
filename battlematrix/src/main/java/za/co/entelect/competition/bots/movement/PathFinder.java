@@ -11,8 +11,8 @@ public class PathFinder {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
-    Node start = new Node(startX, startY);
-    start.goalCost = Util.manhattanDist(start.x, start.y, endX, endY);
+    Node start = new Node(startX, startY, gameState.getMapNode(startX, startY));
+    start.goalCost = heuristic(gameState, startX, startY, endX, endY);
     open.add(start);
 
     while (!open.isEmpty()) {
@@ -25,7 +25,7 @@ public class PathFinder {
       open.remove(currentNode);
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(gameState, currentNode)) {
-        toNode.goalCost = Util.manhattanDist(toNode.x, toNode.y, endX, endY);
+        toNode.goalCost = heuristic(gameState, toNode.x, toNode.y, endX, endY);
         toNode.parent = currentNode;
 
         if (closed.contains(toNode)) {
@@ -46,6 +46,11 @@ public class PathFinder {
     return null;
   }
 
+  private static int heuristic(GameState gameState, int startX, int startY, int endX, int endY) {
+    int dist = Util.manhattanDist(startX, startY, endX, endY);
+    return dist;
+  }
+
   private static Collection<Node> getAvailableNeighbors(GameState gameState, Node node) {
     Collection<Node> neighbors = new ArrayList<>();
 
@@ -56,8 +61,9 @@ public class PathFinder {
         }
 
         if (gameState.isInbounds(x, y)) {
-          if (gameState.getClearanceAt(x, y) > 0) {
-            neighbors.add(new Node(x, y));
+          GameState.MapNode mapNode = gameState.getMapNode(x, y);
+          if (mapNode.getClearance() > 0) {
+            neighbors.add(new Node(x, y, mapNode));
           }
         }
       }
@@ -80,12 +86,14 @@ public class PathFinder {
     int y;
     int goalCost;
     int runningCost;
+    GameState.MapNode mapNode;
 
     Node parent;
 
-    public Node(int x, int y) {
+    public Node(int x, int y, GameState.MapNode mapNode) {
       this.x = x;
       this.y = y;
+      this.mapNode = mapNode;
     }
 
     public int getX() {
@@ -128,6 +136,7 @@ public class PathFinder {
       sb.append(", y=").append(y);
       sb.append(", goalCost=").append(goalCost);
       sb.append(", runningCost=").append(runningCost);
+      sb.append(", mapNode=").append(mapNode);
       sb.append('}');
       return sb.toString();
     }
