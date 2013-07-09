@@ -21,7 +21,7 @@ public class PathFinder {
     Collection<Node> closed = new HashSet<>();
 
     Node start = new Node(startX, startY, gameState.getMapNode(startX, startY));
-    start.goalCost = heuristic(startX, startY, endX, endY);
+    start.goalCost = heuristic(start, endX, endY);
     open.add(start);
 
     while (!open.isEmpty()) {
@@ -34,7 +34,7 @@ public class PathFinder {
       open.remove(currentNode);
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(currentNode)) {
-        toNode.goalCost = heuristic(toNode.x, toNode.y, endX, endY);
+        toNode.goalCost = heuristic(toNode, endX, endY);
         toNode.parent = currentNode;
 
         if (closed.contains(toNode)) {
@@ -55,8 +55,8 @@ public class PathFinder {
     return null;
   }
 
-  private int heuristic(int startX, int startY, int endX, int endY) {
-    int dist = Util.manhattanDist(startX, startY, endX, endY);
+  private int heuristic(Node node, int endX, int endY) {
+    int dist = Util.manhattanDist(node.x, node.y, endX, endY);
     return dist;
   }
 

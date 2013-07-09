@@ -516,6 +516,10 @@ public class GameState {
       return clearance > 0;
     }
 
+    public boolean isWall() {
+      return entity != null && entity.getType() == Entity.Type.WALL;
+    }
+
     @Override
     public String toString() {
       final StringBuilder sb = new StringBuilder("MapNode{");
