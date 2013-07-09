@@ -512,6 +512,10 @@ public class GameState {
       return clearance;
     }
 
+    public boolean isClear() {
+      return clearance > 0;
+    }
+
     @Override
     public String toString() {
       final StringBuilder sb = new StringBuilder("MapNode{");

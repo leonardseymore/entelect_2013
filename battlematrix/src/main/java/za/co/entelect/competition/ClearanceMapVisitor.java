@@ -34,9 +34,8 @@ public class ClearanceMapVisitor implements GameElementVisitor {
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
         GameState.MapNode node = map[x][y];
-        int clearance = node.getClearance();
-        Entity entity = node.getEntity();
-        if (clearance > 0) {
+        if (node.isClear()) {
+          Entity entity = node.getEntity();
           if (entity == null) {
             g.setColor(Color.green);
           } else {

@@ -71,7 +71,7 @@ public class PathFinder {
 
         if (gameState.isInbounds(x, y)) {
           GameState.MapNode mapNode = gameState.getMapNode(x, y);
-          if (mapNode.getClearance() > 0) {
+          if (mapNode.isClear()) {
             neighbors.add(new Node(x, y, mapNode));
           }
         }
