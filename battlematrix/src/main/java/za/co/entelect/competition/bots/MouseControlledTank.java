@@ -20,6 +20,7 @@ public class MouseControlledTank extends Tank {
 
   private Mouse mouse;
   private Stack<PathFinder.Node> path;
+  private PathFinder pathFinder;
 
   private int targetX = -1;
   private int targetY = -1;
@@ -27,6 +28,7 @@ public class MouseControlledTank extends Tank {
   public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Mouse mouse) {
     super(name, x, y, gameState, owner, direction);
     this.mouse = mouse;
+    this.pathFinder = new PathFinder(gameState);
   }
 
   public Stack<PathFinder.Node> getPath() {
@@ -44,7 +46,7 @@ public class MouseControlledTank extends Tank {
       targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
       logger.debug("New target set (" + x + "," + y + ")");
       long start = System.currentTimeMillis();
-      path = PathFinder.closestPathAStar(gameState, x, y, targetX, targetY);
+      path = pathFinder.closestPathAStar(x, y, targetX, targetY);
       logger.debug("Path finding took [" + (System.currentTimeMillis() - start) + "ms]");
     }
 

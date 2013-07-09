@@ -1,5 +1,6 @@
 package za.co.entelect.competition.bots.movement;
 
+import org.apache.log4j.Logger;
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.domain.GameState;
 
@@ -7,12 +8,20 @@ import java.util.*;
 
 public class PathFinder {
 
-  public static Stack<Node> closestPathAStar(GameState gameState, int startX, int startY, int endX, int endY) {
+  private static Logger logger = Logger.getLogger(PathFinder.class);
+
+  private GameState gameState;
+
+  public PathFinder(GameState gameState) {
+    this.gameState = gameState;
+  }
+
+  public Stack<Node> closestPathAStar(int startX, int startY, int endX, int endY) {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
     Node start = new Node(startX, startY, gameState.getMapNode(startX, startY));
-    start.goalCost = heuristic(gameState, startX, startY, endX, endY);
+    start.goalCost = heuristic(startX, startY, endX, endY);
     open.add(start);
 
     while (!open.isEmpty()) {
@@ -24,8 +33,8 @@ public class PathFinder {
 
       open.remove(currentNode);
       closed.add(currentNode);
-      for (Node toNode : getAvailableNeighbors(gameState, currentNode)) {
-        toNode.goalCost = heuristic(gameState, toNode.x, toNode.y, endX, endY);
+      for (Node toNode : getAvailableNeighbors(currentNode)) {
+        toNode.goalCost = heuristic(toNode.x, toNode.y, endX, endY);
         toNode.parent = currentNode;
 
         if (closed.contains(toNode)) {
@@ -46,12 +55,12 @@ public class PathFinder {
     return null;
   }
 
-  private static int heuristic(GameState gameState, int startX, int startY, int endX, int endY) {
+  private int heuristic(int startX, int startY, int endX, int endY) {
     int dist = Util.manhattanDist(startX, startY, endX, endY);
     return dist;
   }
 
-  private static Collection<Node> getAvailableNeighbors(GameState gameState, Node node) {
+  private Collection<Node> getAvailableNeighbors(Node node) {
     Collection<Node> neighbors = new ArrayList<>();
 
     for (int x = node.x - 1; x <= node.x + 1; x++) {
@@ -72,7 +81,7 @@ public class PathFinder {
     return neighbors;
   }
 
-  private static Stack<Node> pathToNode(Node currentNode) {
+  private Stack<Node> pathToNode(Node currentNode) {
     Stack<Node> path = new Stack<>();
     do {
       path.add(currentNode);
@@ -81,7 +90,7 @@ public class PathFinder {
     return path;
   }
 
-  public static class Node implements Comparable<Node> {
+  public class Node implements Comparable<Node> {
     int x;
     int y;
     int goalCost;

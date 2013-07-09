@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/MouseControlledTank.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/MouseControlledTank.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/PathFinder.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/PathFinder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="battlematrix.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,17 +49,17 @@
     <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373271640966" ignored="false" />
     <file path="/RandomTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373235391304" ignored="false" />
     <file path="/Mouse.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373375970225" ignored="false" />
-    <file path="/MouseControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373293597227" ignored="false" />
+    <file path="/MouseControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373389729437" ignored="false" />
     <file path="/MoveToPoint.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373121853467" ignored="false" />
     <file path="/Graph.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373136230567" ignored="false" />
     <file path="/Connection.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373135148133" ignored="false" />
-    <file path="/PathFinder.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373389319678" ignored="false" />
+    <file path="/PathFinder.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373389555980" ignored="false" />
     <file path="/Heuristic.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373136475974" ignored="false" />
     <file path="/Seek.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373293314368" ignored="false" />
     <file path="/ClearanceMapVisitor.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373292695656" ignored="false" />
     <file path="/KeyboardControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373235414724" ignored="false" />
     <file path="/a.dummy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373294073348" ignored="false" />
-    <file path="/Approach.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373303639226" ignored="false" />
+    <file path="/Approach.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373389647596" ignored="false" />
     <file path="/Util.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373294104911" ignored="false" />
     <file path="/ApproachTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373295598674" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -135,13 +135,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameFactory.java">
+      <file leaf-file-name="ClearanceMapVisitor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ClearanceMapVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="48" selection-start="1540" selection-end="1540" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="75" column="43" selection-start="2067" selection-end="2067" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -149,7 +147,7 @@
       <file leaf-file-name="Approach.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="1127" selection-end="1127" vertical-scroll-proportion="0.0">
+            <state line="36" column="43" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -166,10 +164,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PathFinder.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DummyTank.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/DummyTank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="13" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeyboardControlledTank.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/KeyboardControlledTank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="87" selection-start="868" selection-end="868" vertical-scroll-proportion="0.5338983">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MouseControlledTank.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/MouseControlledTank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="47" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RandomTank.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/RandomTank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="13" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PathFinder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/PathFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="40" selection-start="390" selection-end="390" vertical-scroll-proportion="0.10945274">
+            <state line="11" column="2" selection-start="293" selection-end="293" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -177,28 +211,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Util.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/Util.java">
+      <file leaf-file-name="Seek.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/Seek.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="20" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PriorityQueue.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/src.zip!/java/util/PriorityQueue.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="341" column="0" selection-start="12485" selection-end="12485" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tank.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="0" selection-start="2221" selection-end="2221" vertical-scroll-proportion="0.0">
+            <state line="6" column="13" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -225,7 +241,6 @@
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ClearanceMapVisitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/Seek.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/MouseControlledTank.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/Util.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/MainFrame.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/App.java" />
@@ -233,11 +248,12 @@
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/ApproachTank.java" />
         <option value="$PROJECT_DIR$/src/main/resources/map1.txt" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/Mouse.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/AppSwing.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/PathFinder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/MouseControlledTank.java" />
       </list>
     </option>
   </component>
@@ -832,7 +848,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="774" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32721713" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -848,7 +864,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6043771" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23095624" sideWeight="0.6043771" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25364667" sideWeight="0.49541286" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25364667" sideWeight="0.53058106" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42201835" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -927,48 +943,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/RandomTank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="28" selection-start="281" selection-end="281" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/MouseControlledTank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="2" selection-start="701" selection-end="737" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="43" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/GameElementSwingVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="61" selection-start="2328" selection-end="2328" vertical-scroll-proportion="0.44390243">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/Mouse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="12" selection-start="805" selection-end="805" vertical-scroll-proportion="0.80717486">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/MainFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="25" selection-start="1424" selection-end="1424" vertical-scroll-proportion="0.3390244">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/Keyboard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="9" selection-start="348" selection-end="348" vertical-scroll-proportion="-0.47309417">
@@ -990,26 +964,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/ApproachTank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/src.zip!/java/util/PriorityQueue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="341" column="0" selection-start="12485" selection-end="12485" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1127" selection-end="1127" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1042,10 +1000,68 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/PathFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="40" selection-start="390" selection-end="390" vertical-scroll-proportion="0.10945274">
+        <state line="11" column="2" selection-start="293" selection-end="293" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="43" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/Seek.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/ApproachTank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/DummyTank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/RandomTank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ClearanceMapVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="43" selection-start="2067" selection-end="2067" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/MouseControlledTank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="47" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/KeyboardControlledTank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="87" selection-start="868" selection-end="868" vertical-scroll-proportion="0.5338983">
+          <folding />
         </state>
       </provider>
     </entry>

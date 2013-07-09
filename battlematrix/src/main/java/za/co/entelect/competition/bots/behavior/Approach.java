@@ -17,8 +17,10 @@ public class Approach {
   private Entity target;
   private Tank tank;
   private int targetDist;
+  private PathFinder pathFinder;
 
   public Approach(Tank tank, Entity target, int targetDist) {
+    pathFinder = new PathFinder(tank.getGameState());
     this.tank = tank;
     this.target = target;
     this.targetDist = targetDist;
@@ -32,7 +34,7 @@ public class Approach {
     int dist = Util.manhattanDist(tankCenterX, tankCenterY, targetCenterX, targetCenterY);
     if (dist > targetDist) {
       if (path == null || path.isEmpty() || pathAge > maxPathAge) {
-        path = PathFinder.closestPathAStar(tank.getGameState(), tank.getX(), tank.getY(), target.getX(), target.getY());
+        path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), target.getX(), target.getY());
         pathAge = 0;
       }
       if (path == null) {
