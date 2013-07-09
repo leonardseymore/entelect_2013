@@ -16,7 +16,7 @@ public class PathFinder {
     this.gameState = gameState;
   }
 
-  public Stack<Node> closestPathAStar(int startX, int startY, int endX, int endY) {
+  public Stack<Node> closestPathAStar(int startX, int startY, int endX, int endY, boolean closest) {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
@@ -24,8 +24,14 @@ public class PathFinder {
     start.goalCost = heuristic(start, endX, endY);
     open.add(start);
 
+    Node closestNode = start;
+
     while (!open.isEmpty()) {
       Node currentNode = open.poll();
+
+      if (currentNode.goalCost < closestNode.goalCost) {
+        closestNode = currentNode;
+      }
 
       if (currentNode.x == endX && currentNode.y == endY) {
         return pathToNode(currentNode);
@@ -52,6 +58,11 @@ public class PathFinder {
         }
       }
     }
+
+    if (closest && closestNode != null) {
+      return pathToNode(closestNode);
+    }
+
     return null;
   }
 

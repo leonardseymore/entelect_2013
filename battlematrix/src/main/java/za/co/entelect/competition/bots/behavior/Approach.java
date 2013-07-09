@@ -34,7 +34,7 @@ public class Approach {
     int dist = Util.manhattanDist(tankCenterX, tankCenterY, targetCenterX, targetCenterY);
     if (dist > targetDist) {
       if (path == null || path.isEmpty() || pathAge > maxPathAge) {
-        path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), target.getX(), target.getY());
+        path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), target.getX(), target.getY(), true);
         pathAge = 0;
       }
       if (path == null) {
