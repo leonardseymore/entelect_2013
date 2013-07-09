@@ -1,19 +1,15 @@
 package za.co.entelect.competition.bots.movement;
 
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
 
 import java.util.*;
 
-
 public class PathFinder {
 
-  // http://www.policyalmanac.org/games/aStarTutorial.htm
   public static Stack<Node> closestPathAStar(GameState gameState, int startX, int startY, int endX, int endY) {
     Queue<Node> open = new PriorityQueue<>();
-    Collection<Node> closed = new ArrayList<>();
+    Collection<Node> closed = new HashSet<>();
 
     Node start = new Node(startX, startY);
     start.goalCost = Util.manhattanDist(start.x, start.y, endX, endY);
