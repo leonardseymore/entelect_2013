@@ -4,6 +4,7 @@ import za.co.entelect.competition.Util;
 import za.co.entelect.competition.bots.movement.PathFinder;
 import za.co.entelect.competition.bots.movement.Seek;
 import za.co.entelect.competition.domain.Entity;
+import za.co.entelect.competition.domain.Obstruction;
 import za.co.entelect.competition.domain.Tank;
 
 import java.util.Stack;
@@ -20,7 +21,7 @@ public class Approach {
   private PathFinder pathFinder;
 
   public Approach(Tank tank, Entity target, int targetDist) {
-    pathFinder = new PathFinder(tank.getGameState());
+    pathFinder = new PathFinder(tank.getGameState(), Obstruction.BORDER | Obstruction.WALL | Obstruction.TANK | Obstruction.BULLET);
     this.tank = tank;
     this.target = target;
     this.targetDist = targetDist;

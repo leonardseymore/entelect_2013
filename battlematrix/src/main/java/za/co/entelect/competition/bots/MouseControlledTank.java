@@ -4,10 +4,7 @@ import org.apache.log4j.Logger;
 import za.co.entelect.competition.Mouse;
 import za.co.entelect.competition.bots.movement.PathFinder;
 import za.co.entelect.competition.bots.movement.Seek;
-import za.co.entelect.competition.domain.GameElementVisitor;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Player;
-import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.domain.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,7 +25,7 @@ public class MouseControlledTank extends Tank {
   public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Mouse mouse) {
     super(name, x, y, gameState, owner, direction);
     this.mouse = mouse;
-    this.pathFinder = new PathFinder(gameState);
+    this.pathFinder = new PathFinder(gameState, Obstruction.BORDER | Obstruction.WALL);
   }
 
   public Stack<PathFinder.Node> getPath() {

@@ -17,10 +17,6 @@ public abstract class Entity {
     BASE, BULLET, TANK, WALL
   }
 
-  public static enum BoundsAction {
-    BOUNCE, DIE
-  }
-
   private long id;
   protected int x;
   protected int y;
@@ -71,10 +67,6 @@ public abstract class Entity {
   public boolean isAt(int x, int y) {
     return x >= this.x && x < this.x + w
       && y >= this.y && y < this.y + h;
-  }
-
-  public BoundsAction getBoundsAction() {
-    return BoundsAction.BOUNCE;
   }
 
   public abstract Type getType();

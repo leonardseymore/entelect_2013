@@ -6,10 +6,8 @@ public abstract class Tank extends OwnedDirectedEntity {
     UP, RIGHT, DOWN, LEFT, FIRE, NONE
   }
 
-  public static final int TANK_WIDTH = 5;
-  private static final int TANK_HALF_WIDTH = 2;
-  public static final int TANK_HEIGHT = 5;
-  private static final int TANK_HALF_HEIGHT = 2;
+  public static final int TANK_SIZE = 5;
+  private static final int TANK_HALF_SIZE = 2;
 
   private String name;
 
@@ -20,8 +18,8 @@ public abstract class Tank extends OwnedDirectedEntity {
 
   public Tank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
     super(x, y, gameState, owner, direction);
-    this.w = TANK_WIDTH;
-    this.h = TANK_HEIGHT;
+    this.w = TANK_SIZE;
+    this.h = TANK_SIZE;
     this.name = name;
   }
 
@@ -38,20 +36,20 @@ public abstract class Tank extends OwnedDirectedEntity {
 
     switch (direction) {
       case UP:
-        bulletPos[0] = this.x + TANK_HALF_WIDTH;
+        bulletPos[0] = this.x + TANK_HALF_SIZE;
         bulletPos[1] = this.y;
         break;
       case RIGHT:
-        bulletPos[0] = this.x + TANK_WIDTH - 1;
-        bulletPos[1] = this.y + TANK_HALF_HEIGHT;
+        bulletPos[0] = this.x + TANK_SIZE - 1;
+        bulletPos[1] = this.y + TANK_HALF_SIZE;
         break;
       case DOWN:
-        bulletPos[0] = this.x + TANK_HALF_WIDTH;
-        bulletPos[1] = this.y + TANK_HEIGHT - 1;
+        bulletPos[0] = this.x + TANK_HALF_SIZE;
+        bulletPos[1] = this.y + TANK_SIZE - 1;
         break;
       case LEFT:
         bulletPos[0] = this.x;
-        bulletPos[1] = this.y + TANK_HALF_HEIGHT;
+        bulletPos[1] = this.y + TANK_HALF_SIZE;
         break;
     }
     return bulletPos;

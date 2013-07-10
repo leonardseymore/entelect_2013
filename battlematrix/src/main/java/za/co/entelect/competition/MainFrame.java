@@ -2,6 +2,7 @@ package za.co.entelect.competition;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.bots.ApproachTank;
+import za.co.entelect.competition.bots.DummyTank;
 import za.co.entelect.competition.bots.KeyboardControlledTank;
 import za.co.entelect.competition.bots.MouseControlledTank;
 import za.co.entelect.competition.domain.Directed;
@@ -18,7 +19,7 @@ public class MainFrame extends JFrame {
 
   private static final Logger logger = Logger.getLogger(MainFrame.class);
 
-  public static final int DEFAULT_WIDTH = 800;
+  public static final int DEFAULT_WIDTH = 700;
   public static final int DEFAULT_HEIGHT = 700;
 
   private GameState gameState;
@@ -29,6 +30,7 @@ public class MainFrame extends JFrame {
 
   private Keyboard keyboard;
   private Mouse mouse;
+  private boolean paused = false;
 
   public MainFrame(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
@@ -59,6 +61,7 @@ public class MainFrame extends JFrame {
 
     ApproachTank p2t1 = new ApproachTank("p2t1", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     p2t1.setFollowTank(p1t1);
+    //DummyTank p2t1 = new DummyTank("p2t1", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     gameState.add(p2t1);
 
     MouseControlledTank p1t2 = new MouseControlledTank("p1t2", 40, 60, gameState, gameState.getPlayer1(), Directed.Direction.DOWN, mouse);
@@ -91,6 +94,14 @@ public class MainFrame extends JFrame {
         if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
           clearanceMap = !clearanceMap;
         }
+        if (keyboard.keyDownOnce(KeyEvent.VK_P)) {
+          paused = !paused;
+          if (paused) {
+            gameState.stop();
+          } else {
+            gameState.start();
+          }
+        }
 
         g = bi.createGraphics();
 
@@ -99,9 +110,9 @@ public class MainFrame extends JFrame {
 
         AffineTransform t = g.getTransform();
         g.scale(zoomFactor, zoomFactor);
-        gameState.accept(new GameElementSwingVisitor(g, gameState));
+        gameState.accept(new GameElementSwingVisitor(g));
         if (clearanceMap) {
-          gameState.accept(new ClearanceMapVisitor(g, gameState));
+          gameState.accept(new ClearanceMapVisitor(g));
         }
         g.setTransform(t);
 
@@ -112,6 +123,7 @@ public class MainFrame extends JFrame {
           g.drawString("Use arrow keys to move tank", 20, y += 12);
           g.drawString("Press SPACE to fire", 20, y += 12);
           g.drawString("Press c for clearance map", 20, y += 12);
+          g.drawString("Press p toggle pause", 20, y += 12);
           g.drawString("Press ESC to exit", 20, y += 12);
 
         }

@@ -25,11 +25,6 @@ public class Bullet extends OwnedDirectedEntity {
   }
 
   @Override
-  public BoundsAction getBoundsAction() {
-    return BoundsAction.DIE;
-  }
-
-  @Override
   public Type getType() {
     return Type.BULLET;
   }

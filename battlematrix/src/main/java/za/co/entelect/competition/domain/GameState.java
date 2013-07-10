@@ -272,17 +272,25 @@ public class GameState {
     }
   }
 
-  private void generateClearanceMap() { // TODO: only after walls change
+  private void generateClearanceMap() {
     int runningTotal = 0;
+    Entity lastEntity = null;
     for (int x = 0; x < w; x++) {
       for (int y = h - 1; y >= 0; y--) {
         Entity entity = map[x][y].getEntity();
+        if (entity != null) {
+          lastEntity = entity;
+        }
         if (y == h - 1 || entity != null && entity.getType() == Entity.Type.WALL) {
           runningTotal = y == h - 1 ? 1 : 0;
         } else {
           runningTotal++;
         }
-        map[x][y].setClearance(runningTotal >= Tank.TANK_WIDTH ? 1 : 0);
+        map[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
+        map[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? lastEntity : null);
+        if (x == 0 && y == h -1) {
+          logger.debug(x + ":" + y);
+        }
       }
     }
 
@@ -294,7 +302,8 @@ public class GameState {
         } else {
           runningTotal++;
         }
-        map[x][y].setClearance(runningTotal >= Tank.TANK_WIDTH ? 1 : 0);
+        map[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
+        map[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? map[x][y].getClearanceEntity() : null);
       }
     }
   }
@@ -487,52 +496,6 @@ public class GameState {
     @Override
     public void remove() {
       currentCollection.remove();
-    }
-  }
-
-  public static class MapNode {
-    private Entity entity;
-    private int clearance = 1;
-
-    private MapNode() {
-      setEntity(null);
-    }
-
-    public MapNode(Entity entity) {
-      setEntity(entity);
-    }
-
-    public void setEntity(Entity entity) {
-      this.entity = entity;
-    }
-
-    public Entity getEntity() {
-      return entity;
-    }
-
-    public void setClearance(int clearance) {
-      this.clearance = clearance;
-    }
-
-    public int getClearance() {
-      return clearance;
-    }
-
-    public boolean isClear() {
-      return clearance > 0;
-    }
-
-    public boolean isWall() {
-      return entity != null && entity.getType() == Entity.Type.WALL;
-    }
-
-    @Override
-    public String toString() {
-      final StringBuilder sb = new StringBuilder("MapNode{");
-      sb.append("entity=").append(entity);
-      sb.append(", clearance=").append(clearance);
-      sb.append('}');
-      return sb.toString();
     }
   }
 }

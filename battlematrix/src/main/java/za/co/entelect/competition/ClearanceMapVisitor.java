@@ -15,11 +15,9 @@ public class ClearanceMapVisitor implements GameElementVisitor {
   private boolean verbose = false;
 
   private Graphics2D g;
-  private GameState gameState;
 
-  public ClearanceMapVisitor(Graphics2D g, GameState gameState) {
+  public ClearanceMapVisitor(Graphics2D g) {
     this.g = g;
-    this.gameState = gameState;
   }
 
   @Override
@@ -30,10 +28,10 @@ public class ClearanceMapVisitor implements GameElementVisitor {
     g.setColor(Constants.COLOR_SWING_BOARD);
     g.fillRect(0, 0, gameState.getW(), gameState.getH());
 
-    GameState.MapNode[][] map = gameState.getMap();
+    MapNode[][] map = gameState.getMap();
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
-        GameState.MapNode node = map[x][y];
+        MapNode node = map[x][y];
         if (node.isClear()) {
           Entity entity = node.getEntity();
           if (entity == null) {

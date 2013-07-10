@@ -3,6 +3,8 @@ package za.co.entelect.competition.bots.movement;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.domain.MapNode;
+import za.co.entelect.competition.domain.Obstruction;
 
 import java.util.*;
 
@@ -12,8 +14,11 @@ public class PathFinder {
 
   private GameState gameState;
 
-  public PathFinder(GameState gameState) {
+  private int obstructionTypes = 1 | 2;
+
+  public PathFinder(GameState gameState, int obstructionTypes) {
     this.gameState = gameState;
+    this.obstructionTypes = obstructionTypes;
   }
 
   public Stack<Node> closestPathAStar(int startX, int startY, int endX, int endY, boolean closest) {
@@ -81,8 +86,8 @@ public class PathFinder {
         }
 
         if (gameState.isInbounds(x, y)) {
-          GameState.MapNode mapNode = gameState.getMapNode(x, y);
-          if (mapNode.isClear()) {
+          MapNode mapNode = gameState.getMapNode(x, y);
+          if ((mapNode.getObstruction() & obstructionTypes) != mapNode.getObstruction()) {
             neighbors.add(new Node(x, y, mapNode));
           }
         }
@@ -106,11 +111,11 @@ public class PathFinder {
     int y;
     int goalCost;
     int runningCost;
-    GameState.MapNode mapNode;
+    MapNode mapNode;
 
     Node parent;
 
-    public Node(int x, int y, GameState.MapNode mapNode) {
+    public Node(int x, int y, MapNode mapNode) {
       this.x = x;
       this.y = y;
       this.mapNode = mapNode;
