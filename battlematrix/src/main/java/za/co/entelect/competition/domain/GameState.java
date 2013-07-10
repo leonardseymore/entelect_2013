@@ -29,7 +29,7 @@ public class GameState {
 
   private Collection<GameStateListener> listeners = new ArrayList<>();
 
-  private MapNode[][] map;
+  private MapNode[][] tacticalMap;
 
   public GameState(int w, int h, long tickInterval) {
     this.w = w;
@@ -61,26 +61,26 @@ public class GameState {
     listeners.remove(listener);
   }
 
-  public MapNode[][] getMap() {
-    return map;
+  public MapNode[][] getTacticalMap() {
+    return tacticalMap;
   }
 
   public void start() {
-    map = new MapNode[w][h];
+    tacticalMap = new MapNode[w][h];
     for (int y = 0; y < h; y++) {
       nextCell:for (int x  = 0; x < w; x++) {
         Iterator<Entity> it = new EntityIterator();
         while (it.hasNext()) {
           Entity entity = it.next();
           if (entity.isAt(x, y)) {
-            map[x][y] = new MapNode(entity);
+            tacticalMap[x][y] = new MapNode(entity);
             continue nextCell;
           }
         }
-        map[x][y] = new MapNode();
+        tacticalMap[x][y] = new MapNode();
       }
     }
-    generateClearanceMap();
+    generateTacticalMap();
 
     timer = new Timer();
     timer.scheduleAtFixedRate(new TimerTask() {
@@ -110,7 +110,7 @@ public class GameState {
 
   public void remove(Base base) {
     bases.remove(base);
-    map[base.getX()][base.getY()].setEntity(null);
+    tacticalMap[base.getX()][base.getY()].setEntity(null);
     logger.debug("Removed base [" + base + "]");
   }
 
@@ -121,7 +121,7 @@ public class GameState {
 
   public void remove(Bullet bullet) {
     bullets.remove(bullet);
-    map[bullet.getPrevX()][bullet.getPrevY()].setEntity(null);
+    tacticalMap[bullet.getPrevX()][bullet.getPrevY()].setEntity(null);
     logger.debug("Removed bullet [" + bullet + "]");
   }
 
@@ -134,7 +134,7 @@ public class GameState {
     tanks.remove(tank);
     for (int y = tank.getPrevY(); y < tank.getPrevY() + tank.getH(); y++) {
       for (int x = tank.getPrevX(); x < tank.getPrevX() + tank.getW(); x++) {
-        map[x][y].setEntity(null);
+        tacticalMap[x][y].setEntity(null);
       }
     }
     logger.debug("Removed tank [" + tank + "]");
@@ -147,16 +147,16 @@ public class GameState {
 
   public void remove(Wall wall) {
     walls.remove(wall);
-    map[wall.getX()][wall.getY()].setEntity(null);
+    tacticalMap[wall.getX()][wall.getY()].setEntity(null);
     logger.debug("Removed wall [" + wall + "]");
   }
 
   public Entity getEntityAt(int x, int y) {
-    return map[x][y].getEntity();
+    return tacticalMap[x][y].getEntity();
   }
 
   public MapNode getMapNode(int x, int y) {
-    return map[x][y];
+    return tacticalMap[x][y];
   }
 
   public boolean isInbounds(int x, int y) {
@@ -179,7 +179,7 @@ public class GameState {
 
     // Bullets that have been fired are moved and collisions are checked for.
     for (Bullet bullet : bullets) {
-      map[bullet.getX()][bullet.getY()].setEntity(null);
+      tacticalMap[bullet.getX()][bullet.getY()].setEntity(null);
       bullet.move();
 
 
@@ -187,7 +187,7 @@ public class GameState {
         remove(bullet);
       } else {
         if (!checkEntityCollision(bullet)) {
-          map[bullet.getX()][bullet.getY()].setEntity(bullet);
+          tacticalMap[bullet.getX()][bullet.getY()].setEntity(bullet);
         }
       }
     }
@@ -228,26 +228,26 @@ public class GameState {
         switch (tank.getLastAction()) {
           case UP:
             for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
-              map[x][oldY + tank.getH() - 1].setEntity(null);
-              map[x][newY].setEntity(tank);
+              tacticalMap[x][oldY + tank.getH() - 1].setEntity(null);
+              tacticalMap[x][newY].setEntity(tank);
             }
             break;
           case RIGHT:
             for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
-              map[oldX][y].setEntity(null);
-              map[newX + tank.getW() - 1][y].setEntity(tank);
+              tacticalMap[oldX][y].setEntity(null);
+              tacticalMap[newX + tank.getW() - 1][y].setEntity(tank);
             }
             break;
           case DOWN:
             for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
-              map[x][oldY].setEntity(null);
-              map[x][newY + tank.getH() - 1].setEntity(tank);
+              tacticalMap[x][oldY].setEntity(null);
+              tacticalMap[x][newY + tank.getH() - 1].setEntity(tank);
             }
             break;
           case LEFT:
             for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
-              map[oldX + tank.getW() - 1][y].setEntity(null);
-              map[newX][y].setEntity(tank);
+              tacticalMap[oldX + tank.getW() - 1][y].setEntity(null);
+              tacticalMap[newX][y].setEntity(tank);
             }
             break;
         }
@@ -272,12 +272,12 @@ public class GameState {
     }
   }
 
-  private void generateClearanceMap() {
+  private void generateTacticalMap() {
     int runningTotal = 0;
     Entity lastEntity = null;
     for (int x = 0; x < w; x++) {
       for (int y = h - 1; y >= 0; y--) {
-        Entity entity = map[x][y].getEntity();
+        Entity entity = tacticalMap[x][y].getEntity();
         if (entity != null) {
           lastEntity = entity;
         }
@@ -286,8 +286,8 @@ public class GameState {
         } else {
           runningTotal++;
         }
-        map[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
-        map[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? lastEntity : null);
+        tacticalMap[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
+        tacticalMap[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? lastEntity : null);
         if (x == 0 && y == h -1) {
           logger.debug(x + ":" + y);
         }
@@ -296,14 +296,14 @@ public class GameState {
 
     for (int y = 0; y < h; y++) {
       for (int x = w - 1; x >= 0; x--) {
-        int v = map[x][y].getClearance();
+        int v = tacticalMap[x][y].getClearance();
         if (x == w - 1 || v == 0) {
           runningTotal = x == w - 1 ? 1 : 0;
         } else {
           runningTotal++;
         }
-        map[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
-        map[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? map[x][y].getClearanceEntity() : null);
+        tacticalMap[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
+        tacticalMap[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? tacticalMap[x][y].getClearanceEntity() : null);
       }
     }
   }
@@ -387,7 +387,7 @@ public class GameState {
         destroyIfNeighborWall(w.getX(), w.getY() + 2);
       }
     }
-    generateClearanceMap();
+    generateTacticalMap();
   }
 
   private boolean destroyIfNeighborWall(int x, int y) {

@@ -2,7 +2,6 @@ package za.co.entelect.competition;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.bots.ApproachTank;
-import za.co.entelect.competition.bots.DummyTank;
 import za.co.entelect.competition.bots.KeyboardControlledTank;
 import za.co.entelect.competition.bots.MouseControlledTank;
 import za.co.entelect.competition.domain.Directed;
@@ -112,7 +111,7 @@ public class MainFrame extends JFrame {
         g.scale(zoomFactor, zoomFactor);
         gameState.accept(new GameElementSwingVisitor(g));
         if (clearanceMap) {
-          gameState.accept(new ClearanceMapVisitor(g));
+          gameState.accept(new TacticalMapVisitor(g));
         }
         g.setTransform(t);
 
