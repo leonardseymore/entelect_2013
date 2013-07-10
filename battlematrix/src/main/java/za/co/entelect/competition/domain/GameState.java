@@ -292,16 +292,20 @@ public class GameState {
       }
     }
 
+    lastEntity = null;
     for (int y = 0; y < h; y++) {
       for (int x = w - 1; x >= 0; x--) {
-        int v = tacticalMap[x][y].getClearance();
-        if (x == w - 1 || v == 0) {
+        Entity entity = tacticalMap[x][y].getClearanceEntity();
+        if (entity != null) {
+          lastEntity = entity;
+        }
+        if (x == w - 1 || entity != null) {
           runningTotal = x == w - 1 ? 1 : 0;
         } else {
           runningTotal++;
         }
         tacticalMap[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
-        tacticalMap[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? tacticalMap[x][y].getClearanceEntity() : null);
+        tacticalMap[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? lastEntity : null);
       }
     }
   }

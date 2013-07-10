@@ -2,24 +2,37 @@ package za.co.entelect.competition.bots.movement;
 
 import za.co.entelect.competition.domain.Tank;
 
+import java.util.Random;
 import java.util.Stack;
 
 public class Seek {
 
+  private static Random random = new Random();
+
   public static Tank.TankAction seekDumb(Tank tank, int x, int y) {
-    if (tank.getLastAction() == Tank.TankAction.UP || tank.getLastAction() == Tank.TankAction.DOWN) {
+    Tank.TankAction lastAction = tank.getLastAction();
+    boolean lastMovedVertically = tank.hasLastActionMoved() && (lastAction == Tank.TankAction.UP || lastAction == Tank.TankAction.DOWN);
+    boolean lastMovedHorizontally = tank.hasLastActionMoved() && (lastAction == Tank.TankAction.RIGHT || lastAction == Tank.TankAction.LEFT);
+
+    if (lastMovedHorizontally) {
       Tank.TankAction action = moveHorizontally(tank, x);
       if (action == Tank.TankAction.NONE) {
         return moveVertically(tank, y);
       } else {
         return action;
       }
-    } else {
+    } else if (lastMovedVertically) {
       Tank.TankAction action = moveVertically(tank, y);
       if (action == Tank.TankAction.NONE) {
         return moveHorizontally(tank, x);
       } else {
         return action;
+      }
+    } else {
+      if (random.nextBoolean()) {
+        return moveHorizontally(tank, x);
+      } else {
+        return moveVertically(tank, y);
       }
     }
   }

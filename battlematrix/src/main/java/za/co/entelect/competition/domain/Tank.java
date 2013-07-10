@@ -18,6 +18,8 @@ public abstract class Tank extends OwnedDirectedEntity {
 
   public Tank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
     super(x, y, gameState, owner, direction);
+    this.prevX = x;
+    this.prevY = y;
     this.w = TANK_SIZE;
     this.h = TANK_SIZE;
     this.name = name;
@@ -29,6 +31,10 @@ public abstract class Tank extends OwnedDirectedEntity {
 
   public int getPrevY() {
     return prevY;
+  }
+
+  public boolean hasLastActionMoved() {
+    return !(x == prevX && y == prevY);
   }
 
   public int[] turretPos() {

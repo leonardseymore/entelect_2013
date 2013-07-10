@@ -21,7 +21,7 @@ public class Approach {
   private PathFinder pathFinder;
 
   public Approach(Tank tank, Entity target, int targetDist) {
-    pathFinder = new PathFinder(tank.getGameState(), Obstruction.BORDER | Obstruction.WALL | Obstruction.TANK | Obstruction.BULLET);
+    pathFinder = new PathFinder(tank, Obstruction.BORDER | Obstruction.WALL | Obstruction.TANK | Obstruction.BULLET);
     this.tank = tank;
     this.target = target;
     this.targetDist = targetDist;

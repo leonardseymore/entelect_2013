@@ -25,7 +25,7 @@ public class MouseControlledTank extends Tank {
   public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Mouse mouse) {
     super(name, x, y, gameState, owner, direction);
     this.mouse = mouse;
-    this.pathFinder = new PathFinder(gameState, Obstruction.BORDER | Obstruction.WALL);
+    this.pathFinder = new PathFinder(this, Obstruction.BORDER | Obstruction.WALL | Obstruction.TANK);
   }
 
   public Stack<PathFinder.Node> getPath() {

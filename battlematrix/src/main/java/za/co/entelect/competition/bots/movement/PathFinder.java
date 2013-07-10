@@ -2,9 +2,9 @@ package za.co.entelect.competition.bots.movement;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Util;
+import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.MapNode;
-import za.co.entelect.competition.domain.Obstruction;
 
 import java.util.*;
 
@@ -13,11 +13,13 @@ public class PathFinder {
   private static Logger logger = Logger.getLogger(PathFinder.class);
 
   private GameState gameState;
+  private Entity entity;
 
   private int obstructionTypes = 1 | 2;
 
-  public PathFinder(GameState gameState, int obstructionTypes) {
-    this.gameState = gameState;
+  public PathFinder(Entity entity, int obstructionTypes) {
+    this.entity = entity;
+    this.gameState = entity.getGameState();
     this.obstructionTypes = obstructionTypes;
   }
 
@@ -87,7 +89,9 @@ public class PathFinder {
 
         if (gameState.isInbounds(x, y)) {
           MapNode mapNode = gameState.getMapNode(x, y);
-          if ((mapNode.getObstruction() & obstructionTypes) != mapNode.getObstruction()) {
+          if (mapNode.isClear()
+            || mapNode.getClearanceEntity() == entity
+            || (mapNode.getObstruction() & obstructionTypes) != mapNode.getObstruction()) {
             neighbors.add(new Node(x, y, mapNode));
           }
         }

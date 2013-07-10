@@ -32,7 +32,7 @@ public class TacticalMapVisitor implements GameElementVisitor {
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
         MapNode node = map[x][y];
-        if (node.isClear()) {
+        if (node.getClearanceEntity() == null) {
           Entity entity = node.getEntity();
           if (entity == null) {
             g.setColor(Color.green);
