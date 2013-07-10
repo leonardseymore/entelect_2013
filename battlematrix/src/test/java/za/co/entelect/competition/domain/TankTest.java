@@ -111,23 +111,4 @@ public class TankTest {
     testBullet.move();
     assertEquals(testBullet.getX(), oldX - 1);
   }
-
-  private static class TestTank extends Tank {
-
-    private TankAction action;
-
-    private TestTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, TankAction action) {
-      super(name, x, y, gameState, owner, direction);
-      this.action = action;
-    }
-
-    private void setAction(TankAction action) {
-      this.action = action;
-    }
-
-    @Override
-    protected TankAction doGetAction() {
-      return action;
-    }
-  }
 }

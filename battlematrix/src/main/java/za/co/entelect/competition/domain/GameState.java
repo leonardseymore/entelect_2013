@@ -27,8 +27,6 @@ public class GameState {
   private Collection<Tank> tanks = new CopyOnWriteArrayList<>();
   private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
-  private Collection<GameStateListener> listeners = new ArrayList<>();
-
   private MapNode[][] tacticalMap;
 
   public GameState(int w, int h, long tickInterval) {
@@ -51,14 +49,6 @@ public class GameState {
 
   public void setVerbose(boolean verbose) {
     this.verbose = verbose;
-  }
-
-  public synchronized void addEventListener(GameStateListener listener) {
-    listeners.add(listener);
-  }
-
-  public synchronized void removeEventListener(GameStateListener listener) {
-    listeners.remove(listener);
   }
 
   public MapNode[][] getTacticalMap() {
@@ -267,10 +257,6 @@ public class GameState {
       }
     }
     generateTacticalMap();
-
-    for (GameStateListener listener : listeners) {
-      listener.updated();
-    }
   }
 
   private void generateTacticalMap() {
