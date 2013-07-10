@@ -266,6 +266,7 @@ public class GameState {
         }
       }
     }
+    generateTacticalMap();
 
     for (GameStateListener listener : listeners) {
       listener.updated();
@@ -281,16 +282,13 @@ public class GameState {
         if (entity != null) {
           lastEntity = entity;
         }
-        if (y == h - 1 || entity != null && entity.getType() == Entity.Type.WALL) {
+        if (y == h - 1 || entity != null) {
           runningTotal = y == h - 1 ? 1 : 0;
         } else {
           runningTotal++;
         }
         tacticalMap[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
         tacticalMap[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? lastEntity : null);
-        if (x == 0 && y == h -1) {
-          logger.debug(x + ":" + y);
-        }
       }
     }
 
@@ -363,7 +361,7 @@ public class GameState {
       destroyWalls(bullet, wall);
       logger.debug("Wall [" + wall.getX() + ":" + wall.getY() + "] destroyed by [" + bullet.getTank().getName() + "]");
     }
-
+    generateTacticalMap();
     return true;
   }
 

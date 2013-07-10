@@ -96,8 +96,10 @@ public class MainFrame extends JFrame {
         if (keyboard.keyDownOnce(KeyEvent.VK_P)) {
           paused = !paused;
           if (paused) {
+            setTitle(Constants.APP_TITLE + " - PAUSED");
             gameState.stop();
           } else {
+            setTitle(Constants.APP_TITLE);
             gameState.start();
           }
         }
@@ -124,7 +126,6 @@ public class MainFrame extends JFrame {
           g.drawString("Press c for clearance map", 20, y += 12);
           g.drawString("Press p toggle pause", 20, y += 12);
           g.drawString("Press ESC to exit", 20, y += 12);
-
         }
 
         graphics = buffer.getDrawGraphics();
