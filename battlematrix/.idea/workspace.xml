@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/AppSwing.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/AppSwing.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameFactory.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/Heuristic.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/HeuristicDistance.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="battlematrix.iws" />
@@ -47,14 +47,14 @@
     <file path="/GameFactory.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373477173136" ignored="false" />
     <file path="/GameStateUpdatedListener.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373100006850" ignored="false" />
     <file path="/KeyboardInput.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373103995226" ignored="false" />
-    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373572595252" ignored="false" />
+    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373573679105" ignored="false" />
     <file path="/RandomTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373235391304" ignored="false" />
     <file path="/Mouse.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373557271524" ignored="false" />
     <file path="/MouseControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373571771754" ignored="false" />
     <file path="/MoveToPoint.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373121853467" ignored="false" />
     <file path="/Graph.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373136230567" ignored="false" />
     <file path="/Connection.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373135148133" ignored="false" />
-    <file path="/PathFinder.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373570307461" ignored="false" />
+    <file path="/PathFinder.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373574033222" ignored="false" />
     <file path="/Heuristic.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373136475974" ignored="false" />
     <file path="/Seek.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373561734566" ignored="false" />
     <file path="/ClearanceMapVisitor.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373391212688" ignored="false" />
@@ -80,6 +80,7 @@
     <file path="/GameRenderer.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373558639769" ignored="false" />
     <file path="/GUI.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373567883302" ignored="false" />
     <file path="/AlreadyOccupiedException.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373572034533" ignored="false" />
+    <file path="/HeuristicDistance.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373573976158" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,10 +141,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GameState.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="GameState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="124" column="47" selection-start="2971" selection-end="2971" vertical-scroll-proportion="0.5611702">
+            <state line="124" column="47" selection-start="2971" selection-end="2971" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -169,10 +170,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PathFinder.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PathFinder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="24" selection-start="2898" selection-end="2898" vertical-scroll-proportion="0.0">
+            <state line="49" column="46" selection-start="1471" selection-end="1471" vertical-scroll-proportion="0.3084833">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HeuristicDistance.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/HeuristicDistance.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="16" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Heuristic.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/Heuristic.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="29" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -187,28 +206,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApproachTank.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tanks/ApproachTank.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="17" selection-start="360" selection-end="360" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Approach.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="35" column="60" selection-start="1168" selection-end="1224" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GUI.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="0" selection-start="3066" selection-end="3066" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -252,13 +253,10 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Trackable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/Seek.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java" />
         <option value="$PROJECT_DIR$/src/test/java/za/co/entelect/competition/domain/TankTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/za/co/entelect/competition/bots/movement/SeekTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/MapNode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/App.java" />
@@ -268,6 +266,9 @@
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/AppSwing.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameFactory.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/Heuristic.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/HeuristicDistance.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" />
       </list>
     </option>
   </component>
@@ -601,6 +602,40 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="tanks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="competition" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pathfinding" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1038,13 +1073,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="35" selection-start="2515" selection-end="2515" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/za/co/entelect/competition/domain/TankTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="38" selection-start="455" selection-end="455" vertical-scroll-proportion="0.0">
@@ -1115,13 +1143,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="24" selection-start="2898" selection-end="2898" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/AppSwing.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="34" selection-start="640" selection-end="640" vertical-scroll-proportion="0.0">
@@ -1140,10 +1161,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="47" selection-start="2971" selection-end="2971" vertical-scroll-proportion="0.5611702">
+        <state line="124" column="47" selection-start="2971" selection-end="2971" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/Heuristic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="29" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/HeuristicDistance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="16" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="46" selection-start="1471" selection-end="1471" vertical-scroll-proportion="0.3084833">
+          <folding />
         </state>
       </provider>
     </entry>
