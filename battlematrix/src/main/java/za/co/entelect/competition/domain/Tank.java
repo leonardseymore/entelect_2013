@@ -108,6 +108,26 @@ public abstract class Tank extends OwnedDirectedEntity {
     return lastAction;
   }
 
+  public boolean canMoveUp() {
+    int newY = getY() - 1;
+    return gameState.canTankBeMovedTo(this, x, newY);
+  }
+
+  public boolean canMoveRight() {
+    int newX = getX() + 1;
+    return gameState.canTankBeMovedTo(this, newX, y);
+  }
+
+  public boolean canMoveDown() {
+    int newY = getY() + 1;
+    return gameState.canTankBeMovedTo(this, x, newY);
+  }
+
+  public boolean canMoveLeft() {
+    int newX = getX() - 1;
+    return gameState.canTankBeMovedTo(this, newX, y);
+  }
+
   protected abstract TankAction doGetAction();
 
   @Override

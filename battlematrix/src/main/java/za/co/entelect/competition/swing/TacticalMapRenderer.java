@@ -3,6 +3,7 @@ package za.co.entelect.competition.swing;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.Util;
+import za.co.entelect.competition.bots.tanks.ApproachTank;
 import za.co.entelect.competition.bots.tanks.MouseControlledTank;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
@@ -17,9 +18,11 @@ public class TacticalMapRenderer implements GameElementVisitor {
   private boolean verbose = false;
 
   private Graphics2D g;
+  private String selectedTank;
 
-  public TacticalMapRenderer(Graphics2D g) {
+  public TacticalMapRenderer(Graphics2D g, String selectedTank) {
     this.g = g;
+    this.selectedTank = selectedTank;
   }
 
   @Override
@@ -30,20 +33,21 @@ public class TacticalMapRenderer implements GameElementVisitor {
     g.setColor(Constants.COLOR_SWING_BOARD);
     g.fillRect(0, 0, gameState.getW(), gameState.getH());
 
+    Tank tank = gameState.getTank(selectedTank);
     MapNode[][] map = gameState.getTacticalMap();
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
         MapNode node = map[x][y];
-        if (node.getObstruction() != Obstruction.NONE) {
+
+        if (node.hasEntity()) {
           Entity entity = node.getEntity();
-          Entity clearanceEntity = node.getClearanceEntity();
           if (entity != null) {
             g.setColor(Util.getColor(entity));
-          } else if (clearanceEntity != null) {
-            g.setColor(Util.getColor(clearanceEntity).darker());
           } else {
             g.setColor(Color.green);
           }
+        } else if (tank != null && gameState.canTankBeMovedTo(tank, x, y)) {
+          g.setColor(Color.pink);
         } else {
           g.setColor(Color.darkGray);
         }
@@ -71,14 +75,21 @@ public class TacticalMapRenderer implements GameElementVisitor {
     if (verbose) {
       logger.debug("Visiting tank [" + tank + "]");
     }
-    Color tankColor = Color.magenta;
+    Color tankColor = Util.getColor(tank);
     if (tank instanceof MouseControlledTank) {
       Stack<PathFinder.Node> path = ((MouseControlledTank)tank).getPath();
-      if (path != null) {
-        for (PathFinder.Node node : (Stack<PathFinder.Node>)path.clone()) {
-          g.setColor(tankColor);
-          g.fillRect(node.getX(), node.getY(), 1, 1);
-        }
+      g.setColor(tankColor);
+      drawPath(g, path);
+    } else if (tank instanceof ApproachTank) {
+      Stack<PathFinder.Node> path = ((ApproachTank)tank).getPath();
+      g.setColor(tankColor);
+      drawPath(g, path);
+    }
+  }
+  private void drawPath(Graphics2D g, Stack<PathFinder.Node> path) {
+    if (path != null) {
+      for (PathFinder.Node node : (Stack<PathFinder.Node>)path.clone()) {
+        g.fillRect(node.getX(), node.getY(), 1, 1);
       }
     }
   }

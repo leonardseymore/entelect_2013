@@ -11,7 +11,7 @@ public class GameFactory {
   private static final Logger logger = Logger.getLogger(GameFactory.class);
 
   public static GameState smallBoard(long tickInterval) {
-    GameState gameState = new GameState(100, 100, tickInterval);
+    GameState gameState = new GameState(100, 100);
     gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
     gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
 
@@ -48,7 +48,7 @@ public class GameFactory {
   }
 
   public static GameState smallRandomBoard(long tickInterval, int odds) {
-    GameState gameState = new GameState(100, 100, tickInterval);
+    GameState gameState = new GameState(100, 100);
     gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
     gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
 

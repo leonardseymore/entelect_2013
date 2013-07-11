@@ -1,6 +1,5 @@
 package za.co.entelect.competition.domain;
 
-
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 
@@ -8,7 +7,6 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameState {
-
   private static final Logger logger = Logger.getLogger(GameState.class);
 
   private boolean verbose = false;
@@ -18,8 +16,6 @@ public class GameState {
 
   private int w;
   private int h;
-  private long tickInterval;
-  private Timer timer;
 
   private Collection<Base> bases = new CopyOnWriteArrayList<>();
   private Collection<Bullet> bullets = new CopyOnWriteArrayList<>();
@@ -28,10 +24,16 @@ public class GameState {
 
   private MapNode[][] tacticalMap;
 
-  public GameState(int w, int h, long tickInterval) {
+  public GameState(int w, int h) {
     this.w = w;
     this.h = h;
-    this.tickInterval = tickInterval;
+
+    tacticalMap = new MapNode[w][h];
+    for (int y = 0; y < h; y++) {
+      for (int x  = 0; x < w; x++) {
+        tacticalMap[x][y] = new MapNode();
+      }
+    }
   }
 
   public Player getPlayer1() {
@@ -40,6 +42,19 @@ public class GameState {
 
   public Player getPlayer2() {
     return player2;
+  }
+
+  public Tank getTank(String tankName) {
+    if (tankName == null) {
+      return null;
+    }
+
+    for (Tank tank : tanks) {
+      if (tank.getName().equals(tankName)) {
+        return tank;
+      }
+    }
+    return null;
   }
 
   public boolean isVerbose() {
@@ -54,36 +69,6 @@ public class GameState {
     return tacticalMap;
   }
 
-  public void start() {
-    tacticalMap = new MapNode[w][h];
-    for (int y = 0; y < h; y++) {
-      nextCell:for (int x  = 0; x < w; x++) {
-        Iterator<Entity> it = new EntityIterator();
-        while (it.hasNext()) {
-          Entity entity = it.next();
-          if (entity.isAt(x, y)) {
-            tacticalMap[x][y] = new MapNode(entity);
-            continue nextCell;
-          }
-        }
-        tacticalMap[x][y] = new MapNode();
-      }
-    }
-    generateTacticalMap();
-
-    timer = new Timer();
-    timer.scheduleAtFixedRate(new TimerTask() {
-      @Override
-      public void run() {
-        //update();
-      }
-    }, 0, tickInterval);
-  }
-
-  public void stop() {
-    timer.cancel();
-  }
-
   public int getH() {
     return h;
   }
@@ -94,6 +79,7 @@ public class GameState {
 
   public void add(Base base) {
     bases.add(base);
+    tacticalMap[base.getX()][base.getY()] = new MapNode(base);
     logger.debug("Added base [" + base + "]");
   }
 
@@ -105,6 +91,7 @@ public class GameState {
 
   public void add(Bullet bullet) {
     bullets.add(bullet);
+    tacticalMap[bullet.getX()][bullet.getY()] = new MapNode(bullet);
     logger.debug("Added bullet [" + bullet + "]");
   }
 
@@ -116,6 +103,11 @@ public class GameState {
 
   public void add(Tank tank) {
     tanks.add(tank);
+    for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
+      for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
+        tacticalMap[x][y] = new MapNode(tank);
+      }
+    }
     logger.debug("Added tank [" + tank + "]");
   }
 
@@ -131,6 +123,7 @@ public class GameState {
 
   public void add(Wall wall) {
     walls.add(wall);
+    tacticalMap[wall.getX()][wall.getY()] = new MapNode(wall);
     logger.debug("Added wall [" + wall + "]");
   }
 
@@ -145,6 +138,9 @@ public class GameState {
   }
 
   public MapNode getMapNode(int x, int y) {
+    if (!isInbounds(x, y)) {
+      return null;
+    }
     return tacticalMap[x][y];
   }
 
@@ -255,44 +251,6 @@ public class GameState {
         }
       }
     }
-    generateTacticalMap();
-  }
-
-  private void generateTacticalMap() {
-    int runningTotal = 0;
-    Entity lastEntity = null;
-    for (int x = 0; x < w; x++) {
-      for (int y = h - 1; y >= 0; y--) {
-        Entity entity = tacticalMap[x][y].getEntity();
-        if (entity != null) {
-          lastEntity = entity;
-        }
-        if (y == h - 1 || entity != null) {
-          runningTotal = y == h - 1 ? 1 : 0;
-        } else {
-          runningTotal++;
-        }
-        tacticalMap[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
-        tacticalMap[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? lastEntity : null);
-      }
-    }
-
-    lastEntity = null;
-    for (int y = 0; y < h; y++) {
-      for (int x = w - 1; x >= 0; x--) {
-        Entity entity = tacticalMap[x][y].getClearanceEntity();
-        if (entity != null) {
-          lastEntity = entity;
-        }
-        if (x == w - 1 || entity != null) {
-          runningTotal = x == w - 1 ? 1 : 0;
-        } else {
-          runningTotal++;
-        }
-        tacticalMap[x][y].setClearance(runningTotal >= Tank.TANK_SIZE ? 1 : 0);
-        tacticalMap[x][y].setClearanceEntity(runningTotal < Tank.TANK_SIZE ? lastEntity : null);
-      }
-    }
   }
 
   private boolean checkEntityCollision(Entity s) {
@@ -350,7 +308,6 @@ public class GameState {
       destroyWalls(bullet, wall);
       logger.debug("Wall [" + wall.getX() + ":" + wall.getY() + "] destroyed by [" + bullet.getTank().getName() + "]");
     }
-    generateTacticalMap();
     return true;
   }
 
@@ -383,6 +340,22 @@ public class GameState {
       return true;
     }
     return false;
+  }
+
+  public boolean canTankBeMovedTo(Tank tank, int x, int y) {
+    for (int j = y; j < y + Tank.TANK_SIZE; j++) {
+      for (int i = x; i < x + Tank.TANK_SIZE; i++) {
+        if (!isInbounds(i, j)) {
+          return false;
+        }
+
+        Entity entity = tacticalMap[i][j].getEntity();
+        if (entity != null && entity != tank) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   public String toAscii() {

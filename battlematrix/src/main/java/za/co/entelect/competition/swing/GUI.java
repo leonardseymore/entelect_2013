@@ -27,6 +27,7 @@ public class GUI extends JFrame {
   private Keyboard keyboard;
   private Mouse mouse;
   private boolean paused = false;
+  private String selectedTank;
 
   public GUI(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
@@ -84,11 +85,24 @@ public class GUI extends JFrame {
           paused = !paused;
           if (paused) {
             setTitle(Constants.APP_TITLE + " - PAUSED");
-            gameState.stop();
           } else {
             setTitle(Constants.APP_TITLE);
-            gameState.start();
           }
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_0)) {
+          selectedTank = null;
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
+          selectedTank = "p1t1";
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
+          selectedTank = "p1t2";
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
+          selectedTank = "p2t1";
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
+          selectedTank = "p1t2";
         }
         if (paused) {
           continue;
@@ -104,7 +118,7 @@ public class GUI extends JFrame {
         g.scale(zoomFactor, zoomFactor);
         gameState.accept(new GameRenderer(g));
         if (clearanceMap) {
-          gameState.accept(new TacticalMapRenderer(g));
+          gameState.accept(new TacticalMapRenderer(g, selectedTank));
         }
         g.setTransform(t);
 

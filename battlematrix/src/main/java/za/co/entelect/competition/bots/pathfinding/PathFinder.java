@@ -11,13 +11,13 @@ public class PathFinder {
   private static Logger logger = Logger.getLogger(PathFinder.class);
 
   private GameState gameState;
-  private Entity entity;
+  private Tank tank;
 
   private int obstructionTypes = 1 | 2;
 
-  public PathFinder(Entity entity, int obstructionTypes) {
-    this.entity = entity;
-    this.gameState = entity.getGameState();
+  public PathFinder(Tank tank, int obstructionTypes) {
+    this.tank = tank;
+    this.gameState = tank.getGameState();
     this.obstructionTypes = obstructionTypes;
   }
 
@@ -79,24 +79,39 @@ public class PathFinder {
   private Collection<Node> getAvailableNeighbors(Node node) {
     Collection<Node> neighbors = new ArrayList<>();
 
-    for (int x = node.x - 1; x <= node.x + 1; x++) {
-      for (int y = node.y - 1; y <= node.y + 1; y++) {
-        if (x == node.x && y == node.y) {
-          continue;
-        }
+    int x = node.x;
+    int y = node.y;
 
-        if (gameState.isInbounds(x, y)) {
-          MapNode mapNode = gameState.getMapNode(x, y);
-          if (mapNode.getObstruction() == Obstruction.NONE
-            || mapNode.getClearanceEntity() == entity
-            || (mapNode.getObstruction() & obstructionTypes) != mapNode.getObstruction()) {
-            neighbors.add(new Node(x, y, mapNode));
-          }
-        }
-      }
+    boolean canMoveNorth = ifCanMoveToAdd(x, y - 1, neighbors);
+    boolean canMoveEast = ifCanMoveToAdd(x + 1, y, neighbors);
+    boolean canMoveSouth = ifCanMoveToAdd(x, y + 1, neighbors);
+    boolean canMoveWest = ifCanMoveToAdd(x - 1, y, neighbors);
+
+    if (canMoveNorth || canMoveEast) {
+      ifCanMoveToAdd(x + 1, y - 1, neighbors);
+    }
+
+    if (canMoveEast || canMoveSouth) {
+      ifCanMoveToAdd(x + 1, y + 1, neighbors);
+    }
+
+    if (canMoveSouth || canMoveWest) {
+      ifCanMoveToAdd(x - 1, y + 1, neighbors);
+    }
+
+    if (canMoveWest || canMoveNorth) {
+      ifCanMoveToAdd(x - 1, y - 1, neighbors);
     }
 
     return neighbors;
+  }
+
+  private boolean ifCanMoveToAdd(int x, int y, Collection<Node> neighbors) {
+    boolean canMoveTo = gameState.canTankBeMovedTo(tank, x, y);
+    if (canMoveTo) {
+      neighbors.add(new Node(x, y, gameState.getMapNode(x, y)));
+    }
+    return canMoveTo;
   }
 
   private Stack<Node> pathToNode(Node currentNode) {

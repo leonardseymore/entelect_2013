@@ -9,7 +9,7 @@ import za.co.entelect.competition.domain.GameState;
 
 public class AppSwing {
   public static void main(String [] args) throws Exception {
-    final GameState gameState = GameFactory.smallBoard(50);
+    final GameState gameState = GameFactory.smallRandomBoard(50, 50);
     GUI app = new GUI(gameState, 6);
     KeyboardControlledTank p1t1 = new KeyboardControlledTank("p1t1", 60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT);
     gameState.add(p1t1);
@@ -22,7 +22,6 @@ public class AppSwing {
     MouseControlledTank p1t2 = new MouseControlledTank("p1t2", 40, 60, gameState, gameState.getPlayer1(), Directed.Direction.DOWN);
     gameState.add(p1t2);
     app.setVisible(true);
-    gameState.start();
     app.run();
   }
 }
