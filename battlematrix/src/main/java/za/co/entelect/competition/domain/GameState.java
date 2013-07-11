@@ -9,7 +9,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameState {
 
-  public static final long DEFAULT_TICK_INTERVAL = 3000; // 3 seconds
   private static final Logger logger = Logger.getLogger(GameState.class);
 
   private boolean verbose = false;

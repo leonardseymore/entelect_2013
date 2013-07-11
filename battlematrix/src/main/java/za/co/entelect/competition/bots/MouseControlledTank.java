@@ -1,10 +1,9 @@
 package za.co.entelect.competition.bots;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.Mouse;
+import za.co.entelect.competition.swing.Mouse;
 import za.co.entelect.competition.bots.movement.SeekPath;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
-import za.co.entelect.competition.bots.movement.Seek;
 import za.co.entelect.competition.domain.*;
 
 import java.util.Stack;
@@ -21,9 +20,9 @@ public class MouseControlledTank extends Tank {
   private int targetX = -1;
   private int targetY = -1;
 
-  public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Mouse mouse) {
+  public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
     super(name, x, y, gameState, owner, direction);
-    this.mouse = mouse;
+    this.mouse = Mouse.getInstance();
     this.pathFinder = new PathFinder(this, Obstruction.BORDER | Obstruction.WALL);
     this.seek = new SeekPath(this);
   }

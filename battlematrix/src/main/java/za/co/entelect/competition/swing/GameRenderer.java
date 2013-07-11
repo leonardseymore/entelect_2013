@@ -1,6 +1,7 @@
-package za.co.entelect.competition;
+package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.bots.ApproachTank;
 import za.co.entelect.competition.bots.MouseControlledTank;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
@@ -10,15 +11,15 @@ import za.co.entelect.competition.domain.GameState;
 import java.awt.*;
 import java.util.*;
 
-public class GameElementSwingVisitor implements GameElementVisitor {
+public class GameRenderer implements GameElementVisitor {
 
-  public static final Logger logger = Logger.getLogger(GameElementSwingVisitor.class);
+  public static final Logger logger = Logger.getLogger(GameRenderer.class);
 
   private boolean verbose = false;
 
   private Graphics2D g;
 
-  public GameElementSwingVisitor(Graphics2D g) {
+  public GameRenderer(Graphics2D g) {
     this.g = g;
   }
 

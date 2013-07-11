@@ -1,6 +1,7 @@
-package za.co.entelect.competition;
+package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
+import sun.plugin.dom.exception.InvalidStateException;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,7 +10,9 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.SwingUtilities;
 
 public class Mouse implements MouseListener, MouseMotionListener {
+
   private static final Logger logger = Logger.getLogger(Mouse.class);
+  private static Mouse instance;
   private static final int BUTTON_COUNT = 3;
   private double zoomFactor;
   private int dx, dy;
@@ -28,7 +31,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
     ONCE
   }
 
-  public Mouse(Component component, double zoomFactor) {
+  private Mouse(Component component, double zoomFactor) {
     this.component = component;
     this.zoomFactor = zoomFactor;
     int w = component.getBounds().width;
@@ -138,5 +141,18 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
   public double getZoomFactor() {
     return zoomFactor;
+  }
+
+  public static void init(Component component, double zoomFactor) {
+    if (instance == null) {
+      instance = new Mouse(component, zoomFactor);
+    }
+  }
+
+  public static Mouse getInstance() {
+    if (instance == null) {
+      throw new InvalidStateException("Mouse not initialized");
+    }
+    return instance;
   }
 }

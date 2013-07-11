@@ -1,7 +1,7 @@
 package za.co.entelect.competition.bots;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.Keyboard;
+import za.co.entelect.competition.swing.Keyboard;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Player;
 import za.co.entelect.competition.domain.Tank;
@@ -14,9 +14,9 @@ public class KeyboardControlledTank extends Tank {
 
   private Keyboard keyboard;
 
-  public KeyboardControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Keyboard keyboard) {
+  public KeyboardControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
     super(name, x, y, gameState, owner, direction);
-    this.keyboard = keyboard;
+    this.keyboard = Keyboard.getInstance();
   }
 
   @Override

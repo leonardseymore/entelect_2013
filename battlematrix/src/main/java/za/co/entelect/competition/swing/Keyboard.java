@@ -1,9 +1,10 @@
-package za.co.entelect.competition;
+package za.co.entelect.competition.swing;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener {
+  private static Keyboard instance;
   private static final int KEY_COUNT = 256;
 
   private enum KeyState {
@@ -61,5 +62,12 @@ public class Keyboard implements KeyListener {
   }
 
   public void keyTyped(KeyEvent e) {
+  }
+
+  public static Keyboard getInstance() {
+    if (instance == null) {
+      instance = new Keyboard();
+    }
+    return instance;
   }
 }

@@ -3,7 +3,9 @@ package za.co.entelect.competition;
 import java.awt.*;
 
 public class Constants {
-  
+
+  public static final long DEFAULT_TICK_INTERVAL = 3000;
+
   public static final String APP_TITLE = "<<b.a.t.t.l.e m.a.t.r.i.x>>";
 
   public static final String SYMBOL_BLANK = ".";

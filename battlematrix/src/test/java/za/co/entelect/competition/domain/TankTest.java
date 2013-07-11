@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import za.co.entelect.competition.Constants;
 
 import static junit.framework.Assert.*;
 
@@ -16,7 +17,7 @@ public class TankTest {
 
   @Before
   public void setup() {
-    gameState = new GameState(100, 100, GameState.DEFAULT_TICK_INTERVAL);
+    gameState = new GameState(100, 100, Constants.DEFAULT_TICK_INTERVAL);
     testTank = new TestTank("TEST", 50, 50, gameState, gameState.getPlayer1(), Directed.Direction.UP, Tank.TankAction.NONE);
     int [] bulletPos = testTank.turretPos();
     testBullet = new Bullet(bulletPos[0], bulletPos[1], gameState, testTank.getOwner(), testTank.getDirection(), testTank);

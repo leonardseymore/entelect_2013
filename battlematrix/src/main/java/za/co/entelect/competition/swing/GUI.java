@@ -1,6 +1,7 @@
-package za.co.entelect.competition;
+package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.bots.ApproachTank;
 import za.co.entelect.competition.bots.KeyboardControlledTank;
 import za.co.entelect.competition.bots.MouseControlledTank;
@@ -14,9 +15,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
-public class MainFrame extends JFrame {
+public class GUI extends JFrame {
 
-  private static final Logger logger = Logger.getLogger(MainFrame.class);
+  private static final Logger logger = Logger.getLogger(GUI.class);
 
   public static final int DEFAULT_WIDTH = 700;
   public static final int DEFAULT_HEIGHT = 700;
@@ -31,7 +32,7 @@ public class MainFrame extends JFrame {
   private Mouse mouse;
   private boolean paused = false;
 
-  public MainFrame(GameState gameState, double zoomFactor) {
+  public GUI(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
     this.zoomFactor = zoomFactor;
 
@@ -45,26 +46,16 @@ public class MainFrame extends JFrame {
     add(canvas);
     pack();
 
-    keyboard = new Keyboard();
+    keyboard = Keyboard.getInstance();
     addKeyListener(keyboard);
     canvas.addKeyListener(keyboard);
 
-    mouse = new Mouse(canvas, zoomFactor);
+    Mouse.init(canvas, zoomFactor);
+    mouse = Mouse.getInstance();
     addMouseListener(mouse);
     addMouseMotionListener(mouse);
     canvas.addMouseListener(mouse);
     canvas.addMouseMotionListener(mouse);
-
-    KeyboardControlledTank p1t1 = new KeyboardControlledTank("p1t1", 60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT, keyboard);
-    gameState.add(p1t1);
-
-    ApproachTank p2t1 = new ApproachTank("p2t1", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
-    p2t1.setFollowTank(p1t1);
-    //DummyTank p2t1 = new DummyTank("p2t1", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
-    gameState.add(p2t1);
-
-    MouseControlledTank p1t2 = new MouseControlledTank("p1t2", 40, 60, gameState, gameState.getPlayer1(), Directed.Direction.DOWN, mouse);
-    gameState.add(p1t2);
   }
 
   public void run() {
@@ -115,9 +106,9 @@ public class MainFrame extends JFrame {
 
         AffineTransform t = g.getTransform();
         g.scale(zoomFactor, zoomFactor);
-        gameState.accept(new GameElementSwingVisitor(g));
+        gameState.accept(new GameRenderer(g));
         if (clearanceMap) {
-          gameState.accept(new TacticalMapVisitor(g));
+          gameState.accept(new TacticalMapRenderer(g));
         }
         g.setTransform(t);
 
