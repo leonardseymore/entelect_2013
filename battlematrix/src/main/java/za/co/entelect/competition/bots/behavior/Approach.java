@@ -7,6 +7,7 @@ import za.co.entelect.competition.bots.movement.Seek;
 import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.Obstruction;
 import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.domain.Trackable;
 
 import java.util.Stack;
 
@@ -15,12 +16,12 @@ public class Approach {
   private Stack<PathFinder.Node> path;
   private SeekPath seek;
 
-  private Entity target;
+  private Trackable target;
   private Tank tank;
   private int targetDist;
   private PathFinder pathFinder;
 
-  public Approach(Tank tank, Entity target, int targetDist) {
+  public Approach(Tank tank, Trackable target, int targetDist) {
     pathFinder = new PathFinder(tank, Obstruction.BORDER | Obstruction.WALL);
     this.tank = tank;
     this.target = target;
@@ -33,17 +34,13 @@ public class Approach {
     int tankCenterY = tank.getY() + (tank.getH() / 2);
     int targetCenterX = target.getX() + (target.getW() / 2);
     int targetCenterY = target.getY() + (target.getH() / 2);
-    int dist = Util.manhattanDist(tankCenterX, tankCenterY, targetCenterX, targetCenterY);
-    if (dist > targetDist) {
-        path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), target.getX(), target.getY(), false);
-        seek.setPath(path);
-      if (path == null) {
-        return Tank.TankAction.NONE;
-      } else {
-        return seek.getAction();
-      }
+    path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), target.getX(), target.getY(), false);
+    seek.setPath(path);
+    if (path == null) {
+      return Tank.TankAction.NONE;
+    } else {
+      return seek.getAction();
     }
-    return Tank.TankAction.NONE;
   }
 
   public Stack<PathFinder.Node> getPath() {

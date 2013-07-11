@@ -123,12 +123,24 @@ public class PathFinder {
       this.mapNode = mapNode;
     }
 
+    @Override
     public int getX() {
       return x;
     }
 
+    @Override
     public int getY() {
       return y;
+    }
+
+    @Override
+    public int getW() {
+      return 1;
+    }
+
+    @Override
+    public int getH() {
+      return 1;
     }
 
     @Override
