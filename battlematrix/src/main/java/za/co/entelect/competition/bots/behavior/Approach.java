@@ -12,8 +12,6 @@ import java.util.Stack;
 
 public class Approach {
 
-  private int pathAge;
-  private int maxPathAge = 10;
   private Stack<PathFinder.Node> path;
   private SeekPath seek;
 
@@ -37,15 +35,11 @@ public class Approach {
     int targetCenterY = target.getY() + (target.getH() / 2);
     int dist = Util.manhattanDist(tankCenterX, tankCenterY, targetCenterX, targetCenterY);
     if (dist > targetDist) {
-      if (path == null || path.isEmpty() || pathAge > maxPathAge) {
         path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), target.getX(), target.getY(), false);
         seek.setPath(path);
-        pathAge = 0;
-      }
       if (path == null) {
         return Tank.TankAction.NONE;
       } else {
-        pathAge++;
         return seek.getAction();
       }
     }
