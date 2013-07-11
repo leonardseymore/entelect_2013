@@ -10,7 +10,7 @@ public class GameFactory {
 
   private static final Logger logger = Logger.getLogger(GameFactory.class);
 
-  public static GameState smallBoard(long tickInterval) {
+  public static GameState smallBoard() {
     GameState gameState = new GameState(100, 100);
     gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
     gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));
@@ -47,7 +47,7 @@ public class GameFactory {
     return gameState;
   }
 
-  public static GameState smallRandomBoard(long tickInterval, int odds) {
+  public static GameState smallRandomBoard(int odds) {
     GameState gameState = new GameState(100, 100);
     gameState.add(new Base(gameState.getW() / 2, 0, gameState, gameState.getPlayer1()));
     gameState.add(new Base(gameState.getW() / 2, gameState.getH() - 1, gameState, gameState.getPlayer2()));

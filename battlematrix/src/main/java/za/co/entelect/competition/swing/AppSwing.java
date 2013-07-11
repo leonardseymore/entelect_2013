@@ -9,12 +9,13 @@ import za.co.entelect.competition.domain.GameState;
 
 public class AppSwing {
   public static void main(String [] args) throws Exception {
-    final GameState gameState = GameFactory.smallRandomBoard(50, 50);
+    final GameState gameState = GameFactory.smallRandomBoard(50);
+    //final GameState gameState = GameFactory.smallBoard();
     GUI app = new GUI(gameState, 6);
     KeyboardControlledTank p1t1 = new KeyboardControlledTank("p1t1", 60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT);
     gameState.add(p1t1);
 
-    ApproachTank p2t1 = new ApproachTank("p2t1", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
+    ApproachTank p2t1 = new ApproachTank("p2t2", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     p2t1.setFollowTank(p1t1);
     //DummyTank p2t1 = new DummyTank("p2t1", 40, 10, gameState, gameState.getPlayer2(), Directed.Direction.UP);
     gameState.add(p2t1);

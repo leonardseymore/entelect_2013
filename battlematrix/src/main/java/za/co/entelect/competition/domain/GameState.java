@@ -79,7 +79,7 @@ public class GameState {
 
   public void add(Base base) {
     bases.add(base);
-    tacticalMap[base.getX()][base.getY()] = new MapNode(base);
+    addEntityToTacticalMap(base);
     logger.debug("Added base [" + base + "]");
   }
 
@@ -91,7 +91,7 @@ public class GameState {
 
   public void add(Bullet bullet) {
     bullets.add(bullet);
-    tacticalMap[bullet.getX()][bullet.getY()] = new MapNode(bullet);
+    addEntityToTacticalMap(bullet);
     logger.debug("Added bullet [" + bullet + "]");
   }
 
@@ -105,7 +105,7 @@ public class GameState {
     tanks.add(tank);
     for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
       for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
-        tacticalMap[x][y] = new MapNode(tank);
+        tacticalMap[x][y].setEntity(tank);
       }
     }
     logger.debug("Added tank [" + tank + "]");
@@ -123,7 +123,7 @@ public class GameState {
 
   public void add(Wall wall) {
     walls.add(wall);
-    tacticalMap[wall.getX()][wall.getY()] = new MapNode(wall);
+    addEntityToTacticalMap(wall);
     logger.debug("Added wall [" + wall + "]");
   }
 
@@ -131,6 +131,10 @@ public class GameState {
     walls.remove(wall);
     tacticalMap[wall.getX()][wall.getY()].setEntity(null);
     logger.debug("Removed wall [" + wall + "]");
+  }
+
+  private void addEntityToTacticalMap(Entity entity) {
+    tacticalMap[entity.getX()][entity.getY()].setEntity(entity);
   }
 
   public Entity getEntityAt(int x, int y) {

@@ -102,7 +102,7 @@ public class GUI extends JFrame {
           selectedTank = "p2t1";
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
-          selectedTank = "p1t2";
+          selectedTank = "p2t2";
         }
         if (paused) {
           continue;

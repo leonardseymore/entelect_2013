@@ -12,7 +12,7 @@ public class App {
   private static final Logger logger = Logger.getLogger(App.class);
 
   public static void main(String[] args) {
-    GameState gameState = GameFactory.smallBoard(100);
+    GameState gameState = GameFactory.smallBoard();
     logger.info("\n\n" + gameState.toAscii());
 
     try (FileWriter fw = new FileWriter("/tmp/base.ppm")) {

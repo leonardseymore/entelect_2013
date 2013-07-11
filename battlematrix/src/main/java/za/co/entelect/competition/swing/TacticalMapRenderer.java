@@ -85,6 +85,12 @@ public class TacticalMapRenderer implements GameElementVisitor {
       g.setColor(tankColor);
       drawPath(g, path);
     }
+
+    Tank focusTank = tank.getGameState().getTank(selectedTank);
+    if (tank == focusTank) {
+      g.setColor(Color.white);
+      g.drawRect(tank.getX(), tank.getY(), tank.getW(), tank.getH());
+    }
   }
   private void drawPath(Graphics2D g, Stack<PathFinder.Node> path) {
     if (path != null) {
