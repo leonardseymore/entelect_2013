@@ -2,6 +2,7 @@ package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
+import za.co.entelect.competition.Util;
 import za.co.entelect.competition.bots.tanks.MouseControlledTank;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
@@ -35,13 +36,16 @@ public class TacticalMapRenderer implements GameElementVisitor {
         MapNode node = map[x][y];
         if (node.getObstruction() != Obstruction.NONE) {
           Entity entity = node.getEntity();
-          if (entity == null) {
-            g.setColor(Color.green);
+          Entity clearanceEntity = node.getClearanceEntity();
+          if (entity != null) {
+            g.setColor(Util.getColor(entity));
+          } else if (clearanceEntity != null) {
+            g.setColor(Util.getColor(clearanceEntity).darker());
           } else {
-            g.setColor(Color.green.darker());
+            g.setColor(Color.green);
           }
         } else {
-          g.setColor(Color.gray);
+          g.setColor(Color.darkGray);
         }
         g.fillRect(x, y, 1, 1);
       }
