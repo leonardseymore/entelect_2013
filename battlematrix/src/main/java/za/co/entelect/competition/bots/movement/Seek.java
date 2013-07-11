@@ -1,75 +1,69 @@
 package za.co.entelect.competition.bots.movement;
 
+import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.domain.Obstruction;
 import za.co.entelect.competition.domain.Tank;
-
-import java.util.Random;
-import java.util.Stack;
+import za.co.entelect.competition.domain.Trackable;
 
 public class Seek {
 
-  private static Random random = new Random();
+  protected Tank tank;
+  protected Trackable target;
 
-  public static Tank.TankAction seekDumb(Tank tank, int x, int y) {
-    Tank.TankAction lastAction = tank.getLastAction();
-    boolean lastMovedVertically = tank.hasLastActionMoved() && (lastAction == Tank.TankAction.UP || lastAction == Tank.TankAction.DOWN);
-    boolean lastMovedHorizontally = tank.hasLastActionMoved() && (lastAction == Tank.TankAction.RIGHT || lastAction == Tank.TankAction.LEFT);
-
-    if (lastMovedHorizontally) {
-      Tank.TankAction action = moveHorizontally(tank, x);
-      if (action == Tank.TankAction.NONE) {
-        return moveVertically(tank, y);
-      } else {
-        return action;
-      }
-    } else if (lastMovedVertically) {
-      Tank.TankAction action = moveVertically(tank, y);
-      if (action == Tank.TankAction.NONE) {
-        return moveHorizontally(tank, x);
-      } else {
-        return action;
-      }
-    } else {
-      if (random.nextBoolean()) {
-        return moveHorizontally(tank, x);
-      } else {
-        return moveVertically(tank, y);
-      }
-    }
+  public Seek(Tank tank, Trackable target) {
+    this.tank = tank;
+    this.target = target;
   }
 
-  private static Tank.TankAction moveHorizontally(Tank tank, int x) {
-    if (x > tank.getX()) {
-      return Tank.TankAction.RIGHT;
+  public Trackable getTarget() {
+    return target;
+  }
+
+  public void setTarget(Trackable target) {
+    this.target = target;
+  }
+
+  private Tank.TankAction seek() {
+    GameState gameState = tank.getGameState();
+    if (target.getX() > tank.getX()
+      && gameState.isInbounds(tank.getX() + tank.getW() - 1, tank.getY())) {
+      int obstruction = gameState.getTacticalMap()[tank.getX() + tank.getW()][tank.getY()].getObstruction();
+      if (obstruction != Obstruction.BORDER && obstruction != Obstruction.WALL) {
+        return Tank.TankAction.RIGHT;
+      }
     }
 
-    if (x < tank.getX()) {
-      return Tank.TankAction.LEFT;
+    if (target.getX() < tank.getX()
+      && gameState.isInbounds(tank.getX() - 1, tank.getY())) {
+      int obstruction = gameState.getTacticalMap()[tank.getX() - 1][tank.getY()].getObstruction();
+      if (obstruction != Obstruction.BORDER && obstruction != Obstruction.WALL) {
+        return Tank.TankAction.LEFT;
+      }
+    }
+
+    if (target.getY() > tank.getY()
+      && gameState.isInbounds(tank.getX(), tank.getY() + tank.getH())) {
+      int obstruction = gameState.getTacticalMap()[tank.getX()][tank.getY() + tank.getH()].getObstruction();
+      if (obstruction != Obstruction.BORDER && obstruction != Obstruction.WALL) {
+        return Tank.TankAction.DOWN;
+      }
+    }
+
+    if (target.getY() < tank.getY()
+      && gameState.isInbounds(tank.getX(), tank.getY() - 1)) {
+      int obstruction = gameState.getTacticalMap()[tank.getX()][tank.getY() - 1].getObstruction();
+      if (obstruction != Obstruction.BORDER && obstruction != Obstruction.WALL) {
+        return Tank.TankAction.UP;
+      }
     }
 
     return Tank.TankAction.NONE;
   }
 
-  private static Tank.TankAction moveVertically(Tank tank, int y) {
-    if (y > tank.getY()) {
-      return Tank.TankAction.DOWN;
-    }
-
-    if (y < tank.getY()) {
-      return Tank.TankAction.UP;
-    }
-
-    return Tank.TankAction.NONE;
-  }
-
-  public static Tank.TankAction seekPath(Tank tank, Stack<PathFinder.Node> path) {
-    if (path == null || path.isEmpty()) {
+  public Tank.TankAction getAction() {
+    if (tank.getX() == target.getX() && tank.getY() == target.getY()) {
       return Tank.TankAction.NONE;
     }
-
-    PathFinder.Node target = path.peek();
-    if (tank.getX() == target.getX() && tank.getY() == target.getY()) {
-      target = path.pop();
-    }
-    return seekDumb(tank, target.x, target.y);
+    return seek();
   }
 }

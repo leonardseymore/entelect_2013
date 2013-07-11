@@ -2,7 +2,7 @@ package za.co.entelect.competition;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.bots.MouseControlledTank;
-import za.co.entelect.competition.bots.movement.PathFinder;
+import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
 
 import java.awt.*;
@@ -32,7 +32,7 @@ public class TacticalMapVisitor implements GameElementVisitor {
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
         MapNode node = map[x][y];
-        if (node.getClearanceEntity() == null) {
+        if (node.isClear()) {
           Entity entity = node.getEntity();
           if (entity == null) {
             g.setColor(Color.green);

@@ -2,13 +2,11 @@ package za.co.entelect.competition.bots;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Mouse;
-import za.co.entelect.competition.bots.movement.PathFinder;
+import za.co.entelect.competition.bots.movement.SeekPath;
+import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.bots.movement.Seek;
 import za.co.entelect.competition.domain.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Queue;
 import java.util.Stack;
 
 public class MouseControlledTank extends Tank {
@@ -18,6 +16,7 @@ public class MouseControlledTank extends Tank {
   private Mouse mouse;
   private Stack<PathFinder.Node> path;
   private PathFinder pathFinder;
+  private SeekPath seek;
 
   private int targetX = -1;
   private int targetY = -1;
@@ -25,7 +24,8 @@ public class MouseControlledTank extends Tank {
   public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction, Mouse mouse) {
     super(name, x, y, gameState, owner, direction);
     this.mouse = mouse;
-    this.pathFinder = new PathFinder(this, Obstruction.BORDER | Obstruction.WALL | Obstruction.TANK);
+    this.pathFinder = new PathFinder(this, Obstruction.BORDER | Obstruction.WALL);
+    this.seek = new SeekPath(this);
   }
 
   public Stack<PathFinder.Node> getPath() {
@@ -44,9 +44,10 @@ public class MouseControlledTank extends Tank {
       logger.debug("New target set (" + x + "," + y + ")");
       long start = System.currentTimeMillis();
       path = pathFinder.closestPathAStar(x, y, targetX, targetY, true);
+      seek.setPath(path);
       logger.debug("Path finding took [" + (System.currentTimeMillis() - start) + "ms]");
     }
 
-    return Seek.seekPath(this, path);
+    return seek.getAction();
   }
 }

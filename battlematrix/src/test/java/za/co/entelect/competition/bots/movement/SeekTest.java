@@ -19,4 +19,9 @@ public class SeekTest {
     gameState = new GameState(100, 100, GameState.DEFAULT_TICK_INTERVAL);
     targetTank = new TestTank("TEST", 50, 50, gameState, gameState.getPlayer1(), Directed.Direction.UP, Tank.TankAction.NONE);
   }
+
+  @Test
+  public void test( ){
+
+  }
 }

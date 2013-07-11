@@ -68,19 +68,6 @@ public class TankTest {
   }
 
   @Test
-  public void testLastActionMoved() {
-    testTank.setAction(Tank.TankAction.LEFT);
-    assertFalse(testTank.hasLastActionMoved());
-    testTank.performAction();
-    testTank.move();
-    assertTrue(testTank.hasLastActionMoved());
-    testTank.setAction(Tank.TankAction.NONE);
-    testTank.performAction();
-    testTank.move();
-    assertFalse(testTank.hasLastActionMoved());
-  }
-
-  @Test
   public void testMoveBulletUp() {
     testBullet.setDirection(Directed.Direction.UP);
     int oldY = testBullet.getY();

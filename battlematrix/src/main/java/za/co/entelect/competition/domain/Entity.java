@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public abstract class Entity {
+public abstract class Entity implements Trackable {
 
   private static Logger logger = Logger.getLogger(Entity.class);
 

@@ -1,10 +1,11 @@
-package za.co.entelect.competition.bots.movement;
+package za.co.entelect.competition.bots.pathfinding;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.MapNode;
+import za.co.entelect.competition.domain.Trackable;
 
 import java.util.*;
 
@@ -110,7 +111,7 @@ public class PathFinder {
     return path;
   }
 
-  public class Node implements Comparable<Node> {
+  public class Node implements Trackable, Comparable<Node> {
     int x;
     int y;
     int goalCost;

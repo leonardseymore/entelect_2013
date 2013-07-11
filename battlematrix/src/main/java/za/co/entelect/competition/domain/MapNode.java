@@ -38,7 +38,8 @@ public class MapNode {
   }
 
   public boolean isClear() {
-    return clearance > 0;
+    int obstruction = getObstruction();
+    return obstruction == Obstruction.NONE || obstruction != Obstruction.WALL;
   }
 
   public int getObstruction() {

@@ -33,10 +33,6 @@ public abstract class Tank extends OwnedDirectedEntity {
     return prevY;
   }
 
-  public boolean hasLastActionMoved() {
-    return !(x == prevX && y == prevY);
-  }
-
   public int[] turretPos() {
     int[] bulletPos = new int[2];
 

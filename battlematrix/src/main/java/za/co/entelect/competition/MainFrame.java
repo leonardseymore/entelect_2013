@@ -103,6 +103,10 @@ public class MainFrame extends JFrame {
             gameState.start();
           }
         }
+        if (paused) {
+          continue;
+        }
+        gameState.update();
 
         g = bi.createGraphics();
 
@@ -135,7 +139,7 @@ public class MainFrame extends JFrame {
         }
 
         try {
-          Thread.sleep(10);
+          Thread.sleep(33);
         } catch (InterruptedException ex) {
           logger.warn("Thread interrupted", ex);
         }

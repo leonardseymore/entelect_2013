@@ -76,7 +76,7 @@ public class GameState {
     timer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
-        update();
+        //update();
       }
     }, 0, tickInterval);
   }
@@ -375,7 +375,6 @@ public class GameState {
         destroyIfNeighborWall(w.getX(), w.getY() + 2);
       }
     }
-    generateTacticalMap();
   }
 
   private boolean destroyIfNeighborWall(int x, int y) {

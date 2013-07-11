@@ -1,7 +1,7 @@
 package za.co.entelect.competition.bots;
 
 import za.co.entelect.competition.bots.behavior.Approach;
-import za.co.entelect.competition.bots.movement.PathFinder;
+import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Player;
 import za.co.entelect.competition.domain.Tank;
