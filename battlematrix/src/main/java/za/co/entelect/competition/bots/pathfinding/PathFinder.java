@@ -2,10 +2,7 @@ package za.co.entelect.competition.bots.pathfinding;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.domain.Entity;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.MapNode;
-import za.co.entelect.competition.domain.Trackable;
+import za.co.entelect.competition.domain.*;
 
 import java.util.*;
 
@@ -90,7 +87,7 @@ public class PathFinder {
 
         if (gameState.isInbounds(x, y)) {
           MapNode mapNode = gameState.getMapNode(x, y);
-          if (mapNode.isClear()
+          if (mapNode.getObstruction() == Obstruction.NONE
             || mapNode.getClearanceEntity() == entity
             || (mapNode.getObstruction() & obstructionTypes) != mapNode.getObstruction()) {
             neighbors.add(new Node(x, y, mapNode));
