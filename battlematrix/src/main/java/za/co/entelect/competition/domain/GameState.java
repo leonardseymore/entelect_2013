@@ -122,6 +122,9 @@ public class GameState {
   }
 
   public void add(Wall wall) {
+    if (getEntityAt(wall.getX(), wall.getY()) != null) {
+      return;
+    }
     walls.add(wall);
     addEntityToTacticalMap(wall);
     logger.debug("Added wall [" + wall + "]");

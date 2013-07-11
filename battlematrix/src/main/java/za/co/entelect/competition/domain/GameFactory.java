@@ -58,11 +58,11 @@ public class GameFactory {
     Random random = new Random();
     for (int i = 1; i < gameState.getW(); i++) {
       for (int j = 0; j < gameState.getH(); j++) {
-        //if (gameState.getEntityAt(i, j) == null) {
+        if (gameState.getEntityAt(i, j) == null) {
           if (random.nextInt(odds) == 1) {
             gameState.add(new Wall(i, j, gameState));
           }
-        //}
+        }
       }
     }
 
