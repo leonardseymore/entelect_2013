@@ -1,9 +1,8 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.bots.ApproachTank;
-import za.co.entelect.competition.bots.DummyTank;
-import za.co.entelect.competition.bots.RandomTank;
+import za.co.entelect.competition.bots.tanks.DummyTank;
+import za.co.entelect.competition.bots.tanks.RandomTank;
 
 import java.util.Random;
 

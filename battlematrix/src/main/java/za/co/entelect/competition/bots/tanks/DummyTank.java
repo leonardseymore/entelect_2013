@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots;
+package za.co.entelect.competition.bots.tanks;
 
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Player;

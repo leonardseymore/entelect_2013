@@ -1,8 +1,8 @@
 package za.co.entelect.competition.swing;
 
-import za.co.entelect.competition.bots.ApproachTank;
-import za.co.entelect.competition.bots.KeyboardControlledTank;
-import za.co.entelect.competition.bots.MouseControlledTank;
+import za.co.entelect.competition.bots.tanks.ApproachTank;
+import za.co.entelect.competition.bots.tanks.KeyboardControlledTank;
+import za.co.entelect.competition.bots.tanks.MouseControlledTank;
 import za.co.entelect.competition.domain.Directed;
 import za.co.entelect.competition.domain.GameFactory;
 import za.co.entelect.competition.domain.GameState;

@@ -2,10 +2,6 @@ package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.bots.ApproachTank;
-import za.co.entelect.competition.bots.KeyboardControlledTank;
-import za.co.entelect.competition.bots.MouseControlledTank;
-import za.co.entelect.competition.domain.Directed;
 import za.co.entelect.competition.domain.GameState;
 
 import java.awt.*;

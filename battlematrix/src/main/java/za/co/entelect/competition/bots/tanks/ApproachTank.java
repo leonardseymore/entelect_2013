@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots;
+package za.co.entelect.competition.bots.tanks;
 
 import za.co.entelect.competition.bots.behavior.Approach;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;

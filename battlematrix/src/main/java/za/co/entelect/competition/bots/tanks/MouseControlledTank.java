@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots;
+package za.co.entelect.competition.bots.tanks;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.swing.Mouse;

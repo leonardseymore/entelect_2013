@@ -2,8 +2,8 @@ package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.bots.ApproachTank;
-import za.co.entelect.competition.bots.MouseControlledTank;
+import za.co.entelect.competition.bots.tanks.ApproachTank;
+import za.co.entelect.competition.bots.tanks.MouseControlledTank;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.GameState;
