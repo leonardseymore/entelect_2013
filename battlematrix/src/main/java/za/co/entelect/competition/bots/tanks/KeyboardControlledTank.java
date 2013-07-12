@@ -21,7 +21,7 @@ public class KeyboardControlledTank extends Tank {
 
   @Override
   public TankAction doGetAction() {
-    if (keyboard.keyDown(KeyEvent.VK_SPACE)) {
+    if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
       return TankAction.FIRE;
     }
 

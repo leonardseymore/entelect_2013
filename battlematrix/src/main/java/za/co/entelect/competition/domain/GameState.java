@@ -97,7 +97,9 @@ public class GameState {
 
   public void remove(Bullet bullet) {
     bullets.remove(bullet);
-    tacticalMap[bullet.getPrevX()][bullet.getPrevY()].setEntity(null);
+    if (tacticalMap[bullet.getPrevX()][bullet.getPrevY()].getEntity() == bullet) {
+      tacticalMap[bullet.getPrevX()][bullet.getPrevY()].setEntity(null);
+    }
     logger.debug("Removed bullet [" + bullet + "]");
   }
 
@@ -169,22 +171,24 @@ public class GameState {
       logger.debug("Update called");
     }
 
-    // Bullets that have been fired are moved and collisions are checked for.
-    for (Bullet bullet : bullets) {
-      tacticalMap[bullet.getX()][bullet.getY()].setEntity(null);
-      bullet.move();
+    // 1) Bullets that have been fired are moved and collisions are checked for.
+    // Looking at rules 1 and 2 bullets need to be moved twice per round
+    for (int i = 0; i < 2; i++) {
+      for (Bullet bullet : bullets) {
+        tacticalMap[bullet.getX()][bullet.getY()].setEntity(null);
+        bullet.move();
 
-
-      if (bullet.getX() < 0 || bullet.getY() < 0 || bullet.getX() > w - 1 || bullet.getY() > h - 1) {
-        remove(bullet);
-      } else {
-        if (!checkEntityCollision(bullet)) {
-          tacticalMap[bullet.getX()][bullet.getY()].setEntity(bullet);
+        if (bullet.getX() < 0 || bullet.getY() < 0 || bullet.getX() > w - 1 || bullet.getY() > h - 1) {
+          remove(bullet);
+        } else {
+          if (!checkEntityCollision(bullet)) {
+            tacticalMap[bullet.getX()][bullet.getY()].setEntity(bullet);
+          }
         }
       }
     }
 
-    // Bullets and tanks are moved and collision are checked for.
+    // 2) Bullets and tanks are moved and collision are checked for.
     for (Tank tank : tanks) {
       int oldX = tank.getX();
       int oldY = tank.getY();
@@ -246,7 +250,8 @@ public class GameState {
       }
     }
 
-    // All tanks in the firing state are fired and their bullets are added to the field.
+    // 3) All tanks in the firing state are fired and their bullets are added to the field.
+    // 4) Collisions are checked for.
     for (Tank tank : tanks) {
       if (tank.getLastAction() == Tank.TankAction.FIRE) {
         int [] bulletPos = tank.turretPos();
