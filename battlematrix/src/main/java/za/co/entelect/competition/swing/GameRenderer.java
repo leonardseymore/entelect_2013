@@ -7,6 +7,7 @@ import za.co.entelect.competition.bots.tanks.MouseControlledTank;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.domain.Rectangle;
 
 import java.awt.*;
 import java.util.*;
@@ -59,10 +60,11 @@ public class GameRenderer implements GameElementVisitor {
       logger.debug("Visiting tank [" + tank + "]");
     }
 
+    Rectangle rect = tank.getBoundingRect();
     GameState gameState = tank.getGameState();
     Color tankColor = tank.getOwner() == gameState.getPlayer1() ? Constants.COLOR_SWING_TANK_PLAYER1 : Constants.COLOR_SWING_TANK_PLAYER2;
     g.setColor(tankColor);
-    g.fillRect(tank.getX(), tank.getY(), tank.getW(), tank.getH());
+    g.fillRect(rect.getLeft(), rect.getTop(), tank.getW(), tank.getH());
     g.setColor(tankColor.darker());
     int [] turretPos = tank.turretPos();
     g.fillRect(turretPos[0], turretPos[1], 1, 1);

@@ -68,6 +68,10 @@ public abstract class Entity implements Trackable {
 
   public abstract void accept(GameElementVisitor visitor);
 
+  public Rectangle getBoundingRect() {
+    return new Rectangle(y - 1, x + 1, y + 1, x - 1);
+  }
+
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Entity{");

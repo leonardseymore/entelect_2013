@@ -23,6 +23,10 @@ public class MapNode {
     return entity != null;
   }
 
+  public void clear() {
+    entity = null;
+  }
+
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("MapNode{");

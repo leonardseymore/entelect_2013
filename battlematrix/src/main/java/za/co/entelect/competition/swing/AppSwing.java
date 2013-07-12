@@ -9,8 +9,8 @@ import za.co.entelect.competition.domain.GameState;
 
 public class AppSwing {
   public static void main(String [] args) throws Exception {
-    //final GameState gameState = GameFactory.smallRandomBoard(50);
-    final GameState gameState = GameFactory.smallBoard();
+    final GameState gameState = GameFactory.smallRandomBoard(50);
+    //final GameState gameState = GameFactory.smallBoard();
     GUI app = new GUI(gameState, 5);
     KeyboardControlledTank p1t1 = new KeyboardControlledTank("p1t1", 60, 20, gameState, gameState.getPlayer1(), Directed.Direction.LEFT);
     gameState.add(p1t1);

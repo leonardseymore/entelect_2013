@@ -7,6 +7,7 @@ import za.co.entelect.competition.bots.tanks.ApproachTank;
 import za.co.entelect.competition.bots.tanks.MouseControlledTank;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
+import za.co.entelect.competition.domain.Rectangle;
 
 import java.awt.*;
 import java.util.Stack;
@@ -34,10 +35,9 @@ public class TacticalMapRenderer implements GameElementVisitor {
     g.fillRect(0, 0, gameState.getW(), gameState.getH());
 
     Tank tank = gameState.getTank(selectedTank);
-    MapNode[][] map = gameState.getTacticalMap();
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
-        MapNode node = map[x][y];
+        MapNode node = gameState.getMapNode(x, y);
 
         if (node.hasEntity()) {
           Entity entity = node.getEntity();
@@ -89,7 +89,8 @@ public class TacticalMapRenderer implements GameElementVisitor {
     Tank focusTank = tank.getGameState().getTank(selectedTank);
     if (tank == focusTank) {
       g.setColor(Color.white);
-      g.drawRect(tank.getX(), tank.getY(), tank.getW(), tank.getH());
+      Rectangle rect = tank.getBoundingRect();
+      g.drawRect(rect.getLeft(), rect.getTop(), tank.getW(), tank.getH());
     }
   }
   private void drawPath(Graphics2D g, Stack<PathFinder.Node> path) {

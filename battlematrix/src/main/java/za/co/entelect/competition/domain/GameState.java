@@ -22,16 +22,15 @@ public class GameState {
   private Collection<Tank> tanks = new CopyOnWriteArrayList<>();
   private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
-  private MapNode[][] tacticalMap;
+  private MapNode[][] map;
 
   public GameState(int w, int h) {
     this.w = w;
     this.h = h;
-
-    tacticalMap = new MapNode[w][h];
-    for (int y = 0; y < h; y++) {
-      for (int x  = 0; x < w; x++) {
-        tacticalMap[x][y] = new MapNode();
+    map = new MapNode[w][h];
+    for (int i = 0; i < w; i++) {
+      for (int j = 0; j < h; j++) {
+        map[i][j] = new MapNode();
       }
     }
   }
@@ -65,10 +64,6 @@ public class GameState {
     this.verbose = verbose;
   }
 
-  public MapNode[][] getTacticalMap() {
-    return tacticalMap;
-  }
-
   public int getH() {
     return h;
   }
@@ -79,47 +74,31 @@ public class GameState {
 
   public void add(Base base) {
     bases.add(base);
-    addEntityToTacticalMap(base);
     logger.debug("Added base [" + base + "]");
   }
 
   public void remove(Base base) {
     bases.remove(base);
-    tacticalMap[base.getX()][base.getY()].setEntity(null);
     logger.debug("Removed base [" + base + "]");
   }
 
   public void add(Bullet bullet) {
     bullets.add(bullet);
-    addEntityToTacticalMap(bullet);
     logger.debug("Added bullet [" + bullet + "]");
   }
 
   public void remove(Bullet bullet) {
     bullets.remove(bullet);
-    if (tacticalMap[bullet.getPrevX()][bullet.getPrevY()].getEntity() == bullet) {
-      tacticalMap[bullet.getPrevX()][bullet.getPrevY()].setEntity(null);
-    }
     logger.debug("Removed bullet [" + bullet + "]");
   }
 
   public void add(Tank tank) {
     tanks.add(tank);
-    for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
-      for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
-        tacticalMap[x][y].setEntity(tank);
-      }
-    }
     logger.debug("Added tank [" + tank + "]");
   }
 
   public void remove(Tank tank) {
     tanks.remove(tank);
-    for (int y = tank.getPrevY(); y < tank.getPrevY() + tank.getH(); y++) {
-      for (int x = tank.getPrevX(); x < tank.getPrevX() + tank.getW(); x++) {
-        tacticalMap[x][y].setEntity(null);
-      }
-    }
     logger.debug("Removed tank [" + tank + "]");
   }
 
@@ -128,29 +107,23 @@ public class GameState {
       return;
     }
     walls.add(wall);
-    addEntityToTacticalMap(wall);
     logger.debug("Added wall [" + wall + "]");
   }
 
   public void remove(Wall wall) {
     walls.remove(wall);
-    tacticalMap[wall.getX()][wall.getY()].setEntity(null);
     logger.debug("Removed wall [" + wall + "]");
   }
 
-  private void addEntityToTacticalMap(Entity entity) {
-    tacticalMap[entity.getX()][entity.getY()].setEntity(entity);
-  }
-
   public Entity getEntityAt(int x, int y) {
-    return tacticalMap[x][y].getEntity();
+    return map[x][y].getEntity();
   }
 
   public MapNode getMapNode(int x, int y) {
     if (!isInbounds(x, y)) {
       return null;
     }
-    return tacticalMap[x][y];
+    return map[x][y];
   }
 
   public boolean isInbounds(int x, int y) {
@@ -166,6 +139,31 @@ public class GameState {
     }
   }
 
+  private void updateTacticalMap() {
+    for (int i = 0; i < w; i++) {
+      for (int j = 0; j < h; j++) {
+        map[i][j].clear();
+      }
+    }
+
+    EntityIterator it = new EntityIterator();
+    while (it.hasNext()) {
+      Entity entity = it.next();
+
+      if (entity.getType() == Entity.Type.TANK) {
+        Tank tank = (Tank)entity;
+        Rectangle r = tank.getBoundingRect();
+        for (int x = r.getLeft(); x <= r.getRight(); x++) {
+          for (int y = r.getTop(); y <= r.getBottom(); y++) {
+            map[x][y].setEntity(tank);
+          }
+        }
+      } else {
+        map[entity.getX()][entity.getY()].setEntity(entity);
+      }
+    }
+  }
+
   public void update() {
     if (verbose) {
       logger.debug("Update called");
@@ -175,18 +173,16 @@ public class GameState {
     // Looking at rules 1 and 2 bullets need to be moved twice per round
     for (int i = 0; i < 2; i++) {
       for (Bullet bullet : bullets) {
-        tacticalMap[bullet.getX()][bullet.getY()].setEntity(null);
         bullet.move();
 
         if (bullet.getX() < 0 || bullet.getY() < 0 || bullet.getX() > w - 1 || bullet.getY() > h - 1) {
           remove(bullet);
         } else {
-          if (!checkEntityCollision(bullet)) {
-            tacticalMap[bullet.getX()][bullet.getY()].setEntity(bullet);
-          }
+          checkEntityCollision(bullet);
         }
       }
     }
+    updateTacticalMap();
 
     // 2) Bullets and tanks are moved and collision are checked for.
     for (Tank tank : tanks) {
@@ -194,19 +190,20 @@ public class GameState {
       int oldY = tank.getY();
       tank.performAction();
       tank.move();
-      if (tank.getX() < 0) {
+      Rectangle rect = tank.getBoundingRect();
+      if (rect.getLeft() < 0) {
         tank.setX(0);
       }
 
-      if (tank.getX() + tank.getW() > w) {
+      if (rect.getRight() > w) {
         tank.setX(w - tank.getW());
       }
 
-      if (tank.getY() < 0) {
+      if (rect.getTop() < 0) {
         tank.setY(0);
       }
 
-      if (tank.getY() + tank.getH() > h) {
+      if (rect.getBottom() > h) {
         tank.setY(h - tank.getH());
       }
 
@@ -216,36 +213,6 @@ public class GameState {
           tank.setY(oldY);
         } else {
           remove(tank);
-        }
-      } else {
-        int newX = tank.getX();
-        int newY = tank.getY();
-
-        switch (tank.getLastAction()) {
-          case UP:
-            for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
-              tacticalMap[x][oldY + tank.getH() - 1].setEntity(null);
-              tacticalMap[x][newY].setEntity(tank);
-            }
-            break;
-          case RIGHT:
-            for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
-              tacticalMap[oldX][y].setEntity(null);
-              tacticalMap[newX + tank.getW() - 1][y].setEntity(tank);
-            }
-            break;
-          case DOWN:
-            for (int x = tank.getX(); x < tank.getX() + tank.getW(); x++) {
-              tacticalMap[x][oldY].setEntity(null);
-              tacticalMap[x][newY + tank.getH() - 1].setEntity(tank);
-            }
-            break;
-          case LEFT:
-            for (int y = tank.getY(); y < tank.getY() + tank.getH(); y++) {
-              tacticalMap[oldX + tank.getW() - 1][y].setEntity(null);
-              tacticalMap[newX][y].setEntity(tank);
-            }
-            break;
         }
       }
     }
@@ -270,8 +237,7 @@ public class GameState {
     while (it.hasNext()) {
       Entity t = it.next();
       if (s != t) {
-        if (s.getX() < (t.getX() + t.getW()) && (s.getX() + s.getW()) > t.getX() &&
-          s.getY() < (t.getY() + t.getH()) && (s.getY() + s.getH()) > t.getY()) {
+        if (s.getBoundingRect().intersects(t.getBoundingRect())) {
           return handleCollision(s, t);
         }
       }
@@ -355,13 +321,13 @@ public class GameState {
   }
 
   public boolean canTankBeMovedTo(Tank tank, int x, int y) {
-    for (int j = y; j < y + Tank.TANK_SIZE; j++) {
-      for (int i = x; i < x + Tank.TANK_SIZE; i++) {
+    for (int j = y - Tank.TANK_HALF_SIZE; j <= y + Tank.TANK_HALF_SIZE; j++) {
+      for (int i = x - Tank.TANK_HALF_SIZE; i <= x + Tank.TANK_HALF_SIZE; i++) {
         if (!isInbounds(i, j)) {
           return false;
         }
 
-        Entity entity = tacticalMap[i][j].getEntity();
+        Entity entity = getEntityAt(i, j);
         if (entity != null && entity != tank) {
           return false;
         }

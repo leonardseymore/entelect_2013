@@ -38,20 +38,20 @@ public abstract class Tank extends OwnedDirectedEntity {
 
     switch (direction) {
       case UP:
+        bulletPos[0] = this.x;
+        bulletPos[1] = this.y - TANK_HALF_SIZE;
+        break;
+      case RIGHT:
         bulletPos[0] = this.x + TANK_HALF_SIZE;
         bulletPos[1] = this.y;
         break;
-      case RIGHT:
-        bulletPos[0] = this.x + TANK_SIZE - 1;
-        bulletPos[1] = this.y + TANK_HALF_SIZE;
-        break;
       case DOWN:
-        bulletPos[0] = this.x + TANK_HALF_SIZE;
-        bulletPos[1] = this.y + TANK_SIZE - 1;
-        break;
-      case LEFT:
         bulletPos[0] = this.x;
         bulletPos[1] = this.y + TANK_HALF_SIZE;
+        break;
+      case LEFT:
+        bulletPos[0] = this.x - TANK_HALF_SIZE;
+        bulletPos[1] = this.y;
         break;
     }
     return bulletPos;
@@ -109,26 +109,30 @@ public abstract class Tank extends OwnedDirectedEntity {
   }
 
   public boolean canMoveUp() {
-    int newY = getY() - 1;
+    int newY = y - 1;
     return gameState.canTankBeMovedTo(this, x, newY);
   }
 
   public boolean canMoveRight() {
-    int newX = getX() + 1;
+    int newX = x + 1;
     return gameState.canTankBeMovedTo(this, newX, y);
   }
 
   public boolean canMoveDown() {
-    int newY = getY() + 1;
+    int newY = y + 1;
     return gameState.canTankBeMovedTo(this, x, newY);
   }
 
   public boolean canMoveLeft() {
-    int newX = getX() - 1;
+    int newX = x - 1;
     return gameState.canTankBeMovedTo(this, newX, y);
   }
 
   protected abstract TankAction doGetAction();
+
+  public Rectangle getBoundingRect() {
+    return new Rectangle(y - TANK_HALF_SIZE, x + TANK_HALF_SIZE, y + TANK_HALF_SIZE, x - TANK_HALF_SIZE);
+  }
 
   @Override
   public String toString() {
