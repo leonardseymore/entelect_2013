@@ -64,11 +64,6 @@ public abstract class Entity implements Trackable {
     return gameState;
   }
 
-  public boolean isAt(int x, int y) {
-    return x >= this.x && x < this.x + w
-      && y >= this.y && y < this.y + h;
-  }
-
   public abstract Type getType();
 
   public abstract void accept(GameElementVisitor visitor);

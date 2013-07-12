@@ -30,10 +30,6 @@ public class Approach {
   }
 
   public Tank.TankAction getAction() {
-    int tankCenterX = tank.getX() + (tank.getW() / 2);
-    int tankCenterY = tank.getY() + (tank.getH() / 2);
-    int targetCenterX = target.getX() + (target.getW() / 2);
-    int targetCenterY = target.getY() + (target.getH() / 2);
     path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), target.getX(), target.getY(), true);
     seek.setPath(path);
     if (path == null) {
