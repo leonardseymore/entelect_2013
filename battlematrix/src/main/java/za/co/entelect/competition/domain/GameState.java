@@ -11,8 +11,8 @@ public class GameState {
 
   private boolean verbose = false;
 
-  private Player player1 = new Player("1");
-  private Player player2 = new Player("2");
+  private Player you = new Player("1");
+  private Player opponent = new Player("2");
 
   private int w;
   private int h;
@@ -23,6 +23,11 @@ public class GameState {
   private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
   private MapNode[][] map;
+
+  private int yBaseX;
+  private int yBaseY;
+  private int oBaseX;
+  private int oBaseY;
 
   public GameState(int w, int h) {
     this.w = w;
@@ -35,12 +40,22 @@ public class GameState {
     }
   }
 
-  public Player getPlayer1() {
-    return player1;
+  public Player getYou() {
+    return you;
   }
 
-  public Player getPlayer2() {
-    return player2;
+  public Player getOpponent() {
+    return opponent;
+  }
+
+  public void setOpponentBasePos(int x, int y) {
+    oBaseX = x;
+    oBaseY = y;
+  }
+
+  public void setYourBasePos(int x, int y) {
+    yBaseX = x;
+    yBaseY = y;
   }
 
   public Tank getTank(String tankName) {
@@ -137,6 +152,11 @@ public class GameState {
       Entity entity = it.next();
       entity.accept(visitor);
     }
+  }
+
+  public void init() {
+    add(new Base(yBaseX, yBaseY, this, you));
+    add(new Base(oBaseX, oBaseY, this, opponent));
   }
 
   private void updateTacticalMap() {

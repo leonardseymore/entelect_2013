@@ -1,7 +1,6 @@
 package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
-import sun.plugin.dom.exception.InvalidStateException;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -150,9 +149,6 @@ public class Mouse implements MouseListener, MouseMotionListener {
   }
 
   public static Mouse getInstance() {
-    if (instance == null) {
-      throw new InvalidStateException("Mouse not initialized");
-    }
     return instance;
   }
 }

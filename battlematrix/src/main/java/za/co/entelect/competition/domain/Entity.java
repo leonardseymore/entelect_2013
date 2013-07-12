@@ -64,6 +64,10 @@ public abstract class Entity implements Trackable {
     return gameState;
   }
 
+  public void setGameState(GameState gameState) {
+    this.gameState = gameState;
+  }
+
   public abstract Type getType();
 
   public abstract void accept(GameElementVisitor visitor);

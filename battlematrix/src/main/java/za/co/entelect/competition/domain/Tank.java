@@ -25,6 +25,15 @@ public abstract class Tank extends OwnedDirectedEntity {
     this.name = name;
   }
 
+  public Tank(String name, GameState gameState, Player owner, Direction direction) {
+    super(0, 0, gameState, owner, direction);
+    this.prevX = x;
+    this.prevY = y;
+    this.w = TANK_SIZE;
+    this.h = TANK_SIZE;
+    this.name = name;
+  }
+
   public int getPrevX() {
     return prevX;
   }
@@ -59,6 +68,10 @@ public abstract class Tank extends OwnedDirectedEntity {
 
   public String getName() {
     return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   @Override

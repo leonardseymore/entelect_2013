@@ -6,6 +6,10 @@ import za.co.entelect.competition.domain.Tank;
 
 public class DummyTank extends Tank {
 
+  public DummyTank() {
+    super(null, 0, 0, null, null, Direction.UP);
+  }
+
   public DummyTank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
     super(name, x, y, gameState, owner, direction);
   }

@@ -62,7 +62,7 @@ public class GameRenderer implements GameElementVisitor {
 
     Rectangle rect = tank.getBoundingRect();
     GameState gameState = tank.getGameState();
-    Color tankColor = tank.getOwner() == gameState.getPlayer1() ? Constants.COLOR_SWING_TANK_PLAYER1 : Constants.COLOR_SWING_TANK_PLAYER2;
+    Color tankColor = tank.getOwner() == gameState.getYou() ? Constants.COLOR_SWING_TANK_PLAYER1 : Constants.COLOR_SWING_TANK_PLAYER2;
     g.setColor(tankColor);
     g.fillRect(rect.getLeft(), rect.getTop(), tank.getW(), tank.getH());
     g.setColor(tankColor.darker());

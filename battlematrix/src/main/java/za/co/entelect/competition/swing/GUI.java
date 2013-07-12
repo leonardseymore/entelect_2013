@@ -93,16 +93,16 @@ public class GUI extends JFrame {
           selectedTank = null;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-          selectedTank = "p1t1";
+          selectedTank = "1";
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
-          selectedTank = "p1t2";
+          selectedTank = "2";
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
-          selectedTank = "p2t1";
+          selectedTank = "3";
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
-          selectedTank = "p2t2";
+          selectedTank = "4";
         }
         if (paused) {
           continue;

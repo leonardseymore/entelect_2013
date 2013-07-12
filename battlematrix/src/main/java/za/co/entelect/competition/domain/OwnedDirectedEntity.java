@@ -14,6 +14,10 @@ public abstract class OwnedDirectedEntity extends Entity implements Owned, Direc
     return owner;
   }
 
+  public void setOwner(Player owner) {
+    this.owner = owner;
+  }
+
   public Direction getDirection() {
     return direction;
   }
@@ -21,26 +25,6 @@ public abstract class OwnedDirectedEntity extends Entity implements Owned, Direc
   @Override
   public void setDirection(Direction direction) {
     this.direction = direction;
-  }
-
-  protected void updatePos() {
-    switch (direction) {
-      case UP:
-        y--;
-        break;
-
-      case RIGHT:
-        x++;
-        break;
-
-      case DOWN:
-        y++;
-        break;
-
-      case LEFT:
-        x--;
-        break;
-    }
   }
 
   @Override
