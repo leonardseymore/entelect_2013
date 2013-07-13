@@ -19,7 +19,7 @@ public class Util {
         return Constants.COLOR_SWING_BULLET;
       case TANK:
         Tank tank = (Tank)entity;
-        Color tankColor = tank.getOwner() == tank.getGameState().getYou() ? Constants.COLOR_SWING_TANK_PLAYER1 : Constants.COLOR_SWING_TANK_PLAYER2;
+        Color tankColor = tank.isYourTank() ? Constants.COLOR_SWING_TANK_YOU : Constants.COLOR_SWING_TANK_OPPONENT;
         return tankColor;
       case WALL:
         return Constants.COLOR_SWING_WALL;

@@ -8,20 +8,23 @@ import za.co.entelect.competition.domain.Tank;
 
 import java.util.Stack;
 
-public class ApproachTank extends Tank {
+public class ApproachTank/* extends Tank */{
 
+  /*
   private Approach behavior;
 
-  public ApproachTank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
-    super(name, x, y, gameState, owner, direction);
-  }
+  public ApproachTank(TankId id, Approach behavior) {
+    super(id);
+    this.behavior = behavior;
+  } */
 
+  /*
   public void setFollowTank(Tank target) {
     behavior = new Approach(this, target, 0);
   }
 
   @Override
-  public TankAction doGetAction() {
+  public TankAction doGetAction(GameState gameState) {
     if (behavior != null) {
       return behavior.getAction();
     }
@@ -34,4 +37,5 @@ public class ApproachTank extends Tank {
     }
     return null;
   }
+  */
 }

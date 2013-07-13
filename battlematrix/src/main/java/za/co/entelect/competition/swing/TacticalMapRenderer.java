@@ -19,9 +19,10 @@ public class TacticalMapRenderer implements GameElementVisitor {
   private boolean verbose = false;
 
   private Graphics2D g;
-  private String selectedTank;
+  private Tank selectedTank;
+  private GameState gameState;
 
-  public TacticalMapRenderer(Graphics2D g, String selectedTank) {
+  public TacticalMapRenderer(Graphics2D g, Tank selectedTank) {
     this.g = g;
     this.selectedTank = selectedTank;
   }
@@ -34,7 +35,6 @@ public class TacticalMapRenderer implements GameElementVisitor {
     g.setColor(Constants.COLOR_SWING_BOARD);
     g.fillRect(0, 0, gameState.getW(), gameState.getH());
 
-    Tank tank = gameState.getTank(selectedTank);
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
         MapNode node = gameState.getMapNode(x, y);
@@ -46,7 +46,7 @@ public class TacticalMapRenderer implements GameElementVisitor {
           } else {
             g.setColor(Color.green);
           }
-        } else if (tank != null && gameState.canTankBeMovedTo(tank, x, y)) {
+        } else if (selectedTank != null && gameState.canTankBeMovedTo(selectedTank, x, y)) {
           g.setColor(Color.pink);
         } else {
           g.setColor(Color.darkGray);
@@ -54,6 +54,7 @@ public class TacticalMapRenderer implements GameElementVisitor {
         g.fillRect(x, y, 1, 1);
       }
     }
+    this.gameState = gameState;
   }
 
   @Override
@@ -80,14 +81,13 @@ public class TacticalMapRenderer implements GameElementVisitor {
       Stack<PathFinder.Node> path = ((MouseControlledTank)tank).getPath();
       g.setColor(tankColor);
       drawPath(g, path);
-    } else if (tank instanceof ApproachTank) {
+    } /*else if (tank instanceof ApproachTank) {
       Stack<PathFinder.Node> path = ((ApproachTank)tank).getPath();
       g.setColor(tankColor);
       drawPath(g, path);
-    }
+    }   */
 
-    Tank focusTank = tank.getGameState().getTank(selectedTank);
-    if (tank == focusTank) {
+    if (tank == selectedTank) {
       g.setColor(Color.white);
       Rectangle rect = tank.getBoundingRect();
       g.drawRect(rect.getLeft(), rect.getTop(), tank.getW(), tank.getH());

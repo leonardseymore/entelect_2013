@@ -8,8 +8,8 @@ public class Base extends Entity implements Owned {
 
   protected Player owner;
 
-  public Base(int x, int y, GameState gameState, Player owner) {
-    super(x, y, gameState);
+  public Base(int x, int y, Player owner) {
+    super(x, y);
     this.owner = owner;
   }
 

@@ -16,9 +16,9 @@ public class PathFinder {
 
   private int obstructionTypes = 1 | 2;
 
-  public PathFinder(Tank tank, int obstructionTypes) {
+  public PathFinder(GameState gameState, Tank tank, int obstructionTypes) {
     this.tank = tank;
-    this.gameState = tank.getGameState();
+    this.gameState = gameState;
     this.obstructionTypes = obstructionTypes;
     this.heuristic = new HeuristicDistance();
   }

@@ -2,6 +2,10 @@ package za.co.entelect.competition.domain;
 
 public abstract class Tank extends OwnedDirectedEntity {
 
+  public static enum TankId {
+    P1T1, P1T2, P2T1, P2T2
+  }
+
   public static enum TankAction {
     UP, RIGHT, DOWN, LEFT, FIRE, NONE
   }
@@ -9,29 +13,26 @@ public abstract class Tank extends OwnedDirectedEntity {
   public static final int TANK_SIZE = 5;
   public static final int TANK_HALF_SIZE = 2;
 
-  private String name;
-
   private int prevX;
   private int prevY;
 
   private TankAction lastAction;
+  private TankId tankId;
 
-  public Tank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
-    super(x, y, gameState, owner, direction);
-    this.prevX = x;
-    this.prevY = y;
-    this.w = TANK_SIZE;
-    this.h = TANK_SIZE;
-    this.name = name;
+  public Tank(TankId tankId) {
+    this(0, 0, null, Direction.UP);
+    this.tankId = tankId;
+    if (tankId == TankId.P1T1 || tankId == TankId.P1T2) {
+      owner = Player.YOU;
+    } else {
+      owner = Player.OPPONENT;
+    }
+    w = TANK_SIZE;
+    h = TANK_SIZE;
   }
 
-  public Tank(String name, GameState gameState, Player owner, Direction direction) {
-    super(0, 0, gameState, owner, direction);
-    this.prevX = x;
-    this.prevY = y;
-    this.w = TANK_SIZE;
-    this.h = TANK_SIZE;
-    this.name = name;
+  public Tank(int x, int y, Player owner, Direction direction) {
+    super(x, y, owner, direction);
   }
 
   public int getPrevX() {
@@ -40,6 +41,10 @@ public abstract class Tank extends OwnedDirectedEntity {
 
   public int getPrevY() {
     return prevY;
+  }
+
+  public TankId getTankId() {
+    return tankId;
   }
 
   public int[] turretPos() {
@@ -64,14 +69,6 @@ public abstract class Tank extends OwnedDirectedEntity {
         break;
     }
     return bulletPos;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   @Override
@@ -116,32 +113,20 @@ public abstract class Tank extends OwnedDirectedEntity {
     return lastAction;
   }
 
-  public TankAction performAction() {
-    lastAction = doGetAction();
+  public TankAction performAction(GameState gameState) {
+    lastAction = doGetAction(gameState);
     return lastAction;
   }
 
-  public boolean canMoveUp() {
-    int newY = y - 1;
-    return gameState.canTankBeMovedTo(this, x, newY);
+  public boolean isYourTank() {
+    return owner == Player.YOU;
   }
 
-  public boolean canMoveRight() {
-    int newX = x + 1;
-    return gameState.canTankBeMovedTo(this, newX, y);
+  public boolean isOpponentTank() {
+    return owner == Player.OPPONENT;
   }
 
-  public boolean canMoveDown() {
-    int newY = y + 1;
-    return gameState.canTankBeMovedTo(this, x, newY);
-  }
-
-  public boolean canMoveLeft() {
-    int newX = x - 1;
-    return gameState.canTankBeMovedTo(this, newX, y);
-  }
-
-  protected abstract TankAction doGetAction();
+  protected abstract TankAction doGetAction(GameState gameState);
 
   public Rectangle getBoundingRect() {
     return new Rectangle(y - TANK_HALF_SIZE, x + TANK_HALF_SIZE, y + TANK_HALF_SIZE, x - TANK_HALF_SIZE);
@@ -150,7 +135,7 @@ public abstract class Tank extends OwnedDirectedEntity {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Tank{");
-    sb.append("name='").append(name).append('\'');
+    sb.append("tankId='").append(tankId).append('\'');
     sb.append("entity='").append(super.toString()).append('\'');
     sb.append('}');
     return sb.toString();

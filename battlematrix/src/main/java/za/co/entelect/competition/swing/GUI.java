@@ -3,6 +3,7 @@ package za.co.entelect.competition.swing;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.domain.Tank;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -27,7 +28,7 @@ public class GUI extends JFrame {
   private Keyboard keyboard;
   private Mouse mouse;
   private boolean paused = false;
-  private String selectedTank;
+  private Tank selectedTank;
 
   public GUI(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
@@ -93,16 +94,16 @@ public class GUI extends JFrame {
           selectedTank = null;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-          selectedTank = "1";
+          selectedTank = gameState.getTank(Tank.TankId.P1T1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
-          selectedTank = "2";
+          selectedTank = gameState.getTank(Tank.TankId.P1T2);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
-          selectedTank = "3";
+          selectedTank = gameState.getTank(Tank.TankId.P2T1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
-          selectedTank = "4";
+          selectedTank = gameState.getTank(Tank.TankId.P2T2);
         }
         if (paused) {
           continue;

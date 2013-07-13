@@ -12,7 +12,6 @@ public class MouseControlledTank extends Tank {
 
   private static final Logger logger = Logger.getLogger(MouseControlledTank.class);
 
-  private Mouse mouse;
   private Stack<PathFinder.Node> path;
   private PathFinder pathFinder;
   private SeekPath seek;
@@ -20,11 +19,8 @@ public class MouseControlledTank extends Tank {
   private int targetX = -1;
   private int targetY = -1;
 
-  public MouseControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
-    super(name, x, y, gameState, owner, direction);
-    this.mouse = Mouse.getInstance();
-    this.pathFinder = new PathFinder(this, Obstruction.BORDER | Obstruction.WALL);
-    this.seek = new SeekPath(this);
+  public MouseControlledTank(TankId id) {
+    super(id);
   }
 
   public Stack<PathFinder.Node> getPath() {
@@ -32,7 +28,10 @@ public class MouseControlledTank extends Tank {
   }
 
   @Override
-  public TankAction doGetAction() {
+  public TankAction doGetAction(GameState gameState) {
+    this.pathFinder = new PathFinder(gameState, this, Obstruction.BORDER | Obstruction.WALL);
+    this.seek = new SeekPath(gameState, this);
+    Mouse mouse = Mouse.getInstance();
     if (mouse.buttonDown(2)) {
       return TankAction.FIRE;
     }

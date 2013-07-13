@@ -24,7 +24,7 @@ public class Constants {
   public static final Color COLOR_SWING_BOARD = Color.darkGray;
   public static final Color COLOR_SWING_BASE = Color.magenta;
   public static final Color COLOR_SWING_BULLET = Color.white;
-  public static final Color COLOR_SWING_TANK_PLAYER1 = Color.blue;
-  public static final Color COLOR_SWING_TANK_PLAYER2 = Color.orange;
+  public static final Color COLOR_SWING_TANK_YOU = Color.blue;
+  public static final Color COLOR_SWING_TANK_OPPONENT = Color.orange;
   public static final Color COLOR_SWING_WALL = Color.lightGray;
 }

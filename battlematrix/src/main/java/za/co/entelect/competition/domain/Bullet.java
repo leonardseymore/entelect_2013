@@ -7,8 +7,8 @@ public class Bullet extends OwnedDirectedEntity {
   private int prevX;
   private int prevY;
 
-  public Bullet(int x, int y, GameState gameState, Player owner, Direction direction, Tank tank) {
-    super(x, y, gameState, owner, direction);
+  public Bullet(int x, int y, Player owner, Direction direction, Tank tank) {
+    super(x, y, owner, direction);
     this.tank = tank;
   }
 

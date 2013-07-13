@@ -23,13 +23,10 @@ public abstract class Entity implements Trackable {
   protected int w = DEFAULT_WIDTH;
   protected int h = DEFAULT_HEIGHT;
 
-  protected GameState gameState;
-
-  protected Entity(int x, int y, GameState gameState) {
+  protected Entity(int x, int y) {
     this.id = ID_GEN.incrementAndGet();
     this.x = x;
     this.y = y;
-    this.gameState = gameState;
   }
 
   public int getX() {
@@ -58,14 +55,6 @@ public abstract class Entity implements Trackable {
 
   public long getId() {
     return id;
-  }
-
-  public GameState getGameState() {
-    return gameState;
-  }
-
-  public void setGameState(GameState gameState) {
-    this.gameState = gameState;
   }
 
   public abstract Type getType();

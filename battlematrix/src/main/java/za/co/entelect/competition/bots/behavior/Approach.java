@@ -12,7 +12,7 @@ import za.co.entelect.competition.domain.Trackable;
 import java.util.Stack;
 
 public class Approach {
-
+               /*
   private Stack<PathFinder.Node> path;
   private SeekPath seek;
 
@@ -41,5 +41,5 @@ public class Approach {
 
   public Stack<PathFinder.Node> getPath() {
     return path;
-  }
+  }*/
 }

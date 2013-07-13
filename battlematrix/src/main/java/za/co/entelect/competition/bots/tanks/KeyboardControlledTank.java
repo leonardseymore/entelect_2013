@@ -1,10 +1,9 @@
 package za.co.entelect.competition.bots.tanks;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.swing.Keyboard;
 import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Player;
 import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.swing.Keyboard;
 
 import java.awt.event.KeyEvent;
 
@@ -12,15 +11,13 @@ public class KeyboardControlledTank extends Tank {
 
   private static final Logger logger = Logger.getLogger(KeyboardControlledTank.class);
 
-  private Keyboard keyboard;
-
-  public KeyboardControlledTank(String name, int x, int y, GameState gameState, Player owner, Direction direction) {
-    super(name, x, y, gameState, owner, direction);
-    this.keyboard = Keyboard.getInstance();
+  public KeyboardControlledTank(TankId id) {
+    super(id);
   }
 
   @Override
-  public TankAction doGetAction() {
+  public TankAction doGetAction(GameState gameState) {
+    Keyboard keyboard = Keyboard.getInstance();
     if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
       return TankAction.FIRE;
     }

@@ -1,17 +1,13 @@
 package za.co.entelect.competition.swing;
 
-import za.co.entelect.competition.bots.tanks.ApproachTank;
-import za.co.entelect.competition.bots.tanks.KeyboardControlledTank;
-import za.co.entelect.competition.bots.tanks.MouseControlledTank;
-import za.co.entelect.competition.domain.Directed;
-import za.co.entelect.competition.domain.GameFactory;
 import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.groovy.GameFactory;
 
 public class AppSwing {
   public static void main(String [] args) throws Exception {
     //final GameState gameState = GameFactory.smallRandomBoard(50);
     //final GameState gameState = GameFactory.smallBoard();
-    GameState gameState = GameFactory.fromFile("/map1.txt");
+    GameState gameState = GameFactory.fromFile("/map1.groovy");
     GUI app = new GUI(gameState, 5);
     //KeyboardControlledTank p1t1 = new KeyboardControlledTank("p1t1", 60, 20, gameState, gameState.getYou(), Directed.Direction.LEFT);
     //gameState.add(p1t1);
@@ -23,7 +19,6 @@ public class AppSwing {
 
    // MouseControlledTank p1t2 = new MouseControlledTank("p1t2", 40, 60, gameState, gameState.getYou(), Directed.Direction.DOWN);
    // gameState.add(p1t2);
-    gameState.init();
     app.setVisible(true);
     app.run();
   }

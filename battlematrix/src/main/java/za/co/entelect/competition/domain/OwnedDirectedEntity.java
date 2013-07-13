@@ -4,8 +4,8 @@ public abstract class OwnedDirectedEntity extends Entity implements Owned, Direc
   protected Player owner;
   protected Direction direction;
 
-  public OwnedDirectedEntity(int x, int y, GameState gameState, Player owner, Direction direction) {
-    super(x, y, gameState);
+  public OwnedDirectedEntity(int x, int y, Player owner, Direction direction) {
+    super(x, y);
     this.owner = owner;
     this.direction = direction;
   }

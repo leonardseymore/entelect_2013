@@ -2,6 +2,7 @@ package za.co.entelect.competition.bots.movement;
 
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.Entity;
+import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
 
 import java.util.Stack;
@@ -10,13 +11,13 @@ public class SeekPath extends Seek {
 
   private Stack<PathFinder.Node> path;
 
-  public SeekPath(Tank tank, Stack<PathFinder.Node> path) {
-    super(tank, null);
+  public SeekPath(GameState gameState, Tank tank, Stack<PathFinder.Node> path) {
+    super(gameState, tank, null);
     this.path = path;
   }
 
-  public SeekPath(Tank tank) {
-    super(tank, null);
+  public SeekPath(GameState gameState, Tank tank) {
+    super(gameState, tank, null);
   }
 
   public Stack<PathFinder.Node> getPath() {

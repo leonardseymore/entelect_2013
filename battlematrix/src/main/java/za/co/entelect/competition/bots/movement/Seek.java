@@ -9,10 +9,12 @@ public class Seek {
 
   protected Tank tank;
   protected Trackable target;
+  protected GameState gameState;
 
-  public Seek(Tank tank, Trackable target) {
+  public Seek(GameState gameState, Tank tank, Trackable target) {
     this.tank = tank;
     this.target = target;
+    this.gameState = gameState;
   }
 
   public Trackable getTarget() {
@@ -24,19 +26,23 @@ public class Seek {
   }
 
   private Tank.TankAction seek() {
-    if (target.getX() > tank.getX() && tank.canMoveRight()) {
+    if (target.getX() > tank.getX()
+      && gameState.canTankBeMovedTo(tank, tank.getX() + 1, tank.getY())) {
       return Tank.TankAction.RIGHT;
     }
 
-    if (target.getX() < tank.getX() && tank.canMoveLeft()) {
+    if (target.getX() < tank.getX()
+      && gameState.canTankBeMovedTo(tank, tank.getX() - 1, tank.getY())) {
       return Tank.TankAction.LEFT;
     }
 
-    if (target.getY() > tank.getY() && tank.canMoveDown()) {
+    if (target.getY() > tank.getY()
+      && gameState.canTankBeMovedTo(tank, tank.getX(), tank.getY() + 1)) {
       return Tank.TankAction.DOWN;
     }
 
-    if (target.getY() < tank.getY() && tank.canMoveUp()) {
+    if (target.getY() < tank.getY()
+      && gameState.canTankBeMovedTo(tank, tank.getX(), tank.getY() - 1)) {
       return Tank.TankAction.UP;
     }
 
