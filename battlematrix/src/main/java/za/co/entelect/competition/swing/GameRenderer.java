@@ -40,7 +40,7 @@ public class GameRenderer implements GameElementVisitor {
       logger.debug("Visiting base [" + base + "]");
     }
 
-    g.setColor(Constants.COLOR_SWING_BASE);
+    g.setColor(Util.getColor(base));
     g.fillRect(base.getX(), base.getY(), base.getW(), base.getH());
   }
 

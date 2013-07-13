@@ -23,6 +23,10 @@ public class Base extends Entity implements Owned {
     return Type.BASE;
   }
 
+  public boolean isYourBase() {
+    return owner == Player.YOU;
+  }
+
   @Override
   public void accept(GameElementVisitor visitor) {
     visitor.visit(this);

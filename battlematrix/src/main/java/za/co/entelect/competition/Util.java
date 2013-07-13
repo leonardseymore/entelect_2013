@@ -1,5 +1,6 @@
 package za.co.entelect.competition;
 
+import za.co.entelect.competition.domain.Base;
 import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.Tank;
 
@@ -14,7 +15,8 @@ public class Util {
   public static Color getColor(Entity entity) {
     switch (entity.getType()) {
       case BASE:
-        return Constants.COLOR_SWING_BASE;
+        Base base = (Base)entity;
+        return base.isYourBase() ? Constants.COLOR_SWING_TANK_YOU : Constants.COLOR_SWING_TANK_OPPONENT;
       case BULLET:
         return Constants.COLOR_SWING_BULLET;
       case TANK:
