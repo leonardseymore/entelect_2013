@@ -61,8 +61,8 @@ public abstract class Entity implements Trackable {
 
   public abstract void accept(GameElementVisitor visitor);
 
-  public Rectangle getBoundingRect() {
-    return new Rectangle(y - 1, x + 1, y + 1, x - 1);
+  public Rectangle getRect() {
+    return new Rectangle(y, x, y, x);
   }
 
   @Override

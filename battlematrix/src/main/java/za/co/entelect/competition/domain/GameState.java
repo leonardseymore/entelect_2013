@@ -82,6 +82,7 @@ public class GameState {
 
   public void remove(Bullet bullet) {
     bullets.remove(bullet);
+    bullet.getTank().setCanFire(true);
     logger.debug("Removed bullet [" + bullet + "]");
   }
 
@@ -145,7 +146,7 @@ public class GameState {
 
       if (entity.getType() == Entity.Type.TANK) {
         Tank tank = (Tank)entity;
-        Rectangle r = tank.getBoundingRect();
+        Rectangle r = tank.getRect();
         for (int x = r.getLeft(); x <= r.getRight(); x++) {
           for (int y = r.getTop(); y <= r.getBottom(); y++) {
             map[x][y].setEntity(tank);
@@ -183,7 +184,7 @@ public class GameState {
       int oldY = tank.getY();
       tank.performAction(this);
       tank.move();
-      Rectangle rect = tank.getBoundingRect();
+      Rectangle rect = tank.getRect();
       if (rect.getLeft() < 0) {
         tank.setX(0);
       }
@@ -213,12 +214,13 @@ public class GameState {
     // 3) All tanks in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
     for (Tank tank : tanks) {
-      if (tank.getLastAction() == Tank.TankAction.FIRE) {
+      if (tank.isCanFire() && tank.getLastAction() == Tank.TankAction.FIRE) {
         int [] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], tank.getOwner(), tank.getDirection(), tank);
         bullet.move();
         if (isInbounds(bullet.getX(), bullet.getY())) {
           add(bullet);
+          tank.setCanFire(false);
           checkEntityCollision(bullet);
         }
       }
@@ -230,7 +232,7 @@ public class GameState {
     while (it.hasNext()) {
       Entity t = it.next();
       if (s != t) {
-        if (s.getBoundingRect().intersects(t.getBoundingRect())) {
+        if (s.getRect().intersects(t.getRect())) {
           return handleCollision(s, t);
         }
       }

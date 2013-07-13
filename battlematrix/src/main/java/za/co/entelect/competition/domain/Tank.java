@@ -19,6 +19,8 @@ public abstract class Tank extends OwnedDirectedEntity {
   private TankAction lastAction;
   private TankId tankId;
 
+  private boolean canFire = true;
+
   public Tank(TankId tankId) {
     this(0, 0, null, Direction.UP);
     this.tankId = tankId;
@@ -126,9 +128,17 @@ public abstract class Tank extends OwnedDirectedEntity {
     return owner == Player.OPPONENT;
   }
 
+  public boolean isCanFire() {
+    return canFire;
+  }
+
+  public void setCanFire(boolean canFire) {
+    this.canFire = canFire;
+  }
+
   protected abstract TankAction doGetAction(GameState gameState);
 
-  public Rectangle getBoundingRect() {
+  public Rectangle getRect() {
     return new Rectangle(y - TANK_HALF_SIZE, x + TANK_HALF_SIZE, y + TANK_HALF_SIZE, x - TANK_HALF_SIZE);
   }
 

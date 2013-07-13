@@ -47,7 +47,7 @@ public class Rectangle {
   }
   
   public boolean intersects(Rectangle o) {
-    return  getLeft() < o.getRight() && getRight() > o.getLeft() &&
-      getTop() < o.getBottom() && getBottom() > o.getTop();
+    return  getLeft() <= o.getRight() && getRight() >= o.getLeft() &&
+      getTop() <= o.getBottom() && getBottom() >= o.getTop();
   }
 }

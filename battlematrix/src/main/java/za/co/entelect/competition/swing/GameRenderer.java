@@ -3,7 +3,6 @@ package za.co.entelect.competition.swing;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.bots.tanks.ApproachTank;
 import za.co.entelect.competition.bots.tanks.MouseControlledTank;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
@@ -61,7 +60,7 @@ public class GameRenderer implements GameElementVisitor {
       logger.debug("Visiting tank [" + tank + "]");
     }
 
-    Rectangle rect = tank.getBoundingRect();
+    Rectangle rect = tank.getRect();
     Color tankColor = Util.getColor(tank);
     g.setColor(tankColor);
     g.fillRect(rect.getLeft(), rect.getTop(), tank.getW(), tank.getH());
