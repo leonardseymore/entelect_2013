@@ -186,19 +186,19 @@ public class GameState {
       tank.move();
       Rectangle rect = tank.getRect();
       if (rect.getLeft() < 0) {
-        tank.setX(0);
+        tank.setX(Tank.TANK_HALF_SIZE);
       }
 
-      if (rect.getRight() > w) {
-        tank.setX(w - tank.getW());
+      if (rect.getRight() >= w) {
+        tank.setX(w - Tank.TANK_HALF_SIZE - 1);
       }
 
       if (rect.getTop() < 0) {
-        tank.setY(0);
+        tank.setY(Tank.TANK_HALF_SIZE);
       }
 
-      if (rect.getBottom() > h) {
-        tank.setY(h - tank.getH());
+      if (rect.getBottom() >= h) {
+        tank.setY(h - Tank.TANK_HALF_SIZE - 1);
       }
 
       if (checkEntityCollision(tank)) {

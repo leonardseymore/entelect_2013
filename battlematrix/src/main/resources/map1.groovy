@@ -39,7 +39,7 @@ def getTank1() {
 }
 
 def getTank2() {
-  return new DummyTank(Tank.TankId.P1T2)
+  return new MouseControlledTank(Tank.TankId.P1T2)
 }
 
 def getTank3() {
