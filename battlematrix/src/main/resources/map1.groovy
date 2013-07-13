@@ -1,5 +1,6 @@
 import za.co.entelect.competition.bots.tanks.DummyTank
 import za.co.entelect.competition.bots.tanks.KeyboardControlledTank
+import za.co.entelect.competition.bots.tanks.MouseControlledTank
 import za.co.entelect.competition.bots.tanks.RandomTank
 import za.co.entelect.competition.domain.Tank
 
@@ -42,7 +43,7 @@ def getTank2() {
 }
 
 def getTank3() {
-  return new DummyTank(Tank.TankId.P2T1)
+  return new MouseControlledTank(Tank.TankId.P2T1)
 }
 
 def getTank4() {

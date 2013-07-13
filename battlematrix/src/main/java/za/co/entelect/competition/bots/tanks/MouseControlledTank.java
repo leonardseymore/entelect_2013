@@ -29,8 +29,7 @@ public class MouseControlledTank extends Tank {
 
   @Override
   public TankAction doGetAction(GameState gameState) {
-    this.pathFinder = new PathFinder(gameState, this, Obstruction.BORDER | Obstruction.WALL);
-    this.seek = new SeekPath(gameState, this);
+
     Mouse mouse = Mouse.getInstance();
     if (mouse.buttonDown(2)) {
       return TankAction.FIRE;
@@ -41,11 +40,16 @@ public class MouseControlledTank extends Tank {
       targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
       logger.debug("New target set (" + x + "," + y + ")");
       long start = System.currentTimeMillis();
+      this.pathFinder = new PathFinder(gameState, this, Obstruction.BORDER | Obstruction.WALL);
       path = pathFinder.closestPathAStar(x, y, targetX, targetY, true);
+      this.seek = new SeekPath(gameState, this);
       seek.setPath(path);
       logger.debug("Path finding took [" + (System.currentTimeMillis() - start) + "ms]");
     }
 
-    return seek.getAction();
+    if (seek != null) {
+      return seek.getAction();
+    }
+    return TankAction.NONE;
   }
 }

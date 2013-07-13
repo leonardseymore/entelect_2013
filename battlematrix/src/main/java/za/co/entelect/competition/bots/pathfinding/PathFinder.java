@@ -79,27 +79,14 @@ public class PathFinder {
     int x = node.x;
     int y = node.y;
 
-    boolean canMoveNorth = ifCanMoveToAdd(x, y - 1, neighbors);
-    boolean canMoveEast = ifCanMoveToAdd(x + 1, y, neighbors);
-    boolean canMoveSouth = ifCanMoveToAdd(x, y + 1, neighbors);
-    boolean canMoveWest = ifCanMoveToAdd(x - 1, y, neighbors);
-
-    if (canMoveNorth || canMoveEast) {
-      ifCanMoveToAdd(x + 1, y - 1, neighbors);
+    for (int i = x - 1; i <= x + 1; i++) {
+      for (int j = y - 1; j <= y + 1; j++) {
+        if (i == x && j == y) {
+          continue;
+        }
+        ifCanMoveToAdd(i, j, neighbors);
+      }
     }
-
-    if (canMoveEast || canMoveSouth) {
-      ifCanMoveToAdd(x + 1, y + 1, neighbors);
-    }
-
-    if (canMoveSouth || canMoveWest) {
-      ifCanMoveToAdd(x - 1, y + 1, neighbors);
-    }
-
-    if (canMoveWest || canMoveNorth) {
-      ifCanMoveToAdd(x - 1, y - 1, neighbors);
-    }
-
     return neighbors;
   }
 
