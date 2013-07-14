@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.domain.TankId;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -94,16 +95,16 @@ public class GUI extends JFrame {
           selectedTank = null;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-          selectedTank = gameState.getTank(Tank.TankId.P1T1);
+          selectedTank = gameState.getTank(TankId.P1T1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
-          selectedTank = gameState.getTank(Tank.TankId.P1T2);
+          selectedTank = gameState.getTank(TankId.P1T2);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
-          selectedTank = gameState.getTank(Tank.TankId.P2T1);
+          selectedTank = gameState.getTank(TankId.P2T1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
-          selectedTank = gameState.getTank(Tank.TankId.P2T2);
+          selectedTank = gameState.getTank(TankId.P2T2);
         }
         if (paused) {
           continue;

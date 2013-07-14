@@ -4,6 +4,7 @@ import za.co.entelect.competition.bots.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.domain.TankAction;
 
 import java.util.Stack;
 
@@ -28,9 +29,9 @@ public class SeekPath extends Seek {
     this.path = path;
   }
 
-  public Tank.TankAction getAction() {
+  public TankAction getAction() {
     if (path == null || path.isEmpty()) {
-      return Tank.TankAction.NONE;
+      return TankAction.NONE;
     }
 
     target = path.peek();

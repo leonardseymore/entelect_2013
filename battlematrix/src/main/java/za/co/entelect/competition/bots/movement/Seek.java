@@ -1,9 +1,6 @@
 package za.co.entelect.competition.bots.movement;
 
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Obstruction;
-import za.co.entelect.competition.domain.Tank;
-import za.co.entelect.competition.domain.Trackable;
+import za.co.entelect.competition.domain.*;
 
 public class Seek {
 
@@ -25,33 +22,33 @@ public class Seek {
     this.target = target;
   }
 
-  private Tank.TankAction seek() {
+  private TankAction seek() {
     if (target.getX() > tank.getX()
       && gameState.canTankBeMovedTo(tank, tank.getX() + 1, tank.getY())) {
-      return Tank.TankAction.RIGHT;
+      return TankAction.RIGHT;
     }
 
     if (target.getX() < tank.getX()
       && gameState.canTankBeMovedTo(tank, tank.getX() - 1, tank.getY())) {
-      return Tank.TankAction.LEFT;
+      return TankAction.LEFT;
     }
 
     if (target.getY() > tank.getY()
       && gameState.canTankBeMovedTo(tank, tank.getX(), tank.getY() + 1)) {
-      return Tank.TankAction.DOWN;
+      return TankAction.DOWN;
     }
 
     if (target.getY() < tank.getY()
       && gameState.canTankBeMovedTo(tank, tank.getX(), tank.getY() - 1)) {
-      return Tank.TankAction.UP;
+      return TankAction.UP;
     }
 
-    return Tank.TankAction.NONE;
+    return TankAction.NONE;
   }
 
-  public Tank.TankAction getAction() {
+  public TankAction getAction() {
     if (tank.getX() == target.getX() && tank.getY() == target.getY()) {
-      return Tank.TankAction.NONE;
+      return TankAction.NONE;
     }
     return seek();
   }

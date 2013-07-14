@@ -2,14 +2,6 @@ package za.co.entelect.competition.domain;
 
 public abstract class Tank extends OwnedDirectedEntity {
 
-  public static enum TankId {
-    P1T1, P1T2, P2T1, P2T2
-  }
-
-  public static enum TankAction {
-    UP, RIGHT, DOWN, LEFT, FIRE, NONE
-  }
-
   public static final int TANK_SIZE = 5;
   public static final int TANK_HALF_SIZE = 2;
 

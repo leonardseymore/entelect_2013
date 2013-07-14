@@ -2,6 +2,8 @@ package za.co.entelect.competition.bots.tanks;
 
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.domain.TankAction;
+import za.co.entelect.competition.domain.TankId;
 
 import java.util.Random;
 

@@ -42,7 +42,7 @@ public class GameState {
     yourBase = new Base(x, y, Player.YOU);
   }
 
-  public Tank getTank(Tank.TankId tankId) {
+  public Tank getTank(TankId tankId) {
     for (Tank tank : tanks) {
       if (tank.getTankId().equals(tankId)) {
         return tank;
@@ -214,7 +214,7 @@ public class GameState {
     // 3) All tanks in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
     for (Tank tank : tanks) {
-      if (tank.isCanFire() && tank.getLastAction() == Tank.TankAction.FIRE) {
+      if (tank.isCanFire() && tank.getLastAction() == TankAction.FIRE) {
         int [] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], tank.getOwner(), tank.getDirection(), tank);
         bullet.move();

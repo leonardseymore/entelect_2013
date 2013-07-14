@@ -3,6 +3,8 @@ package za.co.entelect.competition.bots.tanks;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.domain.TankAction;
+import za.co.entelect.competition.domain.TankId;
 import za.co.entelect.competition.swing.Keyboard;
 
 import java.awt.event.KeyEvent;
