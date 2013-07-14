@@ -2,6 +2,7 @@ import za.co.entelect.competition.bots.tanks.DummyTank
 import za.co.entelect.competition.bots.tanks.KeyboardControlledTank
 import za.co.entelect.competition.bots.tanks.MouseControlledTank
 import za.co.entelect.competition.bots.tanks.RandomTank
+import za.co.entelect.competition.bots.tanks.TimmyTank
 import za.co.entelect.competition.domain.Tank
 import za.co.entelect.competition.domain.TankId
 
@@ -48,5 +49,5 @@ def getTank3() {
 }
 
 def getTank4() {
-  return new RandomTank(TankId.P2T2)
+  return new TimmyTank(TankId.P2T2)
 }
