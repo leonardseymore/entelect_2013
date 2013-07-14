@@ -42,6 +42,14 @@ public class GameState {
     yourBase = new Base(x, y, Player.YOU);
   }
 
+  public Base getYourBase() {
+    return yourBase;
+  }
+
+  public Base getOpponentBase() {
+    return opponentBase;
+  }
+
   public Tank getTank(TankId tankId) {
     for (Tank tank : tanks) {
       if (tank.getTankId().equals(tankId)) {
@@ -49,6 +57,31 @@ public class GameState {
       }
     }
     return null;
+  }
+
+  public Collection<Tank> getEnemyTanks(Tank tank) {
+    Collection<Tank> tanks = new ArrayList<>();
+    Tank t;
+    if (tank.isYourTank()) {
+      t = getTank(TankId.O1);
+      if (t != null) {
+        tanks.add(t);
+      }
+      t = getTank(TankId.O2);
+      if (t != null) {
+        tanks.add(t);
+      }
+    } else {
+      t = getTank(TankId.Y1);
+      if (t != null) {
+        tanks.add(t);
+      }
+      t = getTank(TankId.Y2);
+      if (t != null) {
+        tanks.add(t);
+      }
+    }
+    return tanks;
   }
 
   public boolean isVerbose() {

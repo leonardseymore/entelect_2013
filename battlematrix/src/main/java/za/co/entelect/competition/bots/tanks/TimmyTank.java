@@ -2,10 +2,9 @@ package za.co.entelect.competition.bots.tanks;
 
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.bots.descision.tree.*;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
-import za.co.entelect.competition.domain.TankAction;
-import za.co.entelect.competition.domain.TankId;
+import za.co.entelect.competition.domain.*;
+
+import java.util.Collection;
 
 public class TimmyTank extends Tank {
 
@@ -14,11 +13,22 @@ public class TimmyTank extends Tank {
   }
 
   private DecisionTreeNode createDecisionTree(GameState gameState) {
-    Tank t = gameState.getTank(TankId.P1T1);
+    Collection<Tank> enemyTanks = gameState.getEnemyTanks(this);
+    Tank closestTank = null;
+    int closestDist = Integer.MAX_VALUE;
+    for (Tank enemyTank : enemyTanks) {
+      int dist = Util.manhattanDist(x, y, enemyTank.getX(), enemyTank.getY());
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestTank = enemyTank;
+      }
+    }
+
+
     DecisionTreeNode root = new RangeDecision<>(
       new TankDecisionTreeAction(TankAction.LEFT),
       new TankDecisionTreeAction(TankAction.RIGHT),
-      Util.manhattanDist(x, y, t.getX(), t.getY()),
+      closestDist,
       50,
       Integer.MAX_VALUE
     );

@@ -1,9 +1,6 @@
-import za.co.entelect.competition.bots.tanks.DummyTank
 import za.co.entelect.competition.bots.tanks.KeyboardControlledTank
 import za.co.entelect.competition.bots.tanks.MouseControlledTank
-import za.co.entelect.competition.bots.tanks.RandomTank
 import za.co.entelect.competition.bots.tanks.TimmyTank
-import za.co.entelect.competition.domain.Tank
 import za.co.entelect.competition.domain.TankId
 
 w = 20
@@ -37,17 +34,17 @@ wwwwwwwwwwwwwwwwwwww"""
 }
 
 def getTank1() {
-  return new KeyboardControlledTank(TankId.P1T1)
+  return new KeyboardControlledTank(TankId.Y1)
 }
 
 def getTank2() {
-  return new MouseControlledTank(TankId.P1T2)
+  return new MouseControlledTank(TankId.Y2)
 }
 
 def getTank3() {
-  return new MouseControlledTank(TankId.P2T1)
+  return new MouseControlledTank(TankId.O1)
 }
 
 def getTank4() {
-  return new TimmyTank(TankId.P2T2)
+  return new TimmyTank(TankId.O2)
 }

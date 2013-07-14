@@ -16,7 +16,7 @@ public abstract class Tank extends OwnedDirectedEntity {
   public Tank(TankId tankId) {
     this(0, 0, null, Direction.UP);
     this.tankId = tankId;
-    if (tankId == TankId.P1T1 || tankId == TankId.P1T2) {
+    if (tankId == TankId.Y1 || tankId == TankId.Y2) {
       owner = Player.YOU;
     } else {
       owner = Player.OPPONENT;

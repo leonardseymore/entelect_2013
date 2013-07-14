@@ -95,16 +95,16 @@ public class GUI extends JFrame {
           selectedTank = null;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-          selectedTank = gameState.getTank(TankId.P1T1);
+          selectedTank = gameState.getTank(TankId.Y1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
-          selectedTank = gameState.getTank(TankId.P1T2);
+          selectedTank = gameState.getTank(TankId.Y2);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
-          selectedTank = gameState.getTank(TankId.P2T1);
+          selectedTank = gameState.getTank(TankId.O1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
-          selectedTank = gameState.getTank(TankId.P2T2);
+          selectedTank = gameState.getTank(TankId.O2);
         }
         if (paused) {
           continue;
