@@ -27,7 +27,7 @@ public class PathFinder {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
-    Node start = new Node(startX, startY, gameState.getMapNode(startX, startY));
+    Node start = new Node(startX, startY, gameState.getEntityAt(startX, startY));
     start.goalCost = heuristic.heuristic(start, endX, endY);
     open.add(start);
 
@@ -93,7 +93,7 @@ public class PathFinder {
   private boolean ifCanMoveToAdd(int x, int y, Collection<Node> neighbors) {
     boolean canMoveTo = gameState.canTankBeMovedTo(tank, x, y);
     if (canMoveTo) {
-      neighbors.add(new Node(x, y, gameState.getMapNode(x, y)));
+      neighbors.add(new Node(x, y, gameState.getEntityAt(x, y)));
     }
     return canMoveTo;
   }
@@ -112,14 +112,14 @@ public class PathFinder {
     int y;
     int goalCost;
     int runningCost;
-    MapNode mapNode;
+    Entity entity;
 
     Node parent;
 
-    public Node(int x, int y, MapNode mapNode) {
+    public Node(int x, int y, Entity entity) {
       this.x = x;
       this.y = y;
-      this.mapNode = mapNode;
+      this.entity = entity;
     }
 
     @Override
@@ -174,7 +174,7 @@ public class PathFinder {
       sb.append(", y=").append(y);
       sb.append(", goalCost=").append(goalCost);
       sb.append(", runningCost=").append(runningCost);
-      sb.append(", mapNode=").append(mapNode);
+      sb.append(", entity=").append(entity);
       sb.append('}');
       return sb.toString();
     }

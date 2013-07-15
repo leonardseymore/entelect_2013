@@ -21,17 +21,12 @@ public class GameState {
   private Collection<Bullet> bullets = new CopyOnWriteArrayList<>();
   private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
-  private MapNode[][] map;
+  private Entity[][] map;
 
   public GameState(int w, int h) {
     this.w = w;
     this.h = h;
-    map = new MapNode[w][h];
-    for (int i = 0; i < w; i++) {
-      for (int j = 0; j < h; j++) {
-        map[i][j] = new MapNode();
-      }
-    }
+    map = new Entity[w][h];
   }
 
   public void setOpponentBase(int x, int y) {
@@ -146,13 +141,6 @@ public class GameState {
     if (!isInbounds(x, y)) {
       return null;
     }
-    return map[x][y].getEntity();
-  }
-
-  public MapNode getMapNode(int x, int y) {
-    if (!isInbounds(x, y)) {
-      return null;
-    }
     return map[x][y];
   }
 
@@ -172,7 +160,7 @@ public class GameState {
   private void updateTacticalMap() {
     for (int i = 0; i < w; i++) {
       for (int j = 0; j < h; j++) {
-        map[i][j].clear();
+        map[i][j] = null;
       }
     }
 
@@ -185,11 +173,11 @@ public class GameState {
         Rectangle r = tank.getRect();
         for (int x = r.getLeft(); x <= r.getRight(); x++) {
           for (int y = r.getTop(); y <= r.getBottom(); y++) {
-            map[x][y].setEntity(tank);
+            map[x][y] = tank;
           }
         }
       } else {
-        map[entity.getX()][entity.getY()].setEntity(entity);
+        map[entity.getX()][entity.getY()] = entity;
       }
     }
   }

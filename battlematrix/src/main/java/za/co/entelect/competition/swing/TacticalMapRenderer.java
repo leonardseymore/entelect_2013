@@ -37,12 +37,10 @@ public class TacticalMapRenderer implements GameElementVisitor {
 
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
-        MapNode node = gameState.getMapNode(x, y);
-
-        if (node.hasEntity()) {
-          Entity entity = node.getEntity();
-          if (entity != null) {
-            g.setColor(Util.getColor(entity));
+        Entity e = gameState.getEntityAt(x, y);
+        if (e != null) {
+          if (e != null) {
+            g.setColor(Util.getColor(e));
           } else {
             g.setColor(Color.green);
           }
