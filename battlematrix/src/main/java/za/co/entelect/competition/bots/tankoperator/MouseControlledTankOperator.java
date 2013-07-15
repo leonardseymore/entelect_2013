@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots.tanks;
+package za.co.entelect.competition.bots.tankoperator;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.swing.Mouse;
@@ -8,9 +8,9 @@ import za.co.entelect.competition.domain.*;
 
 import java.util.Stack;
 
-public class MouseControlledTank extends Tank {
+public class MouseControlledTankOperator implements TankOperator, PathAware {
 
-  private static final Logger logger = Logger.getLogger(MouseControlledTank.class);
+  private static final Logger logger = Logger.getLogger(MouseControlledTankOperator.class);
 
   private Stack<PathFinder.Node> path;
   private PathFinder pathFinder;
@@ -19,16 +19,12 @@ public class MouseControlledTank extends Tank {
   private int targetX = -1;
   private int targetY = -1;
 
-  public MouseControlledTank(TankId id) {
-    super(id);
-  }
-
   public Stack<PathFinder.Node> getPath() {
     return path;
   }
 
   @Override
-  public TankAction doGetAction(GameState gameState) {
+  public TankAction getAction(GameState gameState, Tank tank) {
 
     Mouse mouse = Mouse.getInstance();
     if (mouse.buttonDown(2)) {
@@ -38,11 +34,11 @@ public class MouseControlledTank extends Tank {
     if (mouse.buttonDown(1)) {
       targetX = (int)(mouse.getPosition().getX() / mouse.getZoomFactor());
       targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
-      logger.debug("New target set (" + x + "," + y + ")");
+      logger.debug("New target set (" + targetX + "," + targetY + ")");
       long start = System.currentTimeMillis();
-      this.pathFinder = new PathFinder(gameState, this, Obstruction.BORDER | Obstruction.WALL);
-      path = pathFinder.closestPathAStar(x, y, targetX, targetY, true);
-      this.seek = new SeekPath(gameState, this);
+      this.pathFinder = new PathFinder(gameState, tank, Obstruction.BORDER | Obstruction.WALL);
+      path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), targetX, targetY, true);
+      this.seek = new SeekPath(gameState, tank);
       seek.setPath(path);
       logger.debug("Path finding took [" + (System.currentTimeMillis() - start) + "ms]");
     }

@@ -1,24 +1,16 @@
-package za.co.entelect.competition.bots.tanks;
+package za.co.entelect.competition.bots.tankoperator;
 
-import org.apache.log4j.Logger;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
 import za.co.entelect.competition.domain.TankAction;
-import za.co.entelect.competition.domain.TankId;
+import za.co.entelect.competition.domain.TankOperator;
 import za.co.entelect.competition.swing.Keyboard;
 
 import java.awt.event.KeyEvent;
 
-public class KeyboardControlledTank extends Tank {
+public class KeyboardControlledTankOperator implements TankOperator {
 
-  private static final Logger logger = Logger.getLogger(KeyboardControlledTank.class);
-
-  public KeyboardControlledTank(TankId id) {
-    super(id);
-  }
-
-  @Override
-  public TankAction doGetAction(GameState gameState) {
+  public TankAction getAction(GameState gameState, Tank tank) {
     Keyboard keyboard = Keyboard.getInstance();
     if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
       return TankAction.FIRE;

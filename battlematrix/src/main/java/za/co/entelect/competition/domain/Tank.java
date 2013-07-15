@@ -1,21 +1,21 @@
 package za.co.entelect.competition.domain;
 
-public abstract class Tank extends OwnedDirectedEntity {
+public class Tank extends OwnedDirectedEntity {
 
   public static final int TANK_SIZE = 5;
   public static final int TANK_HALF_SIZE = 2;
-
-  private int prevX;
-  private int prevY;
 
   private TankAction lastAction;
   private TankId tankId;
 
   private boolean canFire = true;
 
-  public Tank(TankId tankId) {
+  private TankOperator tankOperator;
+
+  public Tank(TankId tankId, TankOperator tankOperator) {
     this(0, 0, null, Direction.UP);
     this.tankId = tankId;
+    this.tankOperator = tankOperator;
     if (tankId == TankId.Y1 || tankId == TankId.Y2) {
       owner = Player.YOU;
     } else {
@@ -29,12 +29,12 @@ public abstract class Tank extends OwnedDirectedEntity {
     super(x, y, owner, direction);
   }
 
-  public int getPrevX() {
-    return prevX;
+  public TankOperator getTankOperator() {
+    return tankOperator;
   }
 
-  public int getPrevY() {
-    return prevY;
+  public void setTankOperator(TankOperator tankOperator) {
+    this.tankOperator = tankOperator;
   }
 
   public TankId getTankId() {
@@ -81,8 +81,6 @@ public abstract class Tank extends OwnedDirectedEntity {
   }
 
   public void move() {
-    prevX = x;
-    prevY = y;
     switch (lastAction) {
       case UP:
         direction = Direction.UP;
@@ -112,6 +110,10 @@ public abstract class Tank extends OwnedDirectedEntity {
     return lastAction;
   }
 
+  protected TankAction doGetAction(GameState gameState) {
+    return tankOperator.getAction(gameState, this);
+  }
+
   public boolean isYourTank() {
     return owner == Player.YOU;
   }
@@ -127,8 +129,6 @@ public abstract class Tank extends OwnedDirectedEntity {
   public void setCanFire(boolean canFire) {
     this.canFire = canFire;
   }
-
-  protected abstract TankAction doGetAction(GameState gameState);
 
   public Rectangle getRect() {
     return new Rectangle(y - TANK_HALF_SIZE, x + TANK_HALF_SIZE, y + TANK_HALF_SIZE, x - TANK_HALF_SIZE);

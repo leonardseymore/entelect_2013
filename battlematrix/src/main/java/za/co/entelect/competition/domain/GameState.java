@@ -211,7 +211,7 @@ public class GameState {
     }
     updateTacticalMap();
 
-    // 2) Bullets and tanks are moved and collision are checked for.
+    // 2) Bullets and tankoperator are moved and collision are checked for.
     for (Tank tank : tanks) {
       int oldX = tank.getX();
       int oldY = tank.getY();
@@ -244,7 +244,7 @@ public class GameState {
       }
     }
 
-    // 3) All tanks in the firing state are fired and their bullets are added to the field.
+    // 3) All tankoperator in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
     for (Tank tank : tanks) {
       if (tank.isCanFire() && tank.getLastAction() == TankAction.FIRE) {

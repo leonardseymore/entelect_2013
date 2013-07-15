@@ -3,8 +3,9 @@ package za.co.entelect.competition.swing;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.bots.tanks.MouseControlledTank;
+import za.co.entelect.competition.bots.tankoperator.MouseControlledTankOperator;
 import za.co.entelect.competition.bots.pathfinding.PathFinder;
+import za.co.entelect.competition.bots.tankoperator.PathAware;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Rectangle;
@@ -68,15 +69,11 @@ public class GameRenderer implements GameElementVisitor {
     int [] turretPos = tank.turretPos();
     g.fillRect(turretPos[0], turretPos[1], 1, 1);
 
-    if (tank instanceof MouseControlledTank) {
-      Stack<PathFinder.Node> path = ((MouseControlledTank)tank).getPath();
+    if (tank.getTankOperator() instanceof PathAware) {
+      Stack<PathFinder.Node> path = ((PathAware)tank.getTankOperator()).getPath();
       g.setColor(tankColor);
       drawPath(g, path);
-    } /*else if (tank instanceof ApproachTank) {
-      Stack<PathFinder.Node> path = ((ApproachTank)tank).getPath();
-      g.setColor(tankColor);
-      drawPath(g, path);
-    }   */
+    }
   }
 
   private void drawPath(Graphics2D g, Stack<PathFinder.Node> path) {

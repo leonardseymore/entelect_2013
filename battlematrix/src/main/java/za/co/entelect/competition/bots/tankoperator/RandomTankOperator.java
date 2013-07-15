@@ -1,22 +1,15 @@
-package za.co.entelect.competition.bots.tanks;
+package za.co.entelect.competition.bots.tankoperator;
 
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
-import za.co.entelect.competition.domain.TankAction;
-import za.co.entelect.competition.domain.TankId;
+import za.co.entelect.competition.domain.*;
 
 import java.util.Random;
 
-public class RandomTank extends Tank {
+public class RandomTankOperator implements TankOperator {
 
   private Random random = new Random(System.currentTimeMillis());
 
-  public RandomTank(TankId id) {
-    super(id);
-  }
-
   @Override
-  public TankAction doGetAction(GameState gameState) {
+  public TankAction getAction(GameState gameState, Tank tank) {
     switch (random.nextInt(100)) {
       case 1:
         return TankAction.UP;

@@ -1,12 +1,4 @@
-package za.co.entelect.competition.bots.tanks;
-
-import za.co.entelect.competition.bots.behavior.Approach;
-import za.co.entelect.competition.bots.pathfinding.PathFinder;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Player;
-import za.co.entelect.competition.domain.Tank;
-
-import java.util.Stack;
+package za.co.entelect.competition.bots.tankoperator;
 
 public class ApproachTank/* extends Tank */{
 

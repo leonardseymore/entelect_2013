@@ -1,12 +1,7 @@
-package za.co.entelect.competition.bots.tanks;
+package za.co.entelect.competition.bots.tankoperator;
 
 import za.co.entelect.competition.bots.descision.tree.DecisionTreeAction;
-import za.co.entelect.competition.bots.descision.tree.DecisionTreeNode;
-import za.co.entelect.competition.bots.descision.tree.DecisionTreeNodeType;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
 import za.co.entelect.competition.domain.TankAction;
-import za.co.entelect.competition.domain.TankId;
 
 public class TankDecisionTreeAction extends DecisionTreeAction {
 

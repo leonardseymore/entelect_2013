@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots.tanks;
+package za.co.entelect.competition.bots.tankoperator;
 
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.bots.descision.tree.*;
@@ -6,18 +6,14 @@ import za.co.entelect.competition.domain.*;
 
 import java.util.Collection;
 
-public class TimmyTank extends Tank {
+public class TimmyTankOperator implements TankOperator {
 
-  public TimmyTank(TankId id) {
-    super(id);
-  }
-
-  private DecisionTreeNode createDecisionTree(GameState gameState) {
-    Collection<Tank> enemyTanks = gameState.getEnemyTanks(this);
+  private DecisionTreeNode createDecisionTree(GameState gameState, Tank tank) {
+    Collection<Tank> enemyTanks = gameState.getEnemyTanks(tank);
     Tank closestTank = null;
     int closestDist = Integer.MAX_VALUE;
     for (Tank enemyTank : enemyTanks) {
-      int dist = Util.manhattanDist(x, y, enemyTank.getX(), enemyTank.getY());
+      int dist = Util.manhattanDist(tank.getX(), tank.getY(), enemyTank.getX(), enemyTank.getY());
       if (dist < closestDist) {
         closestDist = dist;
         closestTank = enemyTank;
@@ -37,8 +33,8 @@ public class TimmyTank extends Tank {
   }
 
   @Override
-  public TankAction doGetAction(GameState gameState) {
-    DecisionTreeNode decTree = createDecisionTree(gameState);
+  public TankAction getAction(GameState gameState, Tank tank) {
+    DecisionTreeNode decTree = createDecisionTree(gameState, tank);
     DecisionTreeNode action = decTree.makeDecision();
     if (action != null && action.getType() == DecisionTreeNodeType.ACTION) {
       return ((TankDecisionTreeAction)action).getTankAction();
