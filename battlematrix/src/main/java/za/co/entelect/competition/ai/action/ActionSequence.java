@@ -1,9 +1,7 @@
-package za.co.entelect.competition.ai;
+package za.co.entelect.competition.ai.action;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 public class ActionSequence extends Action {
 

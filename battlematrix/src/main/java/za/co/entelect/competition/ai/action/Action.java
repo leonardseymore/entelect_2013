@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai;
+package za.co.entelect.competition.ai.action;
 
 public class Action implements Comparable<Action> {
 
