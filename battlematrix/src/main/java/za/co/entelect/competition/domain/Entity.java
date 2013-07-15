@@ -66,6 +66,23 @@ public abstract class Entity implements Trackable {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Entity)) return false;
+
+    Entity entity = (Entity) o;
+
+    if (id != entity.id) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return (int) (id ^ (id >>> 32));
+  }
+
+  @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Entity{");
     sb.append("id=").append(id);

@@ -6,13 +6,10 @@ import za.co.entelect.competition.Constants;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameState {
+public class GameState extends GameModel {
   private static final Logger logger = Logger.getLogger(GameState.class);
 
   private boolean verbose = false;
-
-  private int w;
-  private int h;
 
   private Base yourBase;
   private Base opponentBase;
@@ -21,12 +18,8 @@ public class GameState {
   private Collection<Bullet> bullets = new CopyOnWriteArrayList<>();
   private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
-  private Entity[][] map;
-
   public GameState(int w, int h) {
-    this.w = w;
-    this.h = h;
-    map = new Entity[w][h];
+    super(w, h);
   }
 
   public void setOpponentBase(int x, int y) {
@@ -137,17 +130,6 @@ public class GameState {
     logger.debug("Removed wall [" + wall + "]");
   }
 
-  public Entity getEntityAt(int x, int y) {
-    if (!isInbounds(x, y)) {
-      return null;
-    }
-    return map[x][y];
-  }
-
-  public boolean isInbounds(int x, int y) {
-    return x >= 0 && x < w && y >= 0 && y < h;
-  }
-
   public void accept(GameElementVisitor visitor) {
     visitor.visit(this);
     Iterator<Entity> it = new EntityIterator();
@@ -157,7 +139,7 @@ public class GameState {
     }
   }
 
-  private void updateTacticalMap() {
+  private void updateGameModel() {
     for (int i = 0; i < w; i++) {
       for (int j = 0; j < h; j++) {
         map[i][j] = null;
@@ -200,7 +182,7 @@ public class GameState {
         }
       }
     }
-    updateTacticalMap();
+    updateGameModel();
 
     // 2) Bullets and tankoperator are moved and collision are checked for.
     for (Tank tank : tanks) {
@@ -371,22 +353,6 @@ public class GameState {
       return true;
     }
     return false;
-  }
-
-  public boolean canTankBeMovedTo(Tank tank, int x, int y) {
-    for (int j = y - Tank.TANK_HALF_SIZE; j <= y + Tank.TANK_HALF_SIZE; j++) {
-      for (int i = x - Tank.TANK_HALF_SIZE; i <= x + Tank.TANK_HALF_SIZE; i++) {
-        if (!isInbounds(i, j)) {
-          return false;
-        }
-
-        Entity entity = getEntityAt(i, j);
-        if (entity != null && entity != tank) {
-          return false;
-        }
-      }
-    }
-    return true;
   }
 
   public String toAscii() {
