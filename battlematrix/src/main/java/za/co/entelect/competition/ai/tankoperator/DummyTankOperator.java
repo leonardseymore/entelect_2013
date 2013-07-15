@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots.tankoperator;
+package za.co.entelect.competition.ai.tankoperator;
 
 import za.co.entelect.competition.domain.*;
 

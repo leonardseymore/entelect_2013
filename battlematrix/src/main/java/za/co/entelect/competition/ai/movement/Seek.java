@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots.movement;
+package za.co.entelect.competition.ai.movement;
 
 import za.co.entelect.competition.domain.*;
 

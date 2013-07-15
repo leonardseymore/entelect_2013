@@ -1,6 +1,6 @@
-import za.co.entelect.competition.bots.tankoperator.KeyboardControlledTankOperator
-import za.co.entelect.competition.bots.tankoperator.MouseControlledTankOperator
-import za.co.entelect.competition.bots.tankoperator.RandomTankOperator
+import za.co.entelect.competition.ai.tankoperator.KeyboardControlledTankOperator
+import za.co.entelect.competition.ai.tankoperator.MouseControlledTankOperator
+import za.co.entelect.competition.ai.tankoperator.RandomTankOperator
 import za.co.entelect.competition.domain.Tank
 import za.co.entelect.competition.domain.TankId
 

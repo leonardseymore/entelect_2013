@@ -1,4 +1,4 @@
-package za.co.entelect.competition.bots.pathfinding;
+package za.co.entelect.competition.ai.pathfinding;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Util;

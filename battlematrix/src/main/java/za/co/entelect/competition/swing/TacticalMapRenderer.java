@@ -3,9 +3,8 @@ package za.co.entelect.competition.swing;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.bots.tankoperator.MouseControlledTankOperator;
-import za.co.entelect.competition.bots.pathfinding.PathFinder;
-import za.co.entelect.competition.bots.tankoperator.PathAware;
+import za.co.entelect.competition.ai.pathfinding.PathFinder;
+import za.co.entelect.competition.ai.tankoperator.PathAware;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.Rectangle;
 
