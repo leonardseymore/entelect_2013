@@ -143,6 +143,9 @@ public class GameState {
   }
 
   public Entity getEntityAt(int x, int y) {
+    if (!isInbounds(x, y)) {
+      return null;
+    }
     return map[x][y].getEntity();
   }
 
@@ -260,15 +263,49 @@ public class GameState {
     }
   }
 
-  private boolean checkEntityCollision(Entity s) {
-    Iterator<Entity> it = new EntityIterator();
-    while (it.hasNext()) {
-      Entity t = it.next();
-      if (s != t) {
-        if (s.getRect().intersects(t.getRect())) {
-          return handleCollision(s, t);
+  private boolean checkEntityCollision(Bullet bullet) {
+    Entity e = getEntityAt(bullet.getX(), bullet.getY());
+    if (e != null) {
+      return handleCollision(bullet, e);
+    }
+    return false;
+  }
+
+  private boolean checkEntityCollision(Tank tank) {
+    Rectangle rect = tank.getRect();
+    switch (tank.getDirection()) {
+      case UP:
+        for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
+          Entity e = getEntityAt(i, rect.getTop());
+          if (e != null) {
+            return handleCollision(tank, e);
+          }
         }
-      }
+        break;
+      case RIGHT:
+        for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
+          Entity e = getEntityAt(rect.getRight(), j);
+          if (e != null) {
+            return handleCollision(tank, e);
+          }
+        }
+        break;
+      case DOWN:
+        for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
+          Entity e = getEntityAt(i, rect.getBottom());
+          if (e != null) {
+            return handleCollision(tank, e);
+          }
+        }
+        break;
+      case LEFT:
+        for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
+          Entity e = getEntityAt(rect.getLeft(), j);
+          if (e != null) {
+            return handleCollision(tank, e);
+          }
+        }
+        break;
     }
     return false;
   }
