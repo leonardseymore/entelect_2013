@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/MapNode.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/Heuristic.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/HeuristicDistance.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/MouseControlledTankOperator.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/MouseControlledTankOperator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/TacticalMapRenderer.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/TacticalMapRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="battlematrix.iws" />
@@ -48,7 +48,7 @@
     <file path="/GameFactory.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373736796889" ignored="false" />
     <file path="/GameStateUpdatedListener.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373100006850" ignored="false" />
     <file path="/KeyboardInput.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373103995226" ignored="false" />
-    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373908762570" ignored="false" />
+    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373909098375" ignored="false" />
     <file path="/RandomTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373736065727" ignored="false" />
     <file path="/Mouse.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373557271524" ignored="false" />
     <file path="/MouseControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373741418610" ignored="false" />
@@ -184,16 +184,54 @@
       <file leaf-file-name="PathFinder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="64" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0">
+            <state line="44" column="26" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TacticalMapRenderer.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MouseControlledTankOperator.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/MouseControlledTankOperator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="54" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.81329924">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TacticalMapRenderer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/TacticalMapRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="21" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.36714977">
+            <state line="40" column="21" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeekPath.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/SeekPath.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="17" selection-start="358" selection-end="358" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Seek.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/Seek.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="14" selection-start="110" selection-end="110" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Approach.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="48" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -226,13 +264,13 @@
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/TimmyTankOperator.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/DummyTankOperator.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/PathAware.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/MouseControlledTankOperator.java" />
         <option value="$PROJECT_DIR$/src/main/resources/map1.groovy" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GameRenderer.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/TacticalMapRenderer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/MouseControlledTankOperator.java" />
       </list>
     </option>
   </component>
@@ -1063,7 +1101,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved collision detection cost" />
+    <option name="LAST_COMMIT_MESSAGE" value="No need for mapnode" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1090,6 +1128,7 @@
     <MESSAGE value="Implemented basic decision trees" />
     <MESSAGE value="Seperated tank from operators" />
     <MESSAGE value="Improved collision detection cost" />
+    <MESSAGE value="No need for mapnode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1103,22 +1142,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/RandomTankOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="21" selection-start="285" selection-end="285" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/TimmyTankOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="60" selection-start="600" selection-end="600" vertical-scroll-proportion="0.16401275">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/DummyTankOperator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="266" selection-end="266" vertical-scroll-proportion="0.36319613">
@@ -1129,15 +1152,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/PathAware.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="35" selection-start="209" selection-end="209" vertical-scroll-proportion="0.2905569">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/MouseControlledTankOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="75" selection-start="400" selection-end="400" vertical-scroll-proportion="0.23961662">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1186,13 +1200,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/Seek.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="29" selection-start="582" selection-end="582" vertical-scroll-proportion="0.55369127">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="127" column="8" selection-start="2701" selection-end="2701" vertical-scroll-proportion="0.0">
@@ -1202,17 +1209,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/TacticalMapRenderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="64" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0">
+        <state line="40" column="21" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/TacticalMapRenderer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/Seek.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="21" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.36714977">
+        <state line="4" column="14" selection-start="110" selection-end="110" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/behavior/Approach.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="48" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/movement/SeekPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="17" selection-start="358" selection-end="358" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/pathfinding/PathFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="26" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/bots/tankoperator/MouseControlledTankOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="54" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.81329924">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

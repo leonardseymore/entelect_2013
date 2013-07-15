@@ -12,15 +12,10 @@ public class PathFinder {
 
   private GameState gameState;
   private Tank tank;
-  private Heuristic heuristic;
 
-  private int obstructionTypes = 1 | 2;
-
-  public PathFinder(GameState gameState, Tank tank, int obstructionTypes) {
+  public PathFinder(GameState gameState, Tank tank) {
     this.tank = tank;
     this.gameState = gameState;
-    this.obstructionTypes = obstructionTypes;
-    this.heuristic = new HeuristicDistance();
   }
 
   public Stack<Node> closestPathAStar(int startX, int startY, int endX, int endY, boolean closest) {
@@ -28,7 +23,7 @@ public class PathFinder {
     Collection<Node> closed = new HashSet<>();
 
     Node start = new Node(startX, startY, gameState.getEntityAt(startX, startY));
-    start.goalCost = heuristic.heuristic(start, endX, endY);
+    start.goalCost = heuristic(start, endX, endY);
     open.add(start);
 
     Node closestNode = start;
@@ -47,7 +42,7 @@ public class PathFinder {
       open.remove(currentNode);
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(currentNode)) {
-        toNode.goalCost = heuristic.heuristic(toNode, endX, endY);
+        toNode.goalCost = heuristic(toNode, endX, endY);
         toNode.parent = currentNode;
 
         if (closed.contains(toNode)) {
@@ -96,6 +91,11 @@ public class PathFinder {
       neighbors.add(new Node(x, y, gameState.getEntityAt(x, y)));
     }
     return canMoveTo;
+  }
+
+  public int heuristic(PathFinder.Node node, int endX, int endY) {
+    int dist = Util.manhattanDist(node.x, node.y, endX, endY);
+    return dist;
   }
 
   private Stack<Node> pathToNode(Node currentNode) {
