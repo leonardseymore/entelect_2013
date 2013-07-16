@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameModel.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/tankoperator/MouseControlledTankOperator.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/tankoperator/MouseControlledTankOperator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinder.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/Seek.java" afterPath="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/Seek.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="battlematrix.iws" />
@@ -14,7 +12,7 @@
     <file path="/UmpireSimulator.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1372953042360" ignored="false" />
     <file path="/Console.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373026002165" ignored="false" />
     <file path="/pom.xml" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373044935070" ignored="false" />
-    <file path="/fragment.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373989482559" ignored="false" />
+    <file path="/fragment.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373994358400" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../GroovyEmbedShell/src/e/Console.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373027767736" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../GroovyEmbedShell/src/e/ConsolePromptClosure.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373027767736" ignored="false" />
     <file path="/Entity.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373916412134" ignored="false" />
@@ -49,7 +47,7 @@
     <file path="/GameFactory.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373736796889" ignored="false" />
     <file path="/GameStateUpdatedListener.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373100006850" ignored="false" />
     <file path="/KeyboardInput.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373103995226" ignored="false" />
-    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373989751355" ignored="false" />
+    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373990021636" ignored="false" />
     <file path="/RandomTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373736065727" ignored="false" />
     <file path="/Mouse.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373557271524" ignored="false" />
     <file path="/MouseControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373741418610" ignored="false" />
@@ -107,14 +105,14 @@
     <file path="/Sequence.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373828566345" ignored="false" />
     <file path="/TankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373902060236" ignored="false" />
     <file path="/KeyboardControlledTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373902341344" ignored="false" />
-    <file path="/MouseControlledTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373989359187" ignored="false" />
+    <file path="/MouseControlledTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373993713382" ignored="false" />
     <file path="/RandomTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373902480648" ignored="false" />
     <file path="/TimmyTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373902537317" ignored="false" />
     <file path="/PathAware.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373902750193" ignored="false" />
     <file path="/ActionManager.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373917373629" ignored="false" />
     <file path="/CompoundAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373914384812" ignored="false" />
     <file path="/ActionSequence.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373988830248" ignored="false" />
-    <file path="/MoveTankToAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373989953104" ignored="false" />
+    <file path="/MoveTankToAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373993929886" ignored="false" />
     <file path="/GameModel.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373916878329" ignored="false" />
     <file path="$PROJECT_DIR$/../../../groovy/orientdb_api_topology.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373981072809" ignored="false" />
     <file path="/orientdb_api_topology.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373980811975" ignored="false" />
@@ -170,6 +168,113 @@
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java" line="41" class="za.co.entelect.competition.ai.action.MoveTankToAction" package="za.co.entelect.competition.ai.action">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java" line="45" class="za.co.entelect.competition.ai.action.MoveTankToAction" package="za.co.entelect.competition.ai.action">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" line="221" class="za.co.entelect.competition.domain.GameState" package="za.co.entelect.competition.domain">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" line="206" class="za.co.entelect.competition.domain.GameState" package="za.co.entelect.competition.domain">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java" line="23" class="za.co.entelect.competition.ai.action.ActionManager" package="za.co.entelect.competition.ai.action">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java" line="19" class="za.co.entelect.competition.ai.action.ActionManager" package="za.co.entelect.competition.ai.action">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" line="227" class="za.co.entelect.competition.domain.GameState" package="za.co.entelect.competition.domain">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="&#13;&#13;JAVA" />
+        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -179,10 +284,68 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="GameState.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="227" column="0" selection-start="5334" selection-end="5334" vertical-scroll-proportion="0.23015873">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TankOperator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/TankOperator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="13" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MouseControlledTankOperator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/tankoperator/MouseControlledTankOperator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="0" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tank.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="113" column="28" selection-start="2435" selection-end="2435" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActionManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="0" selection-start="868" selection-end="868" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Action.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/Action.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="14" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="MoveTankToAction.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="21" selection-start="1320" selection-end="1320" vertical-scroll-proportion="0.0">
+            <state line="45" column="0" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -190,31 +353,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Seek.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Seek.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/Seek.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="18" selection-start="1031" selection-end="1031" vertical-scroll-proportion="0.7874396">
+            <state line="48" column="20" selection-start="1176" selection-end="1176" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PathFinder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinder.java">
+      <file leaf-file-name="SeekPath.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/SeekPath.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="44" selection-start="2498" selection-end="2498" vertical-scroll-proportion="0.0">
+            <state line="39" column="21" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
+      <file leaf-file-name="GUI.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="3" selection-start="1480" selection-end="1480" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="133" column="64" selection-start="4164" selection-end="4164" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -237,7 +398,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/CompoundAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/ActionSequence.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/Action.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Entity.java" />
@@ -245,14 +405,15 @@
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionSequence.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionCompound.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/Action.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/tankoperator/MouseControlledTankOperator.java" />
         <option value="$PROJECT_DIR$/src/main/resources/map1.groovy" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameModel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/Seek.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/tankoperator/MouseControlledTankOperator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java" />
       </list>
     </option>
   </component>
@@ -541,6 +702,104 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="domain" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="competition" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ai" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tankoperator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="competition" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ai" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="competition" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ai" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="action" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -917,7 +1176,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement mouse operated tank with action manager" />
+    <option name="LAST_COMMIT_MESSAGE" value="Obsolete GameModel class removed" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -953,6 +1212,7 @@
     <MESSAGE value="Moved action management&#10;" />
     <MESSAGE value="Abstract GameModel for use in other algorithms" />
     <MESSAGE value="Implement mouse operated tank with action manager" />
+    <MESSAGE value="Obsolete GameModel class removed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -966,13 +1226,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/SeekPath.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="4" selection-start="783" selection-end="1012" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="68" column="35" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
@@ -980,23 +1233,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="0" selection-start="3343" selection-end="3343" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/AppSwing.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="0" selection-start="1135" selection-end="1135" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="0" selection-start="1798" selection-end="1798" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1017,67 +1256,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/tankoperator/MouseControlledTankOperator.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="52" selection-start="1099" selection-end="1099" vertical-scroll-proportion="0.44630873">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="90" column="44" selection-start="2498" selection-end="2498" vertical-scroll-proportion="0.16932908">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/map1.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="52" selection-start="1067" selection-end="1067" vertical-scroll-proportion="1.3456376">
+        <state line="42" column="52" selection-start="1067" selection-end="1067" vertical-scroll-proportion="0.64057505">
           <folding>
             <element signature="e#0#67#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/swing/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="64" selection-start="4164" selection-end="4164" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/Action.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="16" selection-start="195" selection-end="195" vertical-scroll-proportion="0.30201343">
+        <state line="42" column="14" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/TankOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="13" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/SeekPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="21" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/Seek.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="20" selection-start="1176" selection-end="1176" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="28" selection-start="2435" selection-end="2435" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/tankoperator/MouseControlledTankOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="0" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="0" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/ActionManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="35" selection-start="1102" selection-end="1102" vertical-scroll-proportion="1.3456376">
+        <state line="35" column="0" selection-start="868" selection-end="868" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="3" selection-start="1480" selection-end="1480" vertical-scroll-proportion="0.0">
+        <state line="227" column="0" selection-start="5334" selection-end="5334" vertical-scroll-proportion="0.23015873">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="44" selection-start="2498" selection-end="2498" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/action/MoveTankToAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="21" selection-start="1320" selection-end="1320" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/movement/Seek.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="18" selection-start="1031" selection-end="1031" vertical-scroll-proportion="0.7874396">
-          <folding />
         </state>
       </provider>
     </entry>

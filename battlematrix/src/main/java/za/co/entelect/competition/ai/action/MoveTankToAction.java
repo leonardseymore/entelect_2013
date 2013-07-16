@@ -1,6 +1,7 @@
 package za.co.entelect.competition.ai.action;
 
 import za.co.entelect.competition.ai.movement.Seek;
+import za.co.entelect.competition.ai.movement.SeekPath;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
@@ -17,6 +18,7 @@ public class MoveTankToAction extends Action {
   private GameState gameState;
   private TankAction nextTankAction = TankAction.NONE;
   private Stack<PathFinder.Node> path;
+  private Seek seek;
 
   public MoveTankToAction(GameState gameState, Tank tank, int x, int y) {
     this.gameState = gameState;
@@ -28,6 +30,7 @@ public class MoveTankToAction extends Action {
     if (path != null) {
       expiryTime = path.size() * 2;
     }
+    seek = new SeekPath(gameState, tank, path);
   }
 
   public Stack<PathFinder.Node> getPath() {
@@ -36,27 +39,16 @@ public class MoveTankToAction extends Action {
 
   @Override
   public void doExecute() {
-    if (path == null || path.isEmpty()) {
-      return;
-    }
-
-    PathFinder.Node target = path.peek();
-    while ((tank.getX() == target.getX() && tank.getY() == target.getY()) && !path.isEmpty()) {
-      target = path.pop();
-    }
-    Seek seek = new Seek(gameState, tank, target);
     nextTankAction = seek.getAction();
   }
 
   public TankAction getTankAction() {
-    TankAction ret = nextTankAction;
-    nextTankAction = TankAction.NONE;
-    return ret;
+    return nextTankAction;
   }
 
   @Override
   public boolean isComplete() {
-    if (path == null || path.isEmpty()) {
+    if (path == null || path.isEmpty() || expiryTime <= 0) {
       return true;
     }
 

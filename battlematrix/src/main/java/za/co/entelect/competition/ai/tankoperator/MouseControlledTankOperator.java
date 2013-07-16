@@ -43,7 +43,7 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
       ActionManager.getInstance().scheduleAction(action);
     }
 
-    if (action != null) {
+    if (action != null && !action.isComplete()) {
       return action.getTankAction();
     }
     return TankAction.NONE;

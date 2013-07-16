@@ -25,7 +25,7 @@ public class ActionManager {
     Queue<Action> newActiveQueue = new PriorityQueue<>();
     for (Action action : pending) {
       if (highestPriorityAction != null
-        && action.getPriority() <= highestPriorityAction.getPriority()) {
+        && action.getPriority() < highestPriorityAction.getPriority()) {
         break;
       }
 
