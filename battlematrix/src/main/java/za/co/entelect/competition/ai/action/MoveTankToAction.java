@@ -2,7 +2,7 @@ package za.co.entelect.competition.ai.action;
 
 import za.co.entelect.competition.ai.movement.Seek;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
-import za.co.entelect.competition.domain.GameModel;
+import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
 import za.co.entelect.competition.domain.TankAction;
 
@@ -14,16 +14,16 @@ public class MoveTankToAction extends Action {
   private int y;
   private Tank tank;
   private PathFinder pathFinder;
-  private GameModel gameModel;
+  private GameState gameState;
   private TankAction nextTankAction = TankAction.NONE;
   private Stack<PathFinder.Node> path;
 
-  public MoveTankToAction(GameModel gameModel, Tank tank, int x, int y) {
-    this.gameModel = gameModel;
+  public MoveTankToAction(GameState gameState, Tank tank, int x, int y) {
+    this.gameState = gameState;
     this.tank = tank;
     this.x = x;
     this.y = y;
-    pathFinder = new PathFinder(gameModel, tank);
+    pathFinder = new PathFinder(gameState, tank);
     path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), x, y, true);
     if (path != null) {
       expiryTime = path.size() * 2;
@@ -44,7 +44,7 @@ public class MoveTankToAction extends Action {
     while ((tank.getX() == target.getX() && tank.getY() == target.getY()) && !path.isEmpty()) {
       target = path.pop();
     }
-    Seek seek = new Seek(gameModel, tank, target);
+    Seek seek = new Seek(gameState, tank, target);
     nextTankAction = seek.getAction();
   }
 

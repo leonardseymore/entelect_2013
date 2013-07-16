@@ -7,7 +7,7 @@ import za.co.entelect.competition.ai.action.ActionManager;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameState extends GameModel {
+public class GameState {
   private static final Logger logger = Logger.getLogger(GameState.class);
 
   private boolean verbose = false;
@@ -19,8 +19,42 @@ public class GameState extends GameModel {
   private Collection<Bullet> bullets = new CopyOnWriteArrayList<>();
   private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
+  protected int w;
+  protected int h;
+
+  protected Entity map[][];
+
   public GameState(int w, int h) {
-    super(w, h);
+    this.w = w;
+    this.h = h;
+    map = new Entity[w][h];
+  }
+
+  public boolean canTankBeMovedTo(Tank tank, int x, int y) {
+    for (int j = y - Tank.TANK_HALF_SIZE; j <= y + Tank.TANK_HALF_SIZE; j++) {
+      for (int i = x - Tank.TANK_HALF_SIZE; i <= x + Tank.TANK_HALF_SIZE; i++) {
+        if (!isInbounds(i, j)) {
+          return false;
+        }
+
+        Entity entity = getEntityAt(i, j);
+        if (entity != null && entity != tank) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public boolean isInbounds(int x, int y) {
+    return x >= 0 && x < w && y >= 0 && y < h;
+  }
+
+  public Entity getEntityAt(int x, int y) {
+    if (!isInbounds(x, y)) {
+      return null;
+    }
+    return map[x][y];
   }
 
   public void setOpponentBase(int x, int y) {
