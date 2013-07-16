@@ -1,6 +1,8 @@
 package za.co.entelect.competition.ai.tankoperator;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.ai.action.ActionManager;
+import za.co.entelect.competition.ai.action.MoveTankToAction;
 import za.co.entelect.competition.swing.Mouse;
 import za.co.entelect.competition.ai.movement.SeekPath;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
@@ -12,20 +14,19 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
 
   private static final Logger logger = Logger.getLogger(MouseControlledTankOperator.class);
 
-  private Stack<PathFinder.Node> path;
-  private PathFinder pathFinder;
-  private SeekPath seek;
-
   private int targetX = -1;
   private int targetY = -1;
+  private MoveTankToAction action;
 
   public Stack<PathFinder.Node> getPath() {
-    return path;
+    if (action != null) {
+      return action.getPath();
+    }
+    return null;
   }
 
   @Override
   public TankAction getAction(GameState gameState, Tank tank) {
-
     Mouse mouse = Mouse.getInstance();
     if (mouse.buttonDown(2)) {
       return TankAction.FIRE;
@@ -35,16 +36,15 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
       targetX = (int)(mouse.getPosition().getX() / mouse.getZoomFactor());
       targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
       logger.debug("New target set (" + targetX + "," + targetY + ")");
-      long start = System.currentTimeMillis();
-      this.pathFinder = new PathFinder(gameState, tank);
-      path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), targetX, targetY, true);
-      this.seek = new SeekPath(gameState, tank);
-      seek.setPath(path);
-      logger.debug("Path finding took [" + (System.currentTimeMillis() - start) + "ms]");
+      if (action != null) {
+        action.cancel();
+      }
+      action = new MoveTankToAction(gameState, tank, targetX, targetY);
+      ActionManager.getInstance().scheduleAction(action);
     }
 
-    if (seek != null) {
-      return seek.getAction();
+    if (action != null) {
+      return action.getTankAction();
     }
     return TankAction.NONE;
   }

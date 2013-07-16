@@ -10,19 +10,19 @@ public class PathFinder {
 
   private static Logger logger = Logger.getLogger(PathFinder.class);
 
-  private GameState gameState;
+  private GameModel gameModel;
   private Tank tank;
 
-  public PathFinder(GameState gameState, Tank tank) {
+  public PathFinder(GameModel gameModel, Tank tank) {
     this.tank = tank;
-    this.gameState = gameState;
+    this.gameModel = gameModel;
   }
 
   public Stack<Node> closestPathAStar(int startX, int startY, int endX, int endY, boolean closest) {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
-    Node start = new Node(startX, startY, gameState.getEntityAt(startX, startY));
+    Node start = new Node(startX, startY, gameModel.getEntityAt(startX, startY));
     start.goalCost = heuristic(start, endX, endY);
     open.add(start);
 
@@ -86,9 +86,9 @@ public class PathFinder {
   }
 
   private boolean ifCanMoveToAdd(int x, int y, Collection<Node> neighbors) {
-    boolean canMoveTo = gameState.canTankBeMovedTo(tank, x, y);
+    boolean canMoveTo = gameModel.canTankBeMovedTo(tank, x, y);
     if (canMoveTo) {
-      neighbors.add(new Node(x, y, gameState.getEntityAt(x, y)));
+      neighbors.add(new Node(x, y, gameModel.getEntityAt(x, y)));
     }
     return canMoveTo;
   }

@@ -38,7 +38,7 @@ public class ActionCompound extends Action {
   }
 
   @Override
-  public void execute() {
+  protected void doExecute() {
     for (Action action : actions) {
       action.execute();
     }

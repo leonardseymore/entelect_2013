@@ -2,6 +2,7 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
+import za.co.entelect.competition.ai.action.ActionManager;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -168,6 +169,8 @@ public class GameState extends GameModel {
     if (verbose) {
       logger.debug("Update called");
     }
+
+    ActionManager.getInstance().execute();
 
     // 1) Bullets that have been fired are moved and collisions are checked for.
     // Looking at rules 1 and 2 bullets need to be moved twice per round

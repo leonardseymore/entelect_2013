@@ -4,6 +4,15 @@ import java.util.*;
 
 public class ActionManager {
 
+  private static ActionManager instance;
+
+  public static ActionManager getInstance() {
+    if (instance == null) {
+      instance = new ActionManager();
+    }
+    return instance;
+  }
+
   private Queue<Action> pending = new PriorityQueue<>();
   private Queue<Action> active = new PriorityQueue<>();
 
@@ -29,7 +38,7 @@ public class ActionManager {
     Collection<Action> actionsToRemoveFromPending = new HashSet<>();
     Collection<Action> actionsToAddToActive = new HashSet<>();
     for (Action action : pending) {
-      if (action.getExpiryTime() < System.currentTimeMillis()) {
+      if (action.getExpiryTime() <= 0) {
         actionsToRemoveFromPending.add(action);
       }
 

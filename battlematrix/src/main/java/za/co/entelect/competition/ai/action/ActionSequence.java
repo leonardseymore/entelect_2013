@@ -29,7 +29,7 @@ public class ActionSequence extends Action {
   }
 
   @Override
-  public void execute() {
+  protected void doExecute() {
     actions.get(activeIndex).execute();
     if (actions.get(activeIndex).isComplete()) {
       activeIndex++;

@@ -1,10 +1,10 @@
 package za.co.entelect.competition.ai.action;
 
-public class Action implements Comparable<Action> {
+public abstract class Action implements Comparable<Action> {
 
-  private double priority;
-  private boolean canInterrupt;
-  private long expiryTime;
+  protected double priority;
+  protected boolean canInterrupt = true;
+  protected int expiryTime;
 
   public double getPriority() {
     return priority;
@@ -22,11 +22,11 @@ public class Action implements Comparable<Action> {
     this.canInterrupt = canInterrupt;
   }
 
-  public long getExpiryTime() {
+  public int getExpiryTime() {
     return expiryTime;
   }
 
-  public void setExpiryTime(long expiryTime) {
+  public void setExpiryTime(int expiryTime) {
     this.expiryTime = expiryTime;
   }
 
@@ -38,8 +38,15 @@ public class Action implements Comparable<Action> {
     return true;
   }
 
-  public void execute() {
+  protected abstract void doExecute();
 
+  public void execute() {
+    expiryTime--;
+    doExecute();
+  }
+
+  public void cancel() {
+    expiryTime = 0;
   }
 
   @Override
