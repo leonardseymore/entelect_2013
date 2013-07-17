@@ -65,6 +65,8 @@ public abstract class Entity implements Trackable {
     return new Rectangle(y, x, y, x);
   }
 
+  public abstract int getZobristIndex();
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

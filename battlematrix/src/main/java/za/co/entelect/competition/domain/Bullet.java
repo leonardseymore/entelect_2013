@@ -1,5 +1,7 @@
 package za.co.entelect.competition.domain;
 
+import za.co.entelect.competition.Constants;
+
 public class Bullet extends OwnedDirectedEntity {
 
   private Tank tank;
@@ -22,6 +24,21 @@ public class Bullet extends OwnedDirectedEntity {
 
   public Tank getTank() {
     return tank;
+  }
+
+  @Override
+  public int getZobristIndex() {
+    switch (direction) {
+      case UP:
+        return Constants.ZOBRIST_BU_UP;
+      case RIGHT:
+        return Constants.ZOBRIST_BU_RIGHT;
+      case DOWN:
+        return Constants.ZOBRIST_BU_DOWN;
+      case LEFT:
+        return Constants.ZOBRIST_BU_LEFT;
+    }
+    return 0;
   }
 
   @Override

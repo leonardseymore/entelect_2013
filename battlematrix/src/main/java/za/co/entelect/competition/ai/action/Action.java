@@ -49,6 +49,10 @@ public abstract class Action implements Comparable<Action> {
     expiryTime = 0;
   }
 
+  public int getCost() {
+    return expiryTime;
+  }
+
   @Override
   public int compareTo(Action o) {
     int result = priority > o.priority ? 1 : priority < o.priority ? -1 : 0;

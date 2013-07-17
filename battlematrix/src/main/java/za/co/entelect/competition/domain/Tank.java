@@ -1,5 +1,7 @@
 package za.co.entelect.competition.domain;
 
+import za.co.entelect.competition.Constants;
+
 public class Tank extends OwnedDirectedEntity {
 
   public static final int TANK_SIZE = 5;
@@ -66,6 +68,34 @@ public class Tank extends OwnedDirectedEntity {
   }
 
   @Override
+  public int getZobristIndex() {
+    if (isYourTank()) {
+      switch (direction) {
+        case UP:
+          return Constants.ZOBRIST_YT_UP;
+        case RIGHT:
+          return Constants.ZOBRIST_YT_RIGHT;
+        case DOWN:
+          return Constants.ZOBRIST_YT_DOWN;
+        case LEFT:
+          return Constants.ZOBRIST_YT_LEFT;
+      }
+    } else {
+      switch (direction) {
+        case UP:
+          return Constants.ZOBRIST_OT_UP;
+        case RIGHT:
+          return Constants.ZOBRIST_OT_RIGHT;
+        case DOWN:
+          return Constants.ZOBRIST_OT_DOWN;
+        case LEFT:
+          return Constants.ZOBRIST_OT_LEFT;
+      }
+    }
+    return 0;
+  }
+
+  @Override
   public Direction getDirection() {
     return direction;
   }
@@ -99,6 +129,24 @@ public class Tank extends OwnedDirectedEntity {
         x--;
         break;
     }
+  }
+
+  public boolean canMoveForward(GameState gameState) {
+    switch (lastAction) {
+      case UP:
+        direction = Direction.UP;
+        return gameState.canTankBeMovedTo(this, x, y - 1);
+      case RIGHT:
+        direction = Direction.RIGHT;
+        return gameState.canTankBeMovedTo(this, x + 1, y);
+      case DOWN:
+        direction = Direction.DOWN;
+        return gameState.canTankBeMovedTo(this, x, y + 1);
+      case LEFT:
+        direction = Direction.LEFT;
+        return gameState.canTankBeMovedTo(this, x - 1, y);
+    }
+    return false;
   }
 
   public TankAction getLastAction() {

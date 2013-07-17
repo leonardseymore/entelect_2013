@@ -2,12 +2,13 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
+import za.co.entelect.competition.ai.action.Action;
 import za.co.entelect.competition.ai.action.ActionManager;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameState {
+public class GameState implements Cloneable {
   private static final Logger logger = Logger.getLogger(GameState.class);
 
   private boolean verbose = false;
@@ -24,10 +25,22 @@ public class GameState {
 
   protected Entity map[][];
 
+  private long[][][] zobristHash;
+  private long hash;
+  private Random random = new Random();
+
   public GameState(int w, int h) {
     this.w = w;
     this.h = h;
     map = new Entity[w][h];
+    zobristHash = new long[w][h][Constants.ZOBRIST_NUM_STATES];
+    for (int i = 0; i < w; i++) {
+      for (int j = 0; j < h; j++) {
+        for (int k = 0; k < Constants.ZOBRIST_NUM_STATES; k++) {
+          zobristHash[i][j][k] = random.nextLong();
+        }
+      }
+    }
   }
 
   public boolean canTankBeMovedTo(Tank tank, int x, int y) {
@@ -126,8 +139,10 @@ public class GameState {
   public void remove(Base base) {
     if (base == yourBase) {
       logger.debug("Your base was destroyed, you loose!");
+      yourBase = null;
     } else {
       logger.debug("Opponent base was destroyed, you WIN!");
+      opponentBase = null;
     }
   }
 
@@ -181,20 +196,23 @@ public class GameState {
       }
     }
 
+    hash = 0;
     EntityIterator it = new EntityIterator();
     while (it.hasNext()) {
       Entity entity = it.next();
 
       if (entity.getType() == Entity.Type.TANK) {
-        Tank tank = (Tank)entity;
+        Tank tank = (Tank) entity;
         Rectangle r = tank.getRect();
         for (int x = r.getLeft(); x <= r.getRight(); x++) {
           for (int y = r.getTop(); y <= r.getBottom(); y++) {
             map[x][y] = tank;
+            hash ^= zobristHash[x][y][tank.getZobristIndex()];
           }
         }
       } else {
         map[entity.getX()][entity.getY()] = entity;
+        hash ^= zobristHash[entity.getX()][entity.getX()][entity.getZobristIndex()];
       }
     }
   }
@@ -258,7 +276,7 @@ public class GameState {
     // 4) Collisions are checked for.
     for (Tank tank : tanks) {
       if (tank.isCanFire() && tank.getLastAction() == TankAction.FIRE) {
-        int [] bulletPos = tank.turretPos();
+        int[] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], tank.getOwner(), tank.getDirection(), tank);
         bullet.move();
         if (isInbounds(bullet.getX(), bullet.getY())) {
@@ -323,32 +341,32 @@ public class GameState {
     }
 
     if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BASE) {
-      Bullet bullet = (Bullet)s;
-      Base base = (Base)t;
+      Bullet bullet = (Bullet) s;
+      Base base = (Base) t;
       remove(bullet);
       remove(base);
       logger.debug("Base [" + t + "] destroyed by [" + bullet.getTank().getTankId() + "]");
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BASE) {
-      Tank tank = (Tank)s;
-      Base base = (Base)t;
+      Tank tank = (Tank) s;
+      Base base = (Base) t;
       remove(tank);
       remove(base);
       logger.debug("TANKED Base [" + t + "] destroyed by [" + tank.getTankId() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.TANK) {
-      Bullet bullet = (Bullet)s;
-      Tank tank = (Tank)t;
+      Bullet bullet = (Bullet) s;
+      Tank tank = (Tank) t;
       remove(bullet);
       remove(tank);
       logger.debug("Tank [" + tank.getTankId() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BULLET) {
-      Tank tank = (Tank)s;
-      Bullet bullet = (Bullet)t;
+      Tank tank = (Tank) s;
+      Bullet bullet = (Bullet) t;
       remove(tank);
       remove(bullet);
       logger.debug("Tank [" + tank.getTankId() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BULLET) {
-      Bullet bulletS = (Bullet)s;
-      Bullet bulletT = (Bullet)s;
+      Bullet bulletS = (Bullet) s;
+      Bullet bulletT = (Bullet) s;
       remove(bulletS);
       remove(bulletT);
       logger.debug("Bullet [" + bulletS.getTank().getTankId() + "] destroyed by [" + bulletT.getTank().getTankId() + "]");
@@ -453,6 +471,54 @@ public class GameState {
     }
 
     return buffer.toString();
+  }
+
+  public int getDiscontentment() {
+    if (yourBase == null) {
+      return Integer.MAX_VALUE;
+    }
+
+    if (opponentBase == null) {
+      return 0;
+    }
+
+    int discontentment = 0;
+    if (getTank(TankId.Y1) == null) {
+      discontentment += Integer.MAX_VALUE / 4;
+    }
+
+    if (getTank(TankId.Y2) == null) {
+      discontentment += Integer.MAX_VALUE / 4;
+    }
+
+    if (getTank(TankId.O1) != null) {
+      discontentment += Integer.MAX_VALUE / 2;
+    }
+
+    if (getTank(TankId.O1) != null) {
+      discontentment += Integer.MAX_VALUE / 2;
+    }
+    return discontentment;
+  }
+
+  public GameState clone() {
+    try {
+      return (GameState) super.clone();
+    } catch (CloneNotSupportedException ex) {
+      throw new RuntimeException("Clone not supported", ex);
+    }
+  }
+
+  public long hash() {
+    return hash;
+  }
+
+  public void applyAction(Action nextAction) {
+    //To change body of created methods use File | Settings | File Templates.
+  }
+
+  public Action nextAction() {
+    return null;  //To change body of created methods use File | Settings | File Templates.
   }
 
   private class EntityIterator implements Iterator<Entity> {

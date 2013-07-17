@@ -27,4 +27,21 @@ public class Constants {
   public static final Color COLOR_SWING_TANK_YOU = Color.blue;
   public static final Color COLOR_SWING_TANK_OPPONENT = Color.orange;
   public static final Color COLOR_SWING_WALL = Color.lightGray;
+
+  public static final int ZOBRIST_WALL = 0;
+  public static final int ZOBRIST_YT_UP = 1;
+  public static final int ZOBRIST_YT_RIGHT = 2;
+  public static final int ZOBRIST_YT_DOWN = 3;
+  public static final int ZOBRIST_YT_LEFT = 4;
+  public static final int ZOBRIST_OT_UP = 5;
+  public static final int ZOBRIST_OT_RIGHT = 6;
+  public static final int ZOBRIST_OT_DOWN = 7;
+  public static final int ZOBRIST_OT_LEFT = 8;
+  public static final int ZOBRIST_BU_UP = 9;
+  public static final int ZOBRIST_BU_RIGHT = 10;
+  public static final int ZOBRIST_BU_DOWN = 11;
+  public static final int ZOBRIST_BU_LEFT = 12;
+  public static final int ZOBRIST_YBASE = 13;
+  public static final int ZOBRIST_OBASE = 14;
+  public static final int ZOBRIST_NUM_STATES = 15;
 }

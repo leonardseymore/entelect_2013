@@ -125,6 +125,8 @@ public class GUI extends JFrame {
         g.setTransform(t);
 
         if (printHelp) {
+          g.setColor(new Color(123,123,123,170));
+          g.fillRect(0, 0, getWidth(), 100);
           g.setColor(Color.green);
           int y = 20;
           g.drawString("Press h for help", 20, y);
@@ -132,6 +134,7 @@ public class GUI extends JFrame {
           g.drawString("Press SPACE to fire", 20, y += 12);
           g.drawString("Press c for clearance map", 20, y += 12);
           g.drawString("Press p toggle pause", 20, y += 12);
+          g.drawString("Zobrist hash: " + gameState.hash(), 20, y += 12);
           g.drawString("Press ESC to exit", 20, y += 12);
         }
 

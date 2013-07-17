@@ -1,6 +1,7 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.Constants;
 
 public class Base extends Entity implements Owned {
 
@@ -11,6 +12,11 @@ public class Base extends Entity implements Owned {
   public Base(int x, int y, Player owner) {
     super(x, y);
     this.owner = owner;
+  }
+
+  @Override
+  public int getZobristIndex() {
+    return owner == Player.YOU ? Constants.ZOBRIST_YBASE : Constants.ZOBRIST_OBASE;
   }
 
   @Override
