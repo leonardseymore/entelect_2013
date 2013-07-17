@@ -48,5 +48,5 @@ def getTank3() {
 }
 
 def getTank4() {
-  return new Tank(TankId.O2, new DummyTankOperator())
+  return new Tank(TankId.O2, new RandomTankOperator())
 }

@@ -29,6 +29,8 @@ public class GameState implements Cloneable {
   private long hash;
   private Random random = new Random();
 
+  private Iterator<Action> actionIterator;
+
   public GameState(int w, int h) {
     this.w = w;
     this.h = h;
@@ -139,10 +141,10 @@ public class GameState implements Cloneable {
   public void remove(Base base) {
     if (base == yourBase) {
       logger.debug("Your base was destroyed, you loose!");
-      yourBase = null;
+      //yourBase = null;
     } else {
       logger.debug("Opponent base was destroyed, you WIN!");
-      opponentBase = null;
+      //opponentBase = null;
     }
   }
 
@@ -222,6 +224,9 @@ public class GameState implements Cloneable {
       logger.debug("Update called");
     }
 
+    for (Tank tank : tanks) {
+      tank.performAction(this);
+    }
     ActionManager.getInstance().execute();
 
     // 1) Bullets that have been fired are moved and collisions are checked for.
@@ -243,7 +248,6 @@ public class GameState implements Cloneable {
     for (Tank tank : tanks) {
       int oldX = tank.getX();
       int oldY = tank.getY();
-      tank.performAction(this);
       tank.move();
       Rectangle rect = tank.getRect();
       if (rect.getLeft() < 0) {
@@ -275,7 +279,7 @@ public class GameState implements Cloneable {
     // 3) All tankoperator in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
     for (Tank tank : tanks) {
-      if (tank.isCanFire() && tank.getLastAction() == TankAction.FIRE) {
+      if (tank.isCanFire() && tank.getNextAction() == TankAction.FIRE) {
         int[] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], tank.getOwner(), tank.getDirection(), tank);
         bullet.move();
@@ -285,6 +289,7 @@ public class GameState implements Cloneable {
           checkEntityCollision(bullet);
         }
       }
+      tank.setNextAction(TankAction.NONE);
     }
   }
 
@@ -514,11 +519,12 @@ public class GameState implements Cloneable {
   }
 
   public void applyAction(Action nextAction) {
-    //To change body of created methods use File | Settings | File Templates.
+    Collection<Action> actions = new ArrayList<>();
+    actionIterator = actions.iterator();
   }
 
   public Action nextAction() {
-    return null;  //To change body of created methods use File | Settings | File Templates.
+    return actionIterator.next();
   }
 
   private class EntityIterator implements Iterator<Entity> {

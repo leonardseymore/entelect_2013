@@ -1,37 +1,41 @@
 package za.co.entelect.competition.ai.tankoperator;
 
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
-import za.co.entelect.competition.domain.TankAction;
-import za.co.entelect.competition.domain.TankOperator;
+import za.co.entelect.competition.ai.action.ActionFireTank;
+import za.co.entelect.competition.ai.action.ActionManager;
+import za.co.entelect.competition.ai.action.ActionMoveTank;
+import za.co.entelect.competition.ai.action.ActionMoveTankTo;
+import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.swing.Keyboard;
 
 import java.awt.event.KeyEvent;
 
 public class KeyboardControlledTankOperator implements TankOperator {
 
-  public TankAction getAction(GameState gameState, Tank tank) {
+  public void execute(GameState gameState, Tank tank) {
     Keyboard keyboard = Keyboard.getInstance();
     if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-      return TankAction.FIRE;
+      ActionManager.getInstance().scheduleAction(new ActionFireTank(gameState, tank));
+      return;
     }
 
     if (keyboard.keyDown(KeyEvent.VK_UP)) {
-      return TankAction.UP;
+      ActionManager.getInstance().scheduleAction(new ActionMoveTank(gameState, tank, Directed.Direction.UP));
+      return;
     }
 
     if (keyboard.keyDown(KeyEvent.VK_RIGHT)) {
-      return TankAction.RIGHT;
+      ActionManager.getInstance().scheduleAction(new ActionMoveTank(gameState, tank, Directed.Direction.RIGHT));
+      return;
     }
 
     if (keyboard.keyDown(KeyEvent.VK_DOWN)) {
-      return TankAction.DOWN;
+      ActionManager.getInstance().scheduleAction(new ActionMoveTank(gameState, tank, Directed.Direction.DOWN));
+      return;
     }
 
     if (keyboard.keyDown(KeyEvent.VK_LEFT)) {
-      return TankAction.LEFT;
+      ActionManager.getInstance().scheduleAction(new ActionMoveTank(gameState, tank, Directed.Direction.LEFT));
+      return;
     }
-
-    return TankAction.NONE;
   }
 }

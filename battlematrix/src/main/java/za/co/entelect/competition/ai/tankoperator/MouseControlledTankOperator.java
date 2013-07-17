@@ -2,9 +2,8 @@ package za.co.entelect.competition.ai.tankoperator;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.ai.action.ActionManager;
-import za.co.entelect.competition.ai.action.MoveTankToAction;
+import za.co.entelect.competition.ai.action.ActionMoveTankTo;
 import za.co.entelect.competition.swing.Mouse;
-import za.co.entelect.competition.ai.movement.SeekPath;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
 
@@ -16,7 +15,7 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
 
   private int targetX = -1;
   private int targetY = -1;
-  private MoveTankToAction action;
+  private ActionMoveTankTo action;
 
   public Stack<PathFinder.Node> getPath() {
     if (action != null) {
@@ -26,12 +25,8 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
   }
 
   @Override
-  public TankAction getAction(GameState gameState, Tank tank) {
+  public void execute(GameState gameState, Tank tank) {
     Mouse mouse = Mouse.getInstance();
-    if (mouse.buttonDown(2)) {
-      return TankAction.FIRE;
-    }
-
     if (mouse.buttonDown(1)) {
       targetX = (int)(mouse.getPosition().getX() / mouse.getZoomFactor());
       targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
@@ -39,13 +34,8 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
       if (action != null) {
         action.cancel();
       }
-      action = new MoveTankToAction(gameState, tank, targetX, targetY);
+      action = new ActionMoveTankTo(gameState, tank, targetX, targetY);
       ActionManager.getInstance().scheduleAction(action);
     }
-
-    if (action != null && !action.isComplete()) {
-      return action.getTankAction();
-    }
-    return TankAction.NONE;
   }
 }

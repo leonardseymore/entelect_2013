@@ -7,7 +7,7 @@ public class Tank extends OwnedDirectedEntity {
   public static final int TANK_SIZE = 5;
   public static final int TANK_HALF_SIZE = 2;
 
-  private TankAction lastAction;
+  private TankAction nextAction = TankAction.NONE;
   private TankId tankId;
 
   private boolean canFire = true;
@@ -111,7 +111,7 @@ public class Tank extends OwnedDirectedEntity {
   }
 
   public void move() {
-    switch (lastAction) {
+    switch (nextAction) {
       case UP:
         direction = Direction.UP;
         y--;
@@ -132,7 +132,7 @@ public class Tank extends OwnedDirectedEntity {
   }
 
   public boolean canMoveForward(GameState gameState) {
-    switch (lastAction) {
+    switch (nextAction) {
       case UP:
         direction = Direction.UP;
         return gameState.canTankBeMovedTo(this, x, y - 1);
@@ -149,17 +149,16 @@ public class Tank extends OwnedDirectedEntity {
     return false;
   }
 
-  public TankAction getLastAction() {
-    return lastAction;
+  public TankAction getNextAction() {
+    return nextAction;
   }
 
-  public TankAction performAction(GameState gameState) {
-    lastAction = doGetAction(gameState);
-    return lastAction;
+  public void setNextAction(TankAction nextAction) {
+    this.nextAction = nextAction;
   }
 
-  protected TankAction doGetAction(GameState gameState) {
-    return tankOperator.getAction(gameState, this);
+  public void performAction(GameState gameState) {
+    tankOperator.execute(gameState, this);
   }
 
   public boolean isYourTank() {

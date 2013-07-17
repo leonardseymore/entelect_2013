@@ -1,6 +1,6 @@
 package za.co.entelect.competition.domain;
 
-public class Point {
+public class Point implements Trackable {
 
   private int x;
   private int y;
@@ -24,5 +24,15 @@ public class Point {
 
   public void setY(int y) {
     this.y = y;
+  }
+
+  @Override
+  public int getW() {
+    return 0;
+  }
+
+  @Override
+  public int getH() {
+    return 0;
   }
 }
