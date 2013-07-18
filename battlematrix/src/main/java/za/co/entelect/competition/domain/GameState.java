@@ -3,7 +3,9 @@ package za.co.entelect.competition.domain;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.ai.action.Action;
+import za.co.entelect.competition.ai.action.ActionFireTank;
 import za.co.entelect.competition.ai.action.ActionManager;
+import za.co.entelect.competition.ai.action.ActionMoveTank;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -161,6 +163,7 @@ public class GameState implements Cloneable {
 
   public void add(Tank tank) {
     tanks.add(tank);
+    tank.setGameState(this);
     logger.debug("Added tank [" + tank + "]");
   }
 
@@ -220,14 +223,20 @@ public class GameState implements Cloneable {
   }
 
   public void update() {
+    update(true);
+  }
+
+  private void update(boolean callActionManager) {
     if (verbose) {
       logger.debug("Update called");
     }
 
-    for (Tank tank : tanks) {
-      tank.performAction(this);
+    if (callActionManager) {
+      for (Tank tank : tanks) {
+        tank.performAction(this);
+      }
+      ActionManager.getInstance().execute(this);
     }
-    ActionManager.getInstance().execute();
 
     // 1) Bullets that have been fired are moved and collisions are checked for.
     // Looking at rules 1 and 2 bullets need to be moved twice per round
@@ -275,6 +284,7 @@ public class GameState implements Cloneable {
         }
       }
     }
+    updateGameModel();
 
     // 3) All tankoperator in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
@@ -307,7 +317,7 @@ public class GameState implements Cloneable {
       case UP:
         for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
           Entity e = getEntityAt(i, rect.getTop());
-          if (e != null) {
+          if (e != null && e != tank) {
             return handleCollision(tank, e);
           }
         }
@@ -315,7 +325,7 @@ public class GameState implements Cloneable {
       case RIGHT:
         for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
           Entity e = getEntityAt(rect.getRight(), j);
-          if (e != null) {
+          if (e != null && e != tank) {
             return handleCollision(tank, e);
           }
         }
@@ -323,7 +333,7 @@ public class GameState implements Cloneable {
       case DOWN:
         for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
           Entity e = getEntityAt(i, rect.getBottom());
-          if (e != null) {
+          if (e != null && e != tank) {
             return handleCollision(tank, e);
           }
         }
@@ -331,7 +341,7 @@ public class GameState implements Cloneable {
       case LEFT:
         for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
           Entity e = getEntityAt(rect.getLeft(), j);
-          if (e != null) {
+          if (e != null && e != tank) {
             return handleCollision(tank, e);
           }
         }
@@ -449,6 +459,7 @@ public class GameState implements Cloneable {
     StringBuilder buffer = new StringBuilder();
     buffer.append("P3\n");
     buffer.append(w + " " + h + "\n");
+    buffer.append("255\n");
     for (int y = 0; y < h; y++) {
       for (int x = 0; x < w; x++) {
         Entity e = getEntityAt(x, y);
@@ -463,7 +474,7 @@ public class GameState implements Cloneable {
               buffer.append(Constants.COLOR_PPM3_BULLET);
               break;
             case TANK:
-              buffer.append(Constants.COLOR_PPM3_TANK);
+              buffer.append(((Tank)e).isYourTank() ? Constants.COLOR_PPM3_TANK_YOU : Constants.COLOR_PPM3_TANK_OPPONENT);
               break;
             case WALL:
               buffer.append(Constants.COLOR_PPM3_WALL);
@@ -508,7 +519,23 @@ public class GameState implements Cloneable {
 
   public GameState clone() {
     try {
-      return (GameState) super.clone();
+      GameState clone = (GameState) super.clone();
+      clone.map = map.clone();
+      clone.tanks = new CopyOnWriteArrayList<>();
+      for (Tank tank : tanks) {
+        Tank tankClone = tank.clone();
+        tankClone.setGameState(clone);
+        clone.tanks.add(tankClone);
+      }
+      clone.walls = new CopyOnWriteArrayList<>();
+      for (Wall wall : walls) {
+        clone.walls.add(wall.clone());
+      }
+      clone.bullets = new CopyOnWriteArrayList<>();
+      for (Bullet bullet : bullets) {
+        clone.bullets.add(bullet.clone());
+      }
+      return clone;
     } catch (CloneNotSupportedException ex) {
       throw new RuntimeException("Clone not supported", ex);
     }
@@ -519,12 +546,46 @@ public class GameState implements Cloneable {
   }
 
   public void applyAction(Action nextAction) {
-    Collection<Action> actions = new ArrayList<>();
-    actionIterator = actions.iterator();
+    nextAction.execute(this);
+    update(false);
+    loadActionIterator();
   }
 
   public Action nextAction() {
-    return actionIterator.next();
+    if (actionIterator == null) {
+      loadActionIterator();
+    }
+    if (actionIterator.hasNext()) {
+      return actionIterator.next();
+    } else {
+      loadActionIterator();
+    }
+    return null;
+  }
+
+  private void loadActionIterator() {
+    Collection<Action> actions = new ArrayList<>();
+    Tank tank = getTank(TankId.O1);
+    if (tank != null) {
+    //for (Tank tank : tanks) {
+      if (tank.canMoveInDirection(Directed.Direction.UP)) {
+        actions.add(new ActionMoveTank(tank, Directed.Direction.UP));
+      }
+      if (tank.canMoveInDirection(Directed.Direction.RIGHT)) {
+        actions.add(new ActionMoveTank(tank, Directed.Direction.RIGHT));
+      }
+      if (tank.canMoveInDirection(Directed.Direction.DOWN)) {
+        actions.add(new ActionMoveTank(tank, Directed.Direction.DOWN));
+      }
+      if (tank.canMoveInDirection(Directed.Direction.LEFT)) {
+        actions.add(new ActionMoveTank(tank, Directed.Direction.LEFT));
+      }
+      if (tank.isCanFire()) {
+        actions.add(new ActionFireTank(tank));
+      }
+   // }
+    }
+    actionIterator = actions.iterator();
   }
 
   private class EntityIterator implements Iterator<Entity> {

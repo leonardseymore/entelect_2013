@@ -18,8 +18,8 @@ public class ActionMoveTankTo extends Action {
   private Stack<PathFinder.Node> path;
   private Seek seek;
 
-  public ActionMoveTankTo(GameState gameState, Tank tank, int x, int y) {
-    this.gameState = gameState;
+  public ActionMoveTankTo(Tank tank, int x, int y) {
+    this.gameState = tank.getGameState();
     this.tank = tank;
     this.x = x;
     this.y = y;
@@ -36,8 +36,11 @@ public class ActionMoveTankTo extends Action {
   }
 
   @Override
-  public void doExecute() {
-    tank.setNextAction(seek.getAction());
+  public void doExecute(GameState gameState) {
+    Tank clone = gameState.getTank(tank.getTankId());
+    if (clone != null) {
+      clone.setNextAction(seek.getAction());
+    }
   }
 
   @Override

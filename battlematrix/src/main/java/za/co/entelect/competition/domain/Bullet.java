@@ -2,7 +2,7 @@ package za.co.entelect.competition.domain;
 
 import za.co.entelect.competition.Constants;
 
-public class Bullet extends OwnedDirectedEntity {
+public class Bullet extends OwnedDirectedEntity implements Cloneable {
 
   private Tank tank;
 
@@ -68,6 +68,14 @@ public class Bullet extends OwnedDirectedEntity {
       case LEFT:
         x--;
         break;
+    }
+  }
+
+  public Bullet clone() {
+    try {
+      return (Bullet) super.clone();
+    } catch (CloneNotSupportedException ex) {
+      throw new RuntimeException("Clone not supported", ex);
     }
   }
 }

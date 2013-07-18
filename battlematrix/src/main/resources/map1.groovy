@@ -1,4 +1,5 @@
 import za.co.entelect.competition.ai.tankoperator.DummyTankOperator
+import za.co.entelect.competition.ai.tankoperator.GoalMouseControlledTankOperator
 import za.co.entelect.competition.ai.tankoperator.KeyboardControlledTankOperator
 import za.co.entelect.competition.ai.tankoperator.MouseControlledTankOperator
 import za.co.entelect.competition.ai.tankoperator.RandomTankOperator
@@ -44,9 +45,9 @@ def getTank2() {
 }
 
 def getTank3() {
-  return new Tank(TankId.O1, new MouseControlledTankOperator())
+  return new Tank(TankId.O1, new GoalMouseControlledTankOperator())
 }
 
 def getTank4() {
-  return new Tank(TankId.O2, new RandomTankOperator())
+  return new Tank(TankId.O2, new DummyTankOperator())
 }

@@ -1,5 +1,7 @@
 package za.co.entelect.competition.ai.action;
 
+import za.co.entelect.competition.domain.GameState;
+
 public abstract class Action implements Comparable<Action> {
 
   protected double priority;
@@ -38,11 +40,11 @@ public abstract class Action implements Comparable<Action> {
     return true;
   }
 
-  protected abstract void doExecute();
+  protected abstract void doExecute(GameState gameState);
 
-  public void execute() {
+  public void execute(GameState gameState) {
     expiryTime--;
-    doExecute();
+    doExecute(gameState);
   }
 
   public void cancel() {
@@ -60,5 +62,9 @@ public abstract class Action implements Comparable<Action> {
       return expiryTime < o.expiryTime ? 1 : expiryTime > o.expiryTime ? -1 : 0;
     }
     return result;
+  }
+
+  public String getDescription() {
+    return  "action_desc";
   }
 }

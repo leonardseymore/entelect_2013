@@ -1,5 +1,7 @@
 package za.co.entelect.competition.ai.action;
 
+import za.co.entelect.competition.domain.GameState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +40,9 @@ public class ActionCompound extends Action {
   }
 
   @Override
-  protected void doExecute() {
+  protected void doExecute(GameState gameState) {
     for (Action action : actions) {
-      action.execute();
+      action.execute(gameState);
     }
   }
 }

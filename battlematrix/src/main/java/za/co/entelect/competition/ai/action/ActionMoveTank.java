@@ -9,14 +9,12 @@ import java.util.Stack;
 
 public class ActionMoveTank extends Action {
 
-  private GameState gameState;
   private Tank tank;
   private int x;
   private int y;
   private Directed.Direction direction;
 
-  public ActionMoveTank(GameState gameState, Tank tank, Directed.Direction direction) {
-    this.gameState = gameState;
+  public ActionMoveTank(Tank tank, Directed.Direction direction) {
     this.tank = tank;
     this.direction = direction;
     switch (direction) {
@@ -41,19 +39,20 @@ public class ActionMoveTank extends Action {
   }
 
   @Override
-  public void doExecute() {
+  public void doExecute(GameState gameState) {
+    Tank clone = gameState.getTank(tank.getTankId());
     switch (direction) {
       case UP:
-        tank.setNextAction(TankAction.UP);
+        clone.setNextAction(TankAction.UP);
         break;
       case RIGHT:
-        tank.setNextAction(TankAction.RIGHT);
+        clone.setNextAction(TankAction.RIGHT);
         break;
       case DOWN:
-        tank.setNextAction(TankAction.DOWN);
+        clone.setNextAction(TankAction.DOWN);
         break;
       case LEFT:
-        tank.setNextAction(TankAction.LEFT);
+        clone.setNextAction(TankAction.LEFT);
         break;
     }
   }
@@ -61,5 +60,9 @@ public class ActionMoveTank extends Action {
   @Override
   public boolean isComplete() {
     return tank.getX() == x && tank.getY() == y;
+  }
+
+  public String getDescription() {
+    return "Move " + tank.getTankId().name() + " " + direction.name() + " to (" + x +":" + y + ")";
   }
 }

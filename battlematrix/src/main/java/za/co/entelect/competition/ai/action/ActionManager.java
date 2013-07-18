@@ -1,5 +1,7 @@
 package za.co.entelect.competition.ai.action;
 
+import za.co.entelect.competition.domain.GameState;
+
 import java.util.*;
 
 public class ActionManager {
@@ -20,7 +22,7 @@ public class ActionManager {
     pending.add(action);
   }
 
-  public void execute() {
+  public void execute(GameState gameState) {
     Action highestPriorityAction = active.poll();
     Queue<Action> newActiveQueue = new PriorityQueue<>();
     for (Action action : pending) {
@@ -59,7 +61,7 @@ public class ActionManager {
       if (action.isComplete()) {
         actionsToRemoveFromActive.add(action);
       } else {
-        action.execute();
+        action.execute(gameState);
       }
     }
   }

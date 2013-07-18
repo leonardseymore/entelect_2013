@@ -1,5 +1,7 @@
 package za.co.entelect.competition.ai.action;
 
+import za.co.entelect.competition.domain.GameState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +31,8 @@ public class ActionSequence extends Action {
   }
 
   @Override
-  protected void doExecute() {
-    actions.get(activeIndex).execute();
+  protected void doExecute(GameState gameState) {
+    actions.get(activeIndex).execute(gameState);
     if (actions.get(activeIndex).isComplete()) {
       activeIndex++;
     }

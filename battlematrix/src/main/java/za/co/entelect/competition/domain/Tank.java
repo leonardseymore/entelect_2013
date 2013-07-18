@@ -2,7 +2,7 @@ package za.co.entelect.competition.domain;
 
 import za.co.entelect.competition.Constants;
 
-public class Tank extends OwnedDirectedEntity {
+public class Tank extends OwnedDirectedEntity implements Cloneable {
 
   public static final int TANK_SIZE = 5;
   public static final int TANK_HALF_SIZE = 2;
@@ -13,6 +13,10 @@ public class Tank extends OwnedDirectedEntity {
   private boolean canFire = true;
 
   private TankOperator tankOperator;
+
+  private GameState gameState;
+  private int prevX;
+  private int prevY;
 
   public Tank(TankId tankId, TankOperator tankOperator) {
     this(0, 0, null, Direction.UP);
@@ -37,6 +41,14 @@ public class Tank extends OwnedDirectedEntity {
 
   public void setTankOperator(TankOperator tankOperator) {
     this.tankOperator = tankOperator;
+  }
+
+  public GameState getGameState() {
+    return gameState;
+  }
+
+  public void setGameState(GameState gameState) {
+    this.gameState = gameState;
   }
 
   public TankId getTankId() {
@@ -111,6 +123,9 @@ public class Tank extends OwnedDirectedEntity {
   }
 
   public void move() {
+    prevX = x;
+    prevY = y;
+
     switch (nextAction) {
       case UP:
         direction = Direction.UP;
@@ -131,19 +146,15 @@ public class Tank extends OwnedDirectedEntity {
     }
   }
 
-  public boolean canMoveForward(GameState gameState) {
-    switch (nextAction) {
+  public boolean canMoveInDirection(Direction dir) {
+    switch (dir) {
       case UP:
-        direction = Direction.UP;
         return gameState.canTankBeMovedTo(this, x, y - 1);
       case RIGHT:
-        direction = Direction.RIGHT;
         return gameState.canTankBeMovedTo(this, x + 1, y);
       case DOWN:
-        direction = Direction.DOWN;
         return gameState.canTankBeMovedTo(this, x, y + 1);
       case LEFT:
-        direction = Direction.LEFT;
         return gameState.canTankBeMovedTo(this, x - 1, y);
     }
     return false;
@@ -179,6 +190,14 @@ public class Tank extends OwnedDirectedEntity {
 
   public Rectangle getRect() {
     return new Rectangle(y - TANK_HALF_SIZE, x + TANK_HALF_SIZE, y + TANK_HALF_SIZE, x - TANK_HALF_SIZE);
+  }
+
+  public Tank clone() {
+    try {
+      return (Tank) super.clone();
+    } catch (CloneNotSupportedException ex) {
+      throw new RuntimeException("Clone not supported", ex);
+    }
   }
 
   @Override
