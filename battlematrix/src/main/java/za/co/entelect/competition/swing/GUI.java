@@ -17,8 +17,8 @@ public class GUI extends JFrame {
 
   private static final Logger logger = Logger.getLogger(GUI.class);
 
-  public static final int DEFAULT_WIDTH = 700;
-  public static final int DEFAULT_HEIGHT = 700;
+  public static final int DEFAULT_WIDTH = 500;
+  public static final int DEFAULT_HEIGHT = 520;
 
   private GameState gameState;
   private Canvas canvas;

@@ -152,24 +152,32 @@ public class GameState implements Cloneable {
 
   public void add(Bullet bullet) {
     bullets.add(bullet);
-    logger.debug("Added bullet [" + bullet + "]");
+    if (verbose) {
+      logger.debug("Added bullet [" + bullet + "]");
+    }
   }
 
   public void remove(Bullet bullet) {
     bullets.remove(bullet);
     bullet.getTank().setCanFire(true);
-    logger.debug("Removed bullet [" + bullet + "]");
+    if (verbose) {
+      logger.debug("Removed bullet [" + bullet + "]");
+    }
   }
 
   public void add(Tank tank) {
     tanks.add(tank);
     tank.setGameState(this);
-    logger.debug("Added tank [" + tank + "]");
+    if (verbose) {
+      logger.debug("Added tank [" + tank + "]");
+    }
   }
 
   public void remove(Tank tank) {
     tanks.remove(tank);
-    logger.debug("Removed tank [" + tank + "]");
+    if (verbose) {
+      logger.debug("Removed tank [" + tank + "]");
+    }
   }
 
   public void add(Wall wall) {
@@ -177,12 +185,16 @@ public class GameState implements Cloneable {
       return;
     }
     walls.add(wall);
-    logger.debug("Added wall [" + wall + "]");
+    if (verbose) {
+      logger.debug("Added wall [" + wall + "]");
+    }
   }
 
   public void remove(Wall wall) {
     walls.remove(wall);
-    logger.debug("Removed wall [" + wall + "]");
+    if (verbose) {
+      logger.debug("Removed wall [" + wall + "]");
+    }
   }
 
   public void accept(GameElementVisitor visitor) {
@@ -284,7 +296,6 @@ public class GameState implements Cloneable {
         }
       }
     }
-    updateGameModel();
 
     // 3) All tankoperator in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
@@ -301,6 +312,7 @@ public class GameState implements Cloneable {
       }
       tank.setNextAction(TankAction.NONE);
     }
+    updateGameModel();
   }
 
   private boolean checkEntityCollision(Bullet bullet) {
@@ -360,36 +372,48 @@ public class GameState implements Cloneable {
       Base base = (Base) t;
       remove(bullet);
       remove(base);
-      logger.debug("Base [" + t + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      if (verbose) {
+        logger.debug("Base [" + t + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      }
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BASE) {
       Tank tank = (Tank) s;
       Base base = (Base) t;
       remove(tank);
       remove(base);
-      logger.debug("TANKED Base [" + t + "] destroyed by [" + tank.getTankId() + "]");
+      if (verbose) {
+        logger.debug("TANKED Base [" + t + "] destroyed by [" + tank.getTankId() + "]");
+      }
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.TANK) {
       Bullet bullet = (Bullet) s;
       Tank tank = (Tank) t;
       remove(bullet);
       remove(tank);
-      logger.debug("Tank [" + tank.getTankId() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      if (verbose) {
+        logger.debug("Tank [" + tank.getTankId() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      }
     } else if (s.getType() == Entity.Type.TANK && t.getType() == Entity.Type.BULLET) {
       Tank tank = (Tank) s;
       Bullet bullet = (Bullet) t;
       remove(tank);
       remove(bullet);
-      logger.debug("Tank [" + tank.getTankId() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      if (verbose) {
+        logger.debug("Tank [" + tank.getTankId() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      }
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.BULLET) {
       Bullet bulletS = (Bullet) s;
       Bullet bulletT = (Bullet) s;
       remove(bulletS);
       remove(bulletT);
-      logger.debug("Bullet [" + bulletS.getTank().getTankId() + "] destroyed by [" + bulletT.getTank().getTankId() + "]");
+      if (verbose) {
+        logger.debug("Bullet [" + bulletS.getTank().getTankId() + "] destroyed by [" + bulletT.getTank().getTankId() + "]");
+      }
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.WALL) {
       Bullet bullet = (Bullet) s;
       Wall wall = (Wall) t;
       destroyWalls(bullet, wall);
-      logger.debug("Wall [" + wall.getX() + ":" + wall.getY() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      if (verbose) {
+        logger.debug("Wall [" + wall.getX() + ":" + wall.getY() + "] destroyed by [" + bullet.getTank().getTankId() + "]");
+      }
     }
     return true;
   }
@@ -397,7 +421,9 @@ public class GameState implements Cloneable {
   private void destroyWalls(Bullet b, Wall w) {
     remove(b);
     remove(w);
-    logger.debug("Wall [" + w + "] destroyed by [" + b + "]");
+    if (verbose) {
+      logger.debug("Wall [" + w + "] destroyed by [" + b + "]");
+    }
 
     if (b.getDirection() == Directed.Direction.UP || b.getDirection() == Directed.Direction.DOWN) {
       if (destroyIfNeighborWall(w.getX() - 1, w.getY())) {
