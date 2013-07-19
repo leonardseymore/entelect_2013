@@ -7,6 +7,7 @@ import za.co.entelect.competition.domain.TankAction;
 public class ActionFireTank extends Action {
 
   private Tank tank;
+  private boolean fired = false;
 
   public ActionFireTank(Tank tank) {
     this.tank = tank;
@@ -19,11 +20,12 @@ public class ActionFireTank extends Action {
     if (clone != null) {
       clone.setNextAction(TankAction.FIRE);
     }
+    fired = true;
   }
 
   @Override
   public boolean isComplete() {
-    return false;
+    return fired;
   }
 
   public String getDescription() {

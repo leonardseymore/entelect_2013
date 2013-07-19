@@ -179,10 +179,6 @@ public class GameState implements Cloneable {
     map[bullet.getPrevX()][bullet.getPrevY()] = null;
     int zobristIndex = bullet.getZobristIndex();
     hash = zobristHash[bullet.getPrevX()][bullet.getPrevY()][zobristIndex] ^ hash;
-    if (isInbounds(bullet.getX(), bullet.getY())) {
-      map[bullet.getX()][bullet.getY()] = null;
-      hash = zobristHash[bullet.getX()][bullet.getY()][zobristIndex] ^ hash;
-    }
     if (verbose) {
       logger.debug("Removed bullet [" + bullet + "]");
     }
@@ -416,19 +412,44 @@ public class GameState implements Cloneable {
 
     // 3) All tankoperator in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
+    Collection<Tank> tanksToRemove = new HashSet<>();
     for (Tank tank : tanks.values()) {
+      if (tanksToRemove.contains(tank)) {
+        continue;
+      }
       if (tank.isCanFire() && tank.getNextAction() == TankAction.FIRE) {
         int[] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], tank.getOwner(), tank.getDirection(), tank);
         bullet.move(true);
         if (isInbounds(bullet.getX(), bullet.getY())) {
-          if (!checkEntityCollision(bullet)) {
+          Entity e = getEntityAt(bullet.getX(), bullet.getY());
+          if (e != null && e != bullet) {
+            handleCollision(bullet, e);
+            switch (e.getType()) {
+              case BASE:
+                remove((Base)e);
+                break;
+              case BULLET:
+                remove((Bullet)e);
+                break;
+              case TANK:
+                tanksToRemove.add((Tank)e);
+                break;
+              case WALL:
+                destroyWalls(bullet, (Wall)e);
+                break;
+            }
+          } else {
             add(bullet);
             tank.setCanFire(false);
           }
         }
       }
       tank.setNextAction(TankAction.NONE);
+    }
+
+    for (Tank tank : tanksToRemove) {
+      remove(tank);
     }
   }
 
@@ -526,6 +547,7 @@ public class GameState implements Cloneable {
       }
     } else if (s.getType() == Entity.Type.BULLET && t.getType() == Entity.Type.WALL) {
       Bullet bullet = (Bullet) s;
+      remove(bullet);
       Wall wall = (Wall) t;
       destroyWalls(bullet, wall);
       if (verbose) {
@@ -536,7 +558,6 @@ public class GameState implements Cloneable {
   }
 
   private void destroyWalls(Bullet b, Wall w) {
-    remove(b);
     remove(w);
     if (verbose) {
       logger.debug("Wall [" + w + "] destroyed by [" + b + "]");
