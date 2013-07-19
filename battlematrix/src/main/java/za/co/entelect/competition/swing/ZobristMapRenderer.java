@@ -56,4 +56,11 @@ public class ZobristMapRenderer implements GameElementVisitor {
   @Override
   public void visit(Wall wall) {
   }
+
+  public void renderHelp(GameState gameState) {
+    int x = 10;
+    int y = 10;
+    g.drawString("Zobrist hash: " + gameState.hash(), x, y += 12);
+    g.drawString("Zobrist hash fp: " + gameState.hashFirstPrincipal(), x, y += 12);
+  }
 }

@@ -59,7 +59,7 @@ public class GameState implements Cloneable {
         }
 
         Entity entity = getEntityAt(i, j);
-        if (entity != null && entity != tank) {
+        if (entity != null && entity != tank && (entity.getType() == Entity.Type.WALL || entity.getType() == Entity.Type.TANK)) {
           return false;
         }
       }
@@ -279,7 +279,9 @@ public class GameState implements Cloneable {
     }
 
     // 2) Bullets and tankoperator are moved and collision are checked for.
-    for (Tank tank : tanks.values()) {
+    Iterator<Tank> tankIterator = tanks.values().iterator();
+    while (tankIterator.hasNext()) {
+      Tank tank = tankIterator.next();
       TankAction nextAction = tank.getNextAction();
       if (nextAction == TankAction.UP || nextAction == TankAction.RIGHT || nextAction == TankAction.DOWN || nextAction == TankAction.LEFT) {
         int oldX = tank.getX();
@@ -294,82 +296,117 @@ public class GameState implements Cloneable {
         switch (tank.getNextAction()) {
           case UP:
             direction = Directed.Direction.UP;
-            y--;
-            rect.traspose(0, -1);
+            if (tank.canMoveInDirection(Directed.Direction.UP)) {
+              y--;
+              rect.traspose(0, -1);
+            }
             break;
           case RIGHT:
             direction = Directed.Direction.RIGHT;
-            x++;
-            rect.traspose(1, 0);
+            if (tank.canMoveInDirection(Directed.Direction.RIGHT)) {
+              x++;
+              rect.traspose(1, 0);
+            }
+
             break;
           case DOWN:
             direction = Directed.Direction.DOWN;
-            y++;
-            rect.traspose(0, 1);
+            if (tank.canMoveInDirection(Directed.Direction.DOWN)) {
+              y++;
+              rect.traspose(0, 1);
+            }
+
             break;
           case LEFT:
             direction = Directed.Direction.LEFT;
-            x--;
-            rect.traspose(-1, 0);
+            if (tank.canMoveInDirection(Directed.Direction.LEFT)) {
+              x--;
+              rect.traspose(-1, 0);
+            }
             break;
         }
 
+        Directed.Direction oldDirection = tank.getDirection();
+        tank.setDirection(direction);
+        boolean directionChanged = direction != oldDirection;
+        int zobristKeyIndex = tank.getZobristIndex();
         if (rect.getLeft() >= 0 && rect.getRight() < w && rect.getTop() >= 0 && rect.getBottom() < h) {
           if (x != oldX || y != oldY) {
             tank.setX(x);
             tank.setY(y);
-            Directed.Direction oldDirection = tank.getDirection();
-            tank.setDirection(direction);
-            int zobristKeyIndex = tank.getZobristIndex();
             if (checkEntityCollision(tank)) {
               if (tanks.containsKey(tank.getTankId())) {
                 tank.setX(oldX);
                 tank.setY(oldY);
-                if (direction != oldDirection) {
-                  for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
-                    for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
-                      hash = zobristHash[i][j][oldZobristKeyIndex] ^ hash;
-                      hash ^= zobristHash[i][j][zobristKeyIndex];
-                    }
-                  }
-                }
               } else {
+                tankIterator.remove();
                 remove(tank);
               }
             } else {
+              // coarse hash out the old cells
+              if (directionChanged) {
+                for (int i = oldRect.getLeft(); i <= oldRect.getRight(); i++) {
+                  for (int j = oldRect.getTop(); j <= oldRect.getBottom(); j++) {
+                    hash = zobristHash[i][j][oldZobristKeyIndex] ^ hash;
+                  }
+                }
+              }
               switch (direction) {
                 case UP:
                   for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
                     map[i][oldRect.getBottom()] = null;
-                    hash = zobristHash[i][oldRect.getBottom()][oldZobristKeyIndex] ^ hash;
                     map[i][rect.getTop()] = tank;
-                    hash ^= zobristHash[i][rect.getTop()][zobristKeyIndex];
+                    if (!directionChanged) {
+                      hash = zobristHash[i][oldRect.getBottom()][oldZobristKeyIndex] ^ hash;
+                      hash ^= zobristHash[i][rect.getTop()][zobristKeyIndex];
+                    }
                   }
                   break;
                 case RIGHT:
                   for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
                     map[oldRect.getLeft()][j] = null;
-                    hash = zobristHash[oldRect.getLeft()][j][oldZobristKeyIndex] ^ hash;
                     map[rect.getRight()][j] = tank;
-                    hash ^= zobristHash[rect.getRight()][j][zobristKeyIndex];
+                    if (!directionChanged) {
+                      hash = zobristHash[oldRect.getLeft()][j][oldZobristKeyIndex] ^ hash;
+                      hash ^= zobristHash[rect.getRight()][j][zobristKeyIndex];
+                    }
                   }
                   break;
                 case DOWN:
                   for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
                     map[i][oldRect.getTop()] = null;
-                    hash = zobristHash[i][oldRect.getTop()][oldZobristKeyIndex] ^ hash;
                     map[i][rect.getBottom()] = tank;
-                    hash ^= zobristHash[i][rect.getBottom()][zobristKeyIndex];
+                    if (!directionChanged) {
+                      hash = zobristHash[i][oldRect.getTop()][oldZobristKeyIndex] ^ hash;
+                      hash ^= zobristHash[i][rect.getBottom()][zobristKeyIndex];
+                    }
                   }
                   break;
                 case LEFT:
                   for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
                     map[oldRect.getRight()][j] = null;
-                    hash = zobristHash[oldRect.getRight()][j][oldZobristKeyIndex] ^ hash;
                     map[rect.getLeft()][j] = tank;
-                    hash ^= zobristHash[rect.getLeft()][j][zobristKeyIndex];
+                    if (!directionChanged) {
+                      hash = zobristHash[oldRect.getRight()][j][oldZobristKeyIndex] ^ hash;
+                      hash ^= zobristHash[rect.getLeft()][j][zobristKeyIndex];
+                    }
                   }
                   break;
+              }
+              // coarse hash in the new cells
+              if (directionChanged) {
+                for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
+                  for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
+                    hash ^= zobristHash[i][j][zobristKeyIndex];
+                  }
+                }
+              }
+            }
+          } else if (directionChanged) {
+            for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
+              for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
+                hash = zobristHash[i][j][oldZobristKeyIndex] ^ hash;
+                hash ^= zobristHash[i][j][zobristKeyIndex];
               }
             }
           }
@@ -649,6 +686,20 @@ public class GameState implements Cloneable {
 
   public long hash() {
     return hash;
+  }
+
+  public long hashFirstPrincipal() {
+    long hashFp = 0;
+
+    for (int i = 0; i < w; i++) {
+      for (int j = 0; j < h; j++) {
+        Entity e = getEntityAt(i, j);
+        if (e != null) {
+          hashFp ^= zobristHash[i][j][e.getZobristIndex()];
+        }
+      }
+    }
+    return hashFp;
   }
 
   public void applyAction(Action nextAction) {

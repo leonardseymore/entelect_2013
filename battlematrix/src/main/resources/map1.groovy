@@ -29,23 +29,23 @@ w  w    w  w    w  w
 w               w  w
 wwwwww  wwww    w  w
 w       w          w
-w   1w  w  wwwwww  w
+w  1 w  w  wwwwww  w
 w   www         w  w
-w   yw2         w  w
+w   yw 2        w  w
 w                  w
 wwwwwwwwwwwwwwwwwwww"""
 }
 
 def getTank1() {
-  return new Tank(TankId.Y1, new KeyboardControlledTankOperator())
+  return new Tank(TankId.Y1, new DummyTankOperator())
 }
 
 def getTank2() {
-  return new Tank(TankId.Y2, new DummyTankOperator())
+  return new Tank(TankId.Y2, new GoalMouseControlledTankOperator())
 }
 
 def getTank3() {
-  return new Tank(TankId.O1, new GoalMouseControlledTankOperator())
+  return new Tank(TankId.O1, new KeyboardControlledTankOperator())
 }
 
 def getTank4() {

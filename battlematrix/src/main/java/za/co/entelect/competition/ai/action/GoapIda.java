@@ -71,7 +71,7 @@ public class GoapIda {
         actions[currentDepth] = nextAction;
         models[currentDepth + 1].applyAction(nextAction);
         dot.append("  " + models[currentDepth].hash() + " -> " + models[currentDepth + 1].hash() + " [label=\"d=" + currentDepth + ", c=" + cost + " " + nextAction.getDescription() + "\", colorscheme=HSV, color=\"1.000 1.000 " + String.format("%.3f", (float)currentDepth / maxDepth) + "\"]\n");
-        costs[currentDepth + 1] = costs[currentDepth] + nextAction.getCost();
+        costs[currentDepth + 1] = costs[currentDepth] + nextAction.getCost() + models[currentDepth + 1].getDiscontentment();
 
         if (!transpositionTable.has(models[currentDepth + 1])) {
           String filename = "goapida-" + currentDepth + "-" + nextAction.getDescription().replaceAll(" ", "_") + ".ppm";

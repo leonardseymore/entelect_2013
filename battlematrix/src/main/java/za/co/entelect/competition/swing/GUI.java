@@ -35,14 +35,15 @@ public class GUI extends JFrame {
   private Tank selectedTank;
 
   private Map map = Map.USER;
+  private Font arial = new Font("Arial", Font.BOLD, 10);;
 
   public GUI(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
     this.zoomFactor = zoomFactor;
 
     setIgnoreRepaint(true);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setTitle(Constants.APP_TITLE);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
     canvas = new Canvas();
     canvas.setIgnoreRepaint(true);
@@ -79,16 +80,13 @@ public class GUI extends JFrame {
         keyboard.poll();
         mouse.poll();
 
-        if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
-          break;
-        }
         if (keyboard.keyDownOnce(KeyEvent.VK_H)) {
           printHelp = !printHelp;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_U)) {
           map = Map.USER;
         }
-        if (keyboard.keyDownOnce(KeyEvent.VK_T)) {
+        if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
           map = Map.CLEARANCE;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_Z)) {
@@ -123,37 +121,44 @@ public class GUI extends JFrame {
         gameState.update();
 
         g = bi.createGraphics();
+        g.setFont(arial);
 
         g.setColor(Constants.COLOR_SWING_BLANK);
         g.fillRect(0, 0, getWidth(), getHeight());
 
         AffineTransform t = g.getTransform();
-        g.scale(zoomFactor, zoomFactor);
         switch (map) {
           case USER:
+            g.scale(zoomFactor, zoomFactor);
             gameState.accept(new GameRenderer(g));
+            g.setTransform(t);
             break;
           case CLEARANCE:
+            g.scale(zoomFactor, zoomFactor);
             gameState.accept(new ClearanceMapRenderer(g, selectedTank));
+            g.setTransform(t);
             break;
           case ZOBRIST:
-            gameState.accept(new ZobristMapRenderer(g));
+            g.scale(zoomFactor, zoomFactor);
+            ZobristMapRenderer renderer = new ZobristMapRenderer(g);
+            gameState.accept(renderer);
+            g.setTransform(t);
+            g.setColor(new Color(123,123,123,190));
+            g.fillRect(0, 0, getWidth(), 100);
+            g.setColor(Color.white);
+            renderer.renderHelp(gameState);
             break;
         }
-        g.setTransform(t);
 
         if (printHelp) {
-          g.setColor(new Color(123,123,123,170));
+          g.setColor(new Color(123,123,123,190));
           g.fillRect(0, 0, getWidth(), 100);
-          g.setColor(Color.green);
-          int y = 20;
-          g.drawString("Press h for help", 20, y);
-          g.drawString("Use arrow keys to move tank", 20, y += 12);
-          g.drawString("Press SPACE to fire", 20, y += 12);
-          g.drawString("Press c for clearance map", 20, y += 12);
-          g.drawString("Press p toggle pause", 20, y += 12);
-          g.drawString("Zobrist hash: " + gameState.hash(), 20, y += 12);
-          g.drawString("Press ESC to exit", 20, y += 12);
+          g.setColor(Color.white);
+
+          int x = 10;
+          int y = 10;
+          g.drawString("u=user map (default), c=clearance map, z=zobrist map", x, y += 12);
+          g.drawString("p toggle pause", x, y += 12);
         }
 
         graphics = buffer.getDrawGraphics();
