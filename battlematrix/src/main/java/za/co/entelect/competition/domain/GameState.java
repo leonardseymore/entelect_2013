@@ -424,7 +424,6 @@ public class GameState implements Cloneable {
         if (isInbounds(bullet.getX(), bullet.getY())) {
           Entity e = getEntityAt(bullet.getX(), bullet.getY());
           if (e != null && e != bullet) {
-            handleCollision(bullet, e);
             switch (e.getType()) {
               case BASE:
                 remove((Base)e);
