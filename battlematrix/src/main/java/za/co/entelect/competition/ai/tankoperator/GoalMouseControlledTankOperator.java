@@ -27,7 +27,9 @@ public class GoalMouseControlledTankOperator implements TankOperator {
         action.cancel();
       }
       Goal goal = new GoalMoveTo(tank, targetX, targetY);
-      action = GoapIda.planAction(gameState, goal, new GoalMoveToHeuristic(tank.getTankId(), targetX, targetY), 4);
+      long start = System.currentTimeMillis();
+      action = GoapIda.planAction(gameState, goal, new GoalMoveToHeuristic(tank.getTankId(), targetX, targetY), 5);
+      logger.debug("Plan took [" + (System.currentTimeMillis() - start) + "ms]");
       if (action != null) {
         ActionManager.getInstance().scheduleAction(action);
       }

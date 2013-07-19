@@ -63,6 +63,6 @@ public class ActionMoveTank extends Action {
   }
 
   public String getDescription() {
-    return "Move " + tank.getTankId().name() + " " + direction.name() + " to (" + x +":" + y + ")";
+    return tank.getTankId().name() + " " + direction.name();// + " to (" + x +":" + y + ")";
   }
 }

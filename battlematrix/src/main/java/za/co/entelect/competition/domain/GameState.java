@@ -2,10 +2,7 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.ai.action.Action;
-import za.co.entelect.competition.ai.action.ActionFireTank;
-import za.co.entelect.competition.ai.action.ActionManager;
-import za.co.entelect.competition.ai.action.ActionMoveTank;
+import za.co.entelect.competition.ai.action.*;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -59,7 +56,7 @@ public class GameState implements Cloneable {
         }
 
         Entity entity = getEntityAt(i, j);
-        if (entity != null && entity != tank && (entity.getType() == Entity.Type.WALL || entity.getType() == Entity.Type.TANK)) {
+        if (entity != null && !tank.equals(entity) && (entity.getType() == Entity.Type.WALL || entity.getType() == Entity.Type.TANK)) {
           return false;
         }
       }
@@ -335,8 +332,8 @@ public class GameState implements Cloneable {
                 tank.setX(oldX);
                 tank.setY(oldY);
               } else {
-                tankIterator.remove();
-                remove(tank);
+//                tankIterator.remove();
+ //               remove(tank);
               }
             } else {
               // coarse hash out the old cells
@@ -683,7 +680,13 @@ public class GameState implements Cloneable {
   public GameState clone() {
     try {
       GameState clone = (GameState) super.clone();
-      clone.map = map.clone();
+      clone.map = new Entity[w][h];
+      // TODO: use faster copy method
+      for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+          clone.map[i][j] = map[i][j];
+        }
+      }
       clone.tanks = new HashMap<>();
       for (Tank tank : tanks.values()) {
         Tank tankClone = tank.clone();
@@ -692,7 +695,7 @@ public class GameState implements Cloneable {
       }
       clone.walls = new CopyOnWriteArrayList<>();
       for (Wall wall : walls) {
-        clone.walls.add(wall.clone());
+        clone.walls.add(wall);
       }
       clone.bullets = new CopyOnWriteArrayList<>();
       for (Bullet bullet : bullets) {
@@ -760,6 +763,7 @@ public class GameState implements Cloneable {
       if (tank.isCanFire()) {
         actions.add(new ActionFireTank(tank));
       }
+      actions.add(new ActionTankDoNothing(tank));
       // }
     }
     actionIterator = actions.iterator();

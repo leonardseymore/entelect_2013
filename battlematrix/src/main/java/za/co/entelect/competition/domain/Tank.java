@@ -189,6 +189,26 @@ public class Tank extends OwnedDirectedEntity implements Cloneable {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Tank)) return false;
+    if (!super.equals(o)) return false;
+
+    Tank tank = (Tank) o;
+
+    if (tankId != tank.tankId) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + (tankId != null ? tankId.hashCode() : 0);
+    return result;
+  }
+
+  @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("Tank{");
     sb.append("tankId='").append(tankId).append('\'');

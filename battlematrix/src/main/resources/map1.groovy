@@ -3,6 +3,7 @@ import za.co.entelect.competition.ai.tankoperator.GoalMouseControlledTankOperato
 import za.co.entelect.competition.ai.tankoperator.KeyboardControlledTankOperator
 import za.co.entelect.competition.ai.tankoperator.MouseControlledTankOperator
 import za.co.entelect.competition.ai.tankoperator.RandomTankOperator
+import za.co.entelect.competition.domain.Directed
 import za.co.entelect.competition.domain.Tank
 import za.co.entelect.competition.domain.TankId
 
@@ -41,11 +42,13 @@ def getTank1() {
 }
 
 def getTank2() {
-  return new Tank(TankId.Y2, new GoalMouseControlledTankOperator())
+  return new Tank(TankId.Y2, new KeyboardControlledTankOperator())
 }
 
 def getTank3() {
-  return new Tank(TankId.O1, new KeyboardControlledTankOperator())
+  Tank tank = new Tank(TankId.O1, new GoalMouseControlledTankOperator())
+  tank.setDirection(Directed.Direction.RIGHT);
+  return tank
 }
 
 def getTank4() {
