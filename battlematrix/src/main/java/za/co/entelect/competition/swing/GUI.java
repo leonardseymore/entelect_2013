@@ -20,16 +20,21 @@ public class GUI extends JFrame {
   public static final int DEFAULT_WIDTH = 500;
   public static final int DEFAULT_HEIGHT = 520;
 
+  private static enum Map {
+    USER, CLEARANCE, ZOBRIST
+  }
+
   private GameState gameState;
   private Canvas canvas;
   private boolean printHelp;
-  private boolean clearanceMap;
   private double zoomFactor = 1;
 
   private Keyboard keyboard;
   private Mouse mouse;
   private boolean paused = false;
   private Tank selectedTank;
+
+  private Map map = Map.USER;
 
   public GUI(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
@@ -80,8 +85,14 @@ public class GUI extends JFrame {
         if (keyboard.keyDownOnce(KeyEvent.VK_H)) {
           printHelp = !printHelp;
         }
-        if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
-          clearanceMap = !clearanceMap;
+        if (keyboard.keyDownOnce(KeyEvent.VK_U)) {
+          map = Map.USER;
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_T)) {
+          map = Map.CLEARANCE;
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_Z)) {
+          map = Map.ZOBRIST;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_P)) {
           paused = !paused;
@@ -118,9 +129,16 @@ public class GUI extends JFrame {
 
         AffineTransform t = g.getTransform();
         g.scale(zoomFactor, zoomFactor);
-        gameState.accept(new GameRenderer(g));
-        if (clearanceMap) {
-          gameState.accept(new TacticalMapRenderer(g, selectedTank));
+        switch (map) {
+          case USER:
+            gameState.accept(new GameRenderer(g));
+            break;
+          case CLEARANCE:
+            gameState.accept(new ClearanceMapRenderer(g, selectedTank));
+            break;
+          case ZOBRIST:
+            gameState.accept(new ZobristMapRenderer(g));
+            break;
         }
         g.setTransform(t);
 

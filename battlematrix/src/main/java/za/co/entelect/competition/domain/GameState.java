@@ -18,7 +18,7 @@ public class GameState implements Cloneable {
   private Base yourBase;
   private Base opponentBase;
 
-  private Collection<Tank> tanks = new CopyOnWriteArrayList<>();
+  private Map<TankId, Tank> tanks = new HashMap<>();
   private Collection<Bullet> bullets = new CopyOnWriteArrayList<>();
   private Collection<Wall> walls = new CopyOnWriteArrayList<>();
 
@@ -45,6 +45,10 @@ public class GameState implements Cloneable {
         }
       }
     }
+  }
+
+  public long[][][] getZobristHash() {
+    return zobristHash;
   }
 
   public boolean canTankBeMovedTo(Tank tank, int x, int y) {
@@ -74,12 +78,23 @@ public class GameState implements Cloneable {
     return map[x][y];
   }
 
+  public Entity setEntityAt(int x, int y, Entity entity) {
+    if (!isInbounds(x, y)) {
+      return null;
+    }
+    return map[x][y] = entity;
+  }
+
   public void setOpponentBase(int x, int y) {
     opponentBase = new Base(x, y, Player.OPPONENT);
+    map[opponentBase.getX()][opponentBase.getY()] = opponentBase;
+    hash ^= zobristHash[opponentBase.getX()][opponentBase.getY()][opponentBase.getZobristIndex()];
   }
 
   public void setYourBase(int x, int y) {
     yourBase = new Base(x, y, Player.YOU);
+    map[yourBase.getX()][yourBase.getY()] = yourBase;
+    hash ^= zobristHash[yourBase.getX()][yourBase.getY()][yourBase.getZobristIndex()];
   }
 
   public Base getYourBase() {
@@ -91,12 +106,7 @@ public class GameState implements Cloneable {
   }
 
   public Tank getTank(TankId tankId) {
-    for (Tank tank : tanks) {
-      if (tank.getTankId().equals(tankId)) {
-        return tank;
-      }
-    }
-    return null;
+    return tanks.get(tankId);
   }
 
   public Collection<Tank> getEnemyTanks(Tank tank) {
@@ -143,15 +153,21 @@ public class GameState implements Cloneable {
   public void remove(Base base) {
     if (base == yourBase) {
       logger.debug("Your base was destroyed, you loose!");
-      //yourBase = null;
+      map[yourBase.getX()][yourBase.getY()] = null;
+      hash = zobristHash[yourBase.getX()][yourBase.getY()][yourBase.getZobristIndex()] ^ hash;
+      yourBase = null;
     } else {
       logger.debug("Opponent base was destroyed, you WIN!");
-      //opponentBase = null;
+      map[opponentBase.getX()][opponentBase.getY()] = null;
+      hash = zobristHash[opponentBase.getX()][opponentBase.getY()][opponentBase.getZobristIndex()] ^ hash;
+      opponentBase = null;
     }
   }
 
   public void add(Bullet bullet) {
     bullets.add(bullet);
+    map[bullet.getX()][bullet.getY()] = bullet;
+    hash ^= zobristHash[bullet.getX()][bullet.getY()][bullet.getZobristIndex()];
     if (verbose) {
       logger.debug("Added bullet [" + bullet + "]");
     }
@@ -160,31 +176,51 @@ public class GameState implements Cloneable {
   public void remove(Bullet bullet) {
     bullets.remove(bullet);
     bullet.getTank().setCanFire(true);
+    map[bullet.getPrevX()][bullet.getPrevY()] = null;
+    int zobristIndex = bullet.getZobristIndex();
+    hash = zobristHash[bullet.getPrevX()][bullet.getPrevY()][zobristIndex] ^ hash;
+    if (isInbounds(bullet.getX(), bullet.getY())) {
+      map[bullet.getX()][bullet.getY()] = null;
+      hash = zobristHash[bullet.getX()][bullet.getY()][zobristIndex] ^ hash;
+    }
     if (verbose) {
       logger.debug("Removed bullet [" + bullet + "]");
     }
   }
 
   public void add(Tank tank) {
-    tanks.add(tank);
+    tanks.put(tank.getTankId(), tank);
     tank.setGameState(this);
+    Rectangle r = tank.getRect();
+    for (int x = r.getLeft(); x <= r.getRight(); x++) {
+      for (int y = r.getTop(); y <= r.getBottom(); y++) {
+        map[x][y] = tank;
+        hash ^= zobristHash[x][y][tank.getZobristIndex()];
+      }
+    }
     if (verbose) {
       logger.debug("Added tank [" + tank + "]");
     }
   }
 
   public void remove(Tank tank) {
-    tanks.remove(tank);
+    tanks.remove(tank.getTankId());
+    Rectangle r = tank.getRect();
+    for (int x = r.getLeft(); x <= r.getRight(); x++) {
+      for (int y = r.getTop(); y <= r.getBottom(); y++) {
+        map[x][y] = null;
+        hash = zobristHash[x][y][tank.getZobristIndex()] ^ hash;
+      }
+    }
     if (verbose) {
       logger.debug("Removed tank [" + tank + "]");
     }
   }
 
   public void add(Wall wall) {
-    if (getEntityAt(wall.getX(), wall.getY()) != null) {
-      return;
-    }
     walls.add(wall);
+    map[wall.getX()][wall.getY()] = wall;
+    hash ^= zobristHash[wall.getX()][wall.getY()][wall.getZobristIndex()];
     if (verbose) {
       logger.debug("Added wall [" + wall + "]");
     }
@@ -192,6 +228,8 @@ public class GameState implements Cloneable {
 
   public void remove(Wall wall) {
     walls.remove(wall);
+    map[wall.getX()][wall.getY()] = null;
+    hash = zobristHash[wall.getX()][wall.getY()][wall.getZobristIndex()] ^ hash;
     if (verbose) {
       logger.debug("Removed wall [" + wall + "]");
     }
@@ -206,34 +244,6 @@ public class GameState implements Cloneable {
     }
   }
 
-  private void updateGameModel() {
-    for (int i = 0; i < w; i++) {
-      for (int j = 0; j < h; j++) {
-        map[i][j] = null;
-      }
-    }
-
-    hash = 0;
-    EntityIterator it = new EntityIterator();
-    while (it.hasNext()) {
-      Entity entity = it.next();
-
-      if (entity.getType() == Entity.Type.TANK) {
-        Tank tank = (Tank) entity;
-        Rectangle r = tank.getRect();
-        for (int x = r.getLeft(); x <= r.getRight(); x++) {
-          for (int y = r.getTop(); y <= r.getBottom(); y++) {
-            map[x][y] = tank;
-            hash ^= zobristHash[x][y][tank.getZobristIndex()];
-          }
-        }
-      } else {
-        map[entity.getX()][entity.getY()] = entity;
-        hash ^= zobristHash[entity.getX()][entity.getX()][entity.getZobristIndex()];
-      }
-    }
-  }
-
   public void update() {
     update(true);
   }
@@ -244,7 +254,7 @@ public class GameState implements Cloneable {
     }
 
     if (callActionManager) {
-      for (Tank tank : tanks) {
+      for (Tank tank : tanks.values()) {
         tank.performAction(this);
       }
       ActionManager.getInstance().execute(this);
@@ -254,70 +264,140 @@ public class GameState implements Cloneable {
     // Looking at rules 1 and 2 bullets need to be moved twice per round
     for (int i = 0; i < 2; i++) {
       for (Bullet bullet : bullets) {
-        bullet.move();
-
+        bullet.move(false);
         if (bullet.getX() < 0 || bullet.getY() < 0 || bullet.getX() > w - 1 || bullet.getY() > h - 1) {
           remove(bullet);
         } else {
-          checkEntityCollision(bullet);
+          if (!checkEntityCollision(bullet)) {
+            map[bullet.getPrevX()][bullet.getPrevY()] = null;
+            hash = zobristHash[bullet.getPrevX()][bullet.getPrevY()][bullet.getZobristIndex()] ^ hash;
+            map[bullet.getX()][bullet.getY()] = bullet;
+            hash ^= zobristHash[bullet.getX()][bullet.getY()][bullet.getZobristIndex()];
+          }
         }
       }
     }
-    updateGameModel();
 
     // 2) Bullets and tankoperator are moved and collision are checked for.
-    for (Tank tank : tanks) {
-      int oldX = tank.getX();
-      int oldY = tank.getY();
-      tank.move();
-      Rectangle rect = tank.getRect();
-      if (rect.getLeft() < 0) {
-        tank.setX(Tank.TANK_HALF_SIZE);
-      }
+    for (Tank tank : tanks.values()) {
+      TankAction nextAction = tank.getNextAction();
+      if (nextAction == TankAction.UP || nextAction == TankAction.RIGHT || nextAction == TankAction.DOWN || nextAction == TankAction.LEFT) {
+        int oldX = tank.getX();
+        int oldY = tank.getY();
 
-      if (rect.getRight() >= w) {
-        tank.setX(w - Tank.TANK_HALF_SIZE - 1);
-      }
+        int x = tank.getX();
+        int y = tank.getY();
+        Directed.Direction direction = tank.getDirection();
+        int oldZobristKeyIndex = tank.getZobristIndex();
+        Rectangle oldRect = tank.getRect();
+        Rectangle rect = tank.getRect();
+        switch (tank.getNextAction()) {
+          case UP:
+            direction = Directed.Direction.UP;
+            y--;
+            rect.traspose(0, -1);
+            break;
+          case RIGHT:
+            direction = Directed.Direction.RIGHT;
+            x++;
+            rect.traspose(1, 0);
+            break;
+          case DOWN:
+            direction = Directed.Direction.DOWN;
+            y++;
+            rect.traspose(0, 1);
+            break;
+          case LEFT:
+            direction = Directed.Direction.LEFT;
+            x--;
+            rect.traspose(-1, 0);
+            break;
+        }
 
-      if (rect.getTop() < 0) {
-        tank.setY(Tank.TANK_HALF_SIZE);
-      }
-
-      if (rect.getBottom() >= h) {
-        tank.setY(h - Tank.TANK_HALF_SIZE - 1);
-      }
-
-      if (checkEntityCollision(tank)) {
-        if (tanks.contains(tank)) {
-          tank.setX(oldX);
-          tank.setY(oldY);
-        } else {
-          remove(tank);
+        if (rect.getLeft() >= 0 && rect.getRight() < w && rect.getTop() >= 0 && rect.getBottom() < h) {
+          if (x != oldX || y != oldY) {
+            tank.setX(x);
+            tank.setY(y);
+            Directed.Direction oldDirection = tank.getDirection();
+            tank.setDirection(direction);
+            int zobristKeyIndex = tank.getZobristIndex();
+            if (checkEntityCollision(tank)) {
+              if (tanks.containsKey(tank.getTankId())) {
+                tank.setX(oldX);
+                tank.setY(oldY);
+                if (direction != oldDirection) {
+                  for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
+                    for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
+                      hash = zobristHash[i][j][oldZobristKeyIndex] ^ hash;
+                      hash ^= zobristHash[i][j][zobristKeyIndex];
+                    }
+                  }
+                }
+              } else {
+                remove(tank);
+              }
+            } else {
+              switch (direction) {
+                case UP:
+                  for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
+                    map[i][oldRect.getBottom()] = null;
+                    hash = zobristHash[i][oldRect.getBottom()][oldZobristKeyIndex] ^ hash;
+                    map[i][rect.getTop()] = tank;
+                    hash ^= zobristHash[i][rect.getTop()][zobristKeyIndex];
+                  }
+                  break;
+                case RIGHT:
+                  for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
+                    map[oldRect.getLeft()][j] = null;
+                    hash = zobristHash[oldRect.getLeft()][j][oldZobristKeyIndex] ^ hash;
+                    map[rect.getRight()][j] = tank;
+                    hash ^= zobristHash[rect.getRight()][j][zobristKeyIndex];
+                  }
+                  break;
+                case DOWN:
+                  for (int i = rect.getLeft(); i <= rect.getRight(); i++) {
+                    map[i][oldRect.getTop()] = null;
+                    hash = zobristHash[i][oldRect.getTop()][oldZobristKeyIndex] ^ hash;
+                    map[i][rect.getBottom()] = tank;
+                    hash ^= zobristHash[i][rect.getBottom()][zobristKeyIndex];
+                  }
+                  break;
+                case LEFT:
+                  for (int j = rect.getTop(); j <= rect.getBottom(); j++) {
+                    map[oldRect.getRight()][j] = null;
+                    hash = zobristHash[oldRect.getRight()][j][oldZobristKeyIndex] ^ hash;
+                    map[rect.getLeft()][j] = tank;
+                    hash ^= zobristHash[rect.getLeft()][j][zobristKeyIndex];
+                  }
+                  break;
+              }
+            }
+          }
         }
       }
     }
 
     // 3) All tankoperator in the firing state are fired and their bullets are added to the field.
     // 4) Collisions are checked for.
-    for (Tank tank : tanks) {
+    for (Tank tank : tanks.values()) {
       if (tank.isCanFire() && tank.getNextAction() == TankAction.FIRE) {
         int[] bulletPos = tank.turretPos();
         Bullet bullet = new Bullet(bulletPos[0], bulletPos[1], tank.getOwner(), tank.getDirection(), tank);
-        bullet.move();
+        bullet.move(true);
         if (isInbounds(bullet.getX(), bullet.getY())) {
-          add(bullet);
-          tank.setCanFire(false);
-          checkEntityCollision(bullet);
+          if (!checkEntityCollision(bullet)) {
+            add(bullet);
+            tank.setCanFire(false);
+          }
         }
       }
       tank.setNextAction(TankAction.NONE);
     }
-    updateGameModel();
   }
 
   private boolean checkEntityCollision(Bullet bullet) {
     Entity e = getEntityAt(bullet.getX(), bullet.getY());
-    if (e != null) {
+    if (e != null && e != bullet) {
       return handleCollision(bullet, e);
     }
     return false;
@@ -500,7 +580,7 @@ public class GameState implements Cloneable {
               buffer.append(Constants.COLOR_PPM3_BULLET);
               break;
             case TANK:
-              buffer.append(((Tank)e).isYourTank() ? Constants.COLOR_PPM3_TANK_YOU : Constants.COLOR_PPM3_TANK_OPPONENT);
+              buffer.append(((Tank) e).isYourTank() ? Constants.COLOR_PPM3_TANK_YOU : Constants.COLOR_PPM3_TANK_OPPONENT);
               break;
             case WALL:
               buffer.append(Constants.COLOR_PPM3_WALL);
@@ -547,11 +627,11 @@ public class GameState implements Cloneable {
     try {
       GameState clone = (GameState) super.clone();
       clone.map = map.clone();
-      clone.tanks = new CopyOnWriteArrayList<>();
-      for (Tank tank : tanks) {
+      clone.tanks = new HashMap<>();
+      for (Tank tank : tanks.values()) {
         Tank tankClone = tank.clone();
         tankClone.setGameState(clone);
-        clone.tanks.add(tankClone);
+        clone.tanks.put(tankClone.getTankId(), tankClone);
       }
       clone.walls = new CopyOnWriteArrayList<>();
       for (Wall wall : walls) {
@@ -593,7 +673,7 @@ public class GameState implements Cloneable {
     Collection<Action> actions = new ArrayList<>();
     Tank tank = getTank(TankId.O1);
     if (tank != null) {
-    //for (Tank tank : tanks) {
+      //for (Tank tank : tanks) {
       if (tank.canMoveInDirection(Directed.Direction.UP)) {
         actions.add(new ActionMoveTank(tank, Directed.Direction.UP));
       }
@@ -609,7 +689,7 @@ public class GameState implements Cloneable {
       if (tank.isCanFire()) {
         actions.add(new ActionFireTank(tank));
       }
-   // }
+      // }
     }
     actionIterator = actions.iterator();
   }
@@ -635,7 +715,7 @@ public class GameState implements Cloneable {
           currentCollection = walls.iterator();
           currentCollectionType = Entity.Type.WALL;
         } else if (currentCollectionType == Entity.Type.WALL) {
-          currentCollection = tanks.iterator();
+          currentCollection = tanks.values().iterator();
           currentCollectionType = Entity.Type.TANK;
         } else if (currentCollectionType == Entity.Type.TANK) {
           currentCollection = bullets.iterator();

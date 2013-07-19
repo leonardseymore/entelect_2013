@@ -45,6 +45,13 @@ public class Rectangle {
   public void setLeft(int left) {
     this.left = left;
   }
+
+  public void traspose(int x, int y) {
+    top += y;
+    right += x;
+    bottom += y;
+    left += x;
+  }
   
   public boolean intersects(Rectangle o) {
     return  getLeft() <= o.getRight() && getRight() >= o.getLeft() &&

@@ -51,9 +51,11 @@ public class Bullet extends OwnedDirectedEntity implements Cloneable {
     visitor.visit(this);
   }
 
-  public void move() {
-    prevX = x;
-    prevY = y;
+  public void move(boolean isNew) {
+    if (!isNew) {
+      prevX = x;
+      prevY = y;
+    }
 
     switch (direction) {
       case UP:

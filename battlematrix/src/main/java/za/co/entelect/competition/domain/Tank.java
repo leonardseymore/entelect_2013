@@ -35,6 +35,18 @@ public class Tank extends OwnedDirectedEntity implements Cloneable {
     super(x, y, owner, direction);
   }
 
+  @Override
+  public void setX(int x) {
+    prevX = this.x;
+    this.x = x;
+  }
+
+  @Override
+  public void setY(int y) {
+    prevY = this.y;
+    this.y = y;
+  }
+
   public TankOperator getTankOperator() {
     return tankOperator;
   }
@@ -120,30 +132,6 @@ public class Tank extends OwnedDirectedEntity implements Cloneable {
   @Override
   public void accept(GameElementVisitor visitor) {
     visitor.visit(this);
-  }
-
-  public void move() {
-    prevX = x;
-    prevY = y;
-
-    switch (nextAction) {
-      case UP:
-        direction = Direction.UP;
-        y--;
-        break;
-      case RIGHT:
-        direction = Direction.RIGHT;
-        x++;
-        break;
-      case DOWN:
-        direction = Direction.DOWN;
-        y++;
-        break;
-      case LEFT:
-        direction = Direction.LEFT;
-        x--;
-        break;
-    }
   }
 
   public boolean canMoveInDirection(Direction dir) {

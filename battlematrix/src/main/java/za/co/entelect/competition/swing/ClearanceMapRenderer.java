@@ -11,9 +11,9 @@ import za.co.entelect.competition.domain.Rectangle;
 import java.awt.*;
 import java.util.Stack;
 
-public class TacticalMapRenderer implements GameElementVisitor {
+public class ClearanceMapRenderer implements GameElementVisitor {
 
-  public static final Logger logger = Logger.getLogger(TacticalMapRenderer.class);
+  public static final Logger logger = Logger.getLogger(ClearanceMapRenderer.class);
 
   private boolean verbose = false;
 
@@ -21,7 +21,7 @@ public class TacticalMapRenderer implements GameElementVisitor {
   private Tank selectedTank;
   private GameState gameState;
 
-  public TacticalMapRenderer(Graphics2D g, Tank selectedTank) {
+  public ClearanceMapRenderer(Graphics2D g, Tank selectedTank) {
     this.g = g;
     this.selectedTank = selectedTank;
   }
