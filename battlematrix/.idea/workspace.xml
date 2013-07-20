@@ -2,31 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/AppSwing.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/ClearanceMapRenderer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/tankoperator/DummyTankOperator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/GUI.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/GameElementVisitor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/groovy/GameFactory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/GameRenderer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/Keyboard.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/Mouse.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/tankoperator/PathAware.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/TankOperator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Trackable.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/Util.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/resources/log4j.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/resources/map1.groovy" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/App.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Base.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Base.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Bullet.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Bullet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Action.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseFire.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseRam.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionMoveTo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/Blackboard.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFact.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactAttr.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactBase.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactBullet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactTank.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModel.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelProp.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelPropKey.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Goal.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyBase.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyTank.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/movement/Seek.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/movement/SeekPath.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/TankAction.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/resources/map_basic.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/AppSwing.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/AppSwing.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/Constants.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Entity.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Entity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/GameState.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/GameState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/IdGenerator.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/IdGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Tank.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Tank.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Walls.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/Walls.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="battlematrix.iws" />
@@ -34,7 +32,7 @@
     <file path="/UmpireSimulator.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1372953042360" ignored="false" />
     <file path="/Console.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373026002165" ignored="false" />
     <file path="/pom.xml" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373044935070" ignored="false" />
-    <file path="/fragment.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338379212" ignored="false" />
+    <file path="/fragment.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346303028" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../GroovyEmbedShell/src/e/Console.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373027767736" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../GroovyEmbedShell/src/e/ConsolePromptClosure.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373027767736" ignored="false" />
     <file path="/Entity.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374335331241" ignored="false" />
@@ -49,27 +47,27 @@
     <file path="/Directed.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373098152136" ignored="false" />
     <file path="/Bullet.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338015545" ignored="false" />
     <file path="/log4j.xml" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373462267759" ignored="false" />
-    <file path="/Action.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374251486327" ignored="false" />
+    <file path="/Action.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345166978" ignored="false" />
     <file path="/OwnedDirectedEntity.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373655986796" ignored="false" />
     <file path="/EntityFactory.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373034284673" ignored="false" />
     <file path="/App.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373571260965" ignored="false" />
-    <file path="/GameState.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338626778" ignored="false" />
+    <file path="/GameState.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342768803" ignored="false" />
     <file path="$USER_HOME$/.m2/settings.xml" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373039127567" ignored="false" />
-    <file path="/Constants.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374336911811" ignored="false" />
+    <file path="/Constants.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346123193" ignored="false" />
     <file path="/Wall.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374092326265" ignored="false" />
     <file path="/board1.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373048543584" ignored="false" />
     <file path="/MainFrame.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373557305403" ignored="false" />
     <file path="/BoardVisitor.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373094163671" ignored="false" />
     <file path="/GameElementVisitor.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374337209541" ignored="false" />
     <file path="/GameElementSwingVisitor.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373443626013" ignored="false" />
-    <file path="/AppSwing.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373655201475" ignored="false" />
+    <file path="/AppSwing.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346298487" ignored="false" />
     <file path="/PaintPanel.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373101866865" ignored="false" />
     <file path="/PlayerControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373104367153" ignored="false" />
     <file path="/DummyTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373902609575" ignored="false" />
     <file path="/GameFactory.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338935353" ignored="false" />
     <file path="/GameStateUpdatedListener.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373100006850" ignored="false" />
     <file path="/KeyboardInput.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373103995226" ignored="false" />
-    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374337075376" ignored="false" />
+    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374339165028" ignored="false" />
     <file path="/RandomTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373736065727" ignored="false" />
     <file path="/Mouse.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373557271524" ignored="false" />
     <file path="/MouseControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373741418610" ignored="false" />
@@ -135,12 +133,12 @@
     <file path="/CompoundAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373914384812" ignored="false" />
     <file path="/ActionSequence.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374128136707" ignored="false" />
     <file path="/MoveTankToAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374083290758" ignored="false" />
-    <file path="/GameModel.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373916878329" ignored="false" />
+    <file path="/GameModel.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374343801710" ignored="false" />
     <file path="$PROJECT_DIR$/../../../groovy/orientdb_api_topology.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373981072809" ignored="false" />
     <file path="/orientdb_api_topology.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373980811975" ignored="false" />
     <file path="/ActionCompound.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374128128797" ignored="false" />
     <file path="/GoapIda.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374254239308" ignored="false" />
-    <file path="/Goal.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374254217767" ignored="false" />
+    <file path="/Goal.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345818304" ignored="false" />
     <file path="/NoneAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374000018262" ignored="false" />
     <file path="$PROJECT_DIR$/../../../groovy/zobrist_hashing.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374068164682" ignored="false" />
     <file path="/zobrist_hashing.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374068067249" ignored="false" />
@@ -148,7 +146,7 @@
     <file path="/ActionMoveTankUp.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374083529244" ignored="false" />
     <file path="/ActionMoveTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374185238860" ignored="false" />
     <file path="/DummyTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374083679144" ignored="false" />
-    <file path="/ActionFireTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374251160143" ignored="false" />
+    <file path="/ActionFireTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342799327" ignored="false" />
     <file path="/GoapIdaHeuristic.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374089148924" ignored="false" />
     <file path="/GoalMoveToHeuristic.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374094770882" ignored="false" />
     <file path="/GoalMouseControlledTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374253703962" ignored="false" />
@@ -167,6 +165,21 @@
     <file path="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/tankoperator/GoalMouseControlledTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338074193" ignored="false" />
     <file path="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/tankoperator/RandomTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338074836" ignored="false" />
     <file path="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/tankoperator/KeyboardControlledTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338074836" ignored="false" />
+    <file path="/BlackboardFact.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342553597" ignored="false" />
+    <file path="/Blackboard.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342121681" ignored="false" />
+    <file path="/BlackboardFactBase.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342565570" ignored="false" />
+    <file path="/BlackboardFactTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342942385" ignored="false" />
+    <file path="/BlackboardFactBullet.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342432079" ignored="false" />
+    <file path="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionSequence.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342693689" ignored="false" />
+    <file path="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionCompound.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342693689" ignored="false" />
+    <file path="/ActionFire.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345493023" ignored="false" />
+    <file path="/GameModelProp.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374343632603" ignored="false" />
+    <file path="/GameModelPropKey.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374344772363" ignored="false" />
+    <file path="/ActionDestroyEnemyBase.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346028298" ignored="false" />
+    <file path="/ActionMoveTo.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345490609" ignored="false" />
+    <file path="/GoalDestroyEnemyBase.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345963259" ignored="false" />
+    <file path="/GoalDestroyEnemyTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346111506" ignored="false" />
+    <file path="/ActionDestroyEnemyBaseRam.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346346006" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,37 +239,7 @@
     <favorites_list name="battlematrix" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="GameState.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="234" column="27" selection-start="6357" selection-end="6357" vertical-scroll-proportion="-2.2431972">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Entity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Entity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="58" selection-start="1046" selection-end="1102" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tank.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="31" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -636,6 +619,10 @@
               <option name="myItemId" value="ai" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="planning" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -668,6 +655,70 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="pathfinding" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="competition" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ai" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movement" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlematrix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="competition" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ai" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1008,7 +1059,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6043771" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23014587" sideWeight="0.49847096" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31442463" sideWeight="0.72782874" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31442463" sideWeight="0.72782874" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4204893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1204,7 +1255,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="58" selection-start="1046" selection-end="1102" vertical-scroll-proportion="0.0">
+        <state line="61" column="58" selection-start="1046" selection-end="1102" vertical-scroll-proportion="0.33226836">
           <folding />
         </state>
       </provider>
@@ -1218,14 +1269,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/Tank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="31" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
+        <state line="82" column="30" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.51916933">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="234" column="27" selection-start="6357" selection-end="6357" vertical-scroll-proportion="-2.2431972">
+        <state line="234" column="5" selection-start="6357" selection-end="6357" vertical-scroll-proportion="5.9693875">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
