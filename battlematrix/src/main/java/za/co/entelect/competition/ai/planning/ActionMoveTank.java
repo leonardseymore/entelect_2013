@@ -1,11 +1,6 @@
-package za.co.entelect.competition.ai.action;
+package za.co.entelect.competition.ai.planning;
 
-import za.co.entelect.competition.ai.movement.Seek;
-import za.co.entelect.competition.ai.movement.SeekPath;
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
-
-import java.util.Stack;
 
 public class ActionMoveTank extends Action {
 

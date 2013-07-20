@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.action;
+package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.domain.GameState;
 
@@ -65,11 +65,12 @@ public class GoapIda {
         continue;
       }
 
-      Action nextAction = models[currentDepth].nextAction();
+      Action nextAction = goal.nextAction(models[currentDepth]);
       if (nextAction != null) {
         models[currentDepth + 1] = models[currentDepth].clone();
         actions[currentDepth] = nextAction;
         models[currentDepth + 1].applyAction(nextAction);
+       // goal.loadAvailableActions(models[currentDepth + 1]);
         dot.append("  " + models[currentDepth].hash() + " -> " + models[currentDepth + 1].hash() + " [label=\"d=" + currentDepth + ", c=" + cost + " " + nextAction.getDescription() + "\", colorscheme=HSV, color=\"1.000 1.000 " + String.format("%.3f", (float)currentDepth / maxDepth) + "\"]\n");
         costs[currentDepth + 1] = costs[currentDepth] + nextAction.getCost();// + models[currentDepth + 1].getDiscontentment();
 

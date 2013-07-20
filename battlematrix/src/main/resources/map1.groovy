@@ -17,20 +17,20 @@ def getSize() {
 def getMap() {
   return """wwwwwwwwwwwwwwwwwwww
 w                  w
-w  w         4wo   w
+w  w          wo   w
 w  w         www   w
 w  wwwwww  w  w3   w
 w          w       w
-w  w    wwww  wwwwww
+wwwwwwwwwwwwwwwwwwww
 w  w               w
 w  w ww w  w    w  w
-w  w    w  w    w  w
+w  w    w  w  4 w  w
+w  w 1  w  w    w  w
 w  w    w  w ww w  w
-w  w    w  w    w  w
 w               w  w
-wwwwww  wwww    w  w
+wwwwwwwwwwwwwwwwwwww
 w       w          w
-w  1 w  w  wwwwww  w
+w    w  w  wwwwww  w
 w   www         w  w
 w   yw 2        w  w
 w                  w

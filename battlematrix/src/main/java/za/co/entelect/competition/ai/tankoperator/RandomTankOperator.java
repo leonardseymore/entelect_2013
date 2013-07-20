@@ -1,8 +1,8 @@
 package za.co.entelect.competition.ai.tankoperator;
 
-import za.co.entelect.competition.ai.action.ActionFireTank;
-import za.co.entelect.competition.ai.action.ActionManager;
-import za.co.entelect.competition.ai.action.ActionMoveTank;
+import za.co.entelect.competition.ai.planning.ActionFireTank;
+import za.co.entelect.competition.ai.planning.ActionManager;
+import za.co.entelect.competition.ai.planning.ActionMoveTank;
 import za.co.entelect.competition.domain.*;
 
 import java.util.Random;

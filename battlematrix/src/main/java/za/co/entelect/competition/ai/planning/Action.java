@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.action;
+package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.domain.GameState;
 
@@ -53,6 +53,10 @@ public abstract class Action implements Comparable<Action> {
 
   public int getCost() {
     return expiryTime;
+  }
+
+  public boolean isPreconditionsMet(GameState gameState) {
+    return true;
   }
 
   @Override

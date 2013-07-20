@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.action;
+package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.ai.movement.Seek;
 import za.co.entelect.competition.ai.movement.SeekPath;
@@ -10,6 +10,7 @@ import java.util.Stack;
 
 public class ActionMoveTankTo extends Action {
 
+  private boolean closest;
   private int x;
   private int y;
   private Tank tank;
@@ -18,13 +19,14 @@ public class ActionMoveTankTo extends Action {
   private Stack<PathFinder.Node> path;
   private Seek seek;
 
-  public ActionMoveTankTo(Tank tank, int x, int y) {
+  public ActionMoveTankTo(Tank tank, int x, int y, boolean closest) {
     this.gameState = tank.getGameState();
     this.tank = tank;
     this.x = x;
     this.y = y;
+    this.closest = closest;
     pathFinder = new PathFinder(gameState, tank);
-    path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), x, y, true);
+    path = pathFinder.closestPathAStar(tank.getX(), tank.getY(), x, y, closest);
     if (path != null) {
       expiryTime = path.size() * 2;
     }
@@ -50,5 +52,9 @@ public class ActionMoveTankTo extends Action {
     }
 
     return tank.getX() == x && tank.getY() == y;
+  }
+
+  public String getDescription() {
+    return tank.getTankId().name() + " to (" + x +":" + y + ")";
   }
 }

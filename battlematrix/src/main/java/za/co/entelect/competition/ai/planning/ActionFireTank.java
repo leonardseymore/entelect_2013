@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.action;
+package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
@@ -26,6 +26,14 @@ public class ActionFireTank extends Action {
   @Override
   public boolean isComplete() {
     return fired;
+  }
+
+  public boolean isPreconditionsMet(GameState gameState) {
+    Tank clone = gameState.getTank(tank.getTankId());
+    if (clone != null) {
+      return clone.isCanFire();
+    }
+    return false;
   }
 
   public String getDescription() {

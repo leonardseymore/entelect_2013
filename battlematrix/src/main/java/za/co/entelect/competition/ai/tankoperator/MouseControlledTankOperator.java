@@ -1,8 +1,8 @@
 package za.co.entelect.competition.ai.tankoperator;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.action.ActionManager;
-import za.co.entelect.competition.ai.action.ActionMoveTankTo;
+import za.co.entelect.competition.ai.planning.ActionManager;
+import za.co.entelect.competition.ai.planning.ActionMoveTankTo;
 import za.co.entelect.competition.swing.Mouse;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
@@ -34,7 +34,7 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
       if (action != null) {
         action.cancel();
       }
-      action = new ActionMoveTankTo(tank, targetX, targetY);
+      action = new ActionMoveTankTo(tank, targetX, targetY, true);
       ActionManager.getInstance().scheduleAction(action);
     }
   }

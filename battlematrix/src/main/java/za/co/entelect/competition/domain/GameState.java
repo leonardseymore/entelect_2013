@@ -2,7 +2,7 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.ai.action.*;
+import za.co.entelect.competition.ai.planning.*;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -27,8 +27,6 @@ public class GameState implements Cloneable {
   private long[][][] zobristHash;
   private long hash;
   private Random random = new Random();
-
-  private Iterator<Action> actionIterator;
 
   public GameState(int w, int h) {
     this.w = w;
@@ -726,47 +724,10 @@ public class GameState implements Cloneable {
   }
 
   public void applyAction(Action nextAction) {
-    nextAction.execute(this);
-    update(false);
-    loadActionIterator();
-  }
-
-  public Action nextAction() {
-    if (actionIterator == null) {
-      loadActionIterator();
+    while (!nextAction.isComplete() && nextAction.getExpiryTime() > 0) {
+      nextAction.execute(this);
+      update(false);
     }
-    if (actionIterator.hasNext()) {
-      return actionIterator.next();
-    } else {
-      loadActionIterator();
-    }
-    return null;
-  }
-
-  private void loadActionIterator() {
-    Collection<Action> actions = new ArrayList<>();
-    Tank tank = getTank(TankId.O1);
-    if (tank != null) {
-      //for (Tank tank : tanks) {
-      if (tank.canMoveInDirection(Directed.Direction.UP)) {
-        actions.add(new ActionMoveTank(tank, Directed.Direction.UP));
-      }
-      if (tank.canMoveInDirection(Directed.Direction.RIGHT)) {
-        actions.add(new ActionMoveTank(tank, Directed.Direction.RIGHT));
-      }
-      if (tank.canMoveInDirection(Directed.Direction.DOWN)) {
-        actions.add(new ActionMoveTank(tank, Directed.Direction.DOWN));
-      }
-      if (tank.canMoveInDirection(Directed.Direction.LEFT)) {
-        actions.add(new ActionMoveTank(tank, Directed.Direction.LEFT));
-      }
-      if (tank.isCanFire()) {
-        actions.add(new ActionFireTank(tank));
-      }
-      actions.add(new ActionTankDoNothing(tank));
-      // }
-    }
-    actionIterator = actions.iterator();
   }
 
   private class EntityIterator implements Iterator<Entity> {

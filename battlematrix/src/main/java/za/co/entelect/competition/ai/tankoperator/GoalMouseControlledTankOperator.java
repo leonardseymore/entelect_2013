@@ -1,7 +1,7 @@
 package za.co.entelect.competition.ai.tankoperator;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.action.*;
+import za.co.entelect.competition.ai.planning.*;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
 import za.co.entelect.competition.domain.TankOperator;
@@ -26,10 +26,10 @@ public class GoalMouseControlledTankOperator implements TankOperator {
       if (action != null) {
         action.cancel();
       }
-      Goal goal = new GoalMoveTo(tank, targetX, targetY);
+      Goal goal = new GoalMoveTo(10, tank, targetX, targetY);
       long start = System.currentTimeMillis();
-      action = GoapIda.planAction(gameState, goal, new GoalMoveToHeuristic(tank.getTankId(), targetX, targetY), 5);
-      logger.debug("Plan took [" + (System.currentTimeMillis() - start) + "ms]");
+      action = GoapIda.planAction(gameState, goal, new GoalMoveToHeuristic(tank.getTankId(), targetX, targetY), 3);
+      logger.debug("Plan [" + action + "] took [" + (System.currentTimeMillis() - start) + "ms]");
       if (action != null) {
         ActionManager.getInstance().scheduleAction(action);
       }

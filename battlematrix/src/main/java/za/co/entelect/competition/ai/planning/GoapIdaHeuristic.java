@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.action;
+package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.domain.GameState;
 
