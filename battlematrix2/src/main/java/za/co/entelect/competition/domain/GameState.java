@@ -1,5 +1,7 @@
 package za.co.entelect.competition.domain;
 
+import za.co.entelect.competition.Constants;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +24,21 @@ public class GameState {
     this.idxPos = new Entity[w][h];
   }
 
+  public void update() {
+
+  }
+
+  public void setWalls(Walls walls) {
+    this.walls = walls;
+  }
+
   public void setYourBase(int x, int y) {
     yourBase = new Base(IdGenerator.YOUR_BASE, x, y, Player.YOU);
     addEntity(yourBase);
   }
 
   public void setOpponentBase(int x, int y) {
-    opponentBase = new Base(IdGenerator.YOUR_BASE, x, y, Player.YOU);
+    opponentBase = new Base(IdGenerator.OPPONENT_BASE, x, y, Player.OPPONENT);
     addEntity(opponentBase);
   }
 
@@ -91,5 +101,62 @@ public class GameState {
       return GameElement.WALL;
     }
     return null;
+  }
+
+  public Entity getEntityAt(int x, int y) {
+    return idxPos[x][y];
+  }
+
+  public Entity getEntity(String id) {
+    return idxId.get(id);
+  }
+
+  public int getW() {
+    return w;
+  }
+
+  public void setW(int w) {
+    this.w = w;
+  }
+
+  public int getH() {
+    return h;
+  }
+
+  public void setH(int h) {
+    this.h = h;
+  }
+
+  public boolean canTankBeMovedTo(Tank tank, int x, int y) {
+    for (int j = y - Constants.TANK_HALF_SIZE; j <= y + Constants.TANK_HALF_SIZE; j++) {
+      for (int i = x - Constants.TANK_HALF_SIZE; i <= x + Constants.TANK_HALF_SIZE; i++) {
+        if (!isInBounds(i, j)) {
+          return false;
+        }
+
+        if (walls.hasWall(i, j)) {
+          return false;
+        }
+        Entity entity = getEntityAt(i, j);
+        if (entity != null
+          && !tank.equals(entity)
+          && entity.getGameElement() == GameElement.TANK) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public boolean isInBounds(int x, int y) {
+    return walls.isInBounds(x, y);
+  }
+
+  public void accept(GameElementVisitor visitor) {
+    visitor.visit(this);
+    walls.accept(visitor);
+    for (Entity entity : idxId.values()) {
+      entity.accept(visitor);
+    }
   }
 }

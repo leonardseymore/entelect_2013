@@ -69,6 +69,8 @@ public abstract class Entity {
     this.gameElement = gameElement;
   }
 
+  public abstract void accept(GameElementVisitor visitor);
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

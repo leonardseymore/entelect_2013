@@ -21,6 +21,15 @@ public class Base extends Entity {
     this.owner = owner;
   }
 
+  public boolean isYourBase() {
+    return owner == Player.YOU;
+  }
+
+  @Override
+  public void accept(GameElementVisitor visitor) {
+    visitor.visit(this);
+  }
+
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder();

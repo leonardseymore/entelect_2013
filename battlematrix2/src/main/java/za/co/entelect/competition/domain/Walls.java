@@ -20,8 +20,20 @@ public class Walls {
     this.walls = walls;
   }
 
+  public int getW() {
+    return w;
+  }
+
+  public int getH() {
+    return h;
+  }
+
   public int[][] getWalls() {
     return walls;
+  }
+
+  public void putWall(int x, int y) {
+    walls[x][y] = 1;
   }
 
   public boolean hasWall(int x, int y) {
@@ -61,8 +73,12 @@ public class Walls {
     return false;
   }
 
-  private boolean isInBounds(int x, int y) {
+  public boolean isInBounds(int x, int y) {
     return x >= 0 && x < w && y >= 0 && y < h;
+  }
+
+  public void accept(GameElementVisitor visitor) {
+    visitor.visit(this);
   }
 
   @Override
