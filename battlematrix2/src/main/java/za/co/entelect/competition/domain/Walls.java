@@ -2,19 +2,19 @@ package za.co.entelect.competition.domain;
 
 import java.util.Arrays;
 
-public class Map {
+public class Walls {
 
   private int w;
   private int h;
   private int walls[][];
 
-  public Map(int w, int h) {
+  public Walls(int w, int h) {
     this.w = w;
     this.h = h;
     this.walls = new int[w][h];
   }
 
-  public Map(int w, int h, int[][]walls) {
+  public Walls(int w, int h, int[][] walls) {
     this.w = w;
     this.h = h;
     this.walls = walls;
@@ -80,8 +80,8 @@ public class Map {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Map)) return false;
-    Map owall = (Map)o;
+    if (!(o instanceof Walls)) return false;
+    Walls owall = (Walls)o;
     for (int i = 0; i < w; i++) {
       int[] wall = walls[i];
       int[] owalls = owall.getWalls()[i];
