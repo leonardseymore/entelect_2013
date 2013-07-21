@@ -10,4 +10,24 @@ public class GameModelProp<T> {
     this.key = key;
     this.value = value;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof GameModelProp)) return false;
+
+    GameModelProp that = (GameModelProp) o;
+
+    if (key != that.key) return false;
+    if (subjectId != null ? !subjectId.equals(that.subjectId) : that.subjectId != null) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = subjectId != null ? subjectId.hashCode() : 0;
+    result = 31 * result + (key != null ? key.hashCode() : 0);
+    return result;
+  }
 }

@@ -2,31 +2,25 @@ package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Point;
-import za.co.entelect.competition.domain.Tank;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
 
-public class ActionMoveTo extends Action {
+public class ActionReload extends Action {
 
   private String tankId;
-  private Point pos;
   private Collection<GameModelProp> preconditions = new ArrayList<>();
   private Collection<GameModelProp> effects = new ArrayList<>();
-  private Stack<PathFinder.Node> path;
 
-  public ActionMoveTo(String tankId, int x, int y, Stack<PathFinder.Node> path) {
+  public ActionReload(String tankId) {
     this.tankId = tankId;
-    this.path = path;
-    effects.add(new GameModelProp(tankId, GameModelPropKey.IsAtX, x));
-    effects.add(new GameModelProp(tankId, GameModelPropKey.IsAtY, y));
+    effects.add(new GameModelProp(tankId, GameModelPropKey.CanFire, true));
   }
 
   @Override
   public int getCost() {
-    return path.size() * 2;
+    return 1;
   }
 
   @Override
@@ -46,6 +40,6 @@ public class ActionMoveTo extends Action {
 
   @Override
   public String getName() {
-    return "ActionMoveTo";
+    return "ActionReload";
   }
 }

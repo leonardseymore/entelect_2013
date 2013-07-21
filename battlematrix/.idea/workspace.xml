@@ -2,29 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Action.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseFire.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseRam.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionMoveTo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/Blackboard.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFact.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactAttr.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactBase.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactBullet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/blackboard/BlackboardFactTank.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelProp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelPropKey.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Goal.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyBase.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyTank.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/movement/Seek.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/movement/SeekPath.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/domain/TankAction.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/resources/map_basic.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/AppSwing.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/swing/AppSwing.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionMoveToX.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionMoveToY.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionReload.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalMoveTo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalMoveToX.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/test/java/za/co/entelect/competition/planning/GoapTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinderGoal.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/pathfinding/PathFinderX.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Action.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Action.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseFire.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseFire.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseRam.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionDestroyEnemyBaseRam.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionMoveTo.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionMoveTo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/Constants.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/Constants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModel.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelProp.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelProp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelPropKey.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GameModelPropKey.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Goal.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/Goal.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyBase.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyTank.java" afterPath="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/GoalDestroyEnemyTank.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="battlematrix.iws" />
@@ -32,7 +28,7 @@
     <file path="/UmpireSimulator.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1372953042360" ignored="false" />
     <file path="/Console.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373026002165" ignored="false" />
     <file path="/pom.xml" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373044935070" ignored="false" />
-    <file path="/fragment.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346303028" ignored="false" />
+    <file path="/fragment.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374389704090" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../GroovyEmbedShell/src/e/Console.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373027767736" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../GroovyEmbedShell/src/e/ConsolePromptClosure.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373027767736" ignored="false" />
     <file path="/Entity.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374335331241" ignored="false" />
@@ -53,7 +49,7 @@
     <file path="/App.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373571260965" ignored="false" />
     <file path="/GameState.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342768803" ignored="false" />
     <file path="$USER_HOME$/.m2/settings.xml" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373039127567" ignored="false" />
-    <file path="/Constants.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346123193" ignored="false" />
+    <file path="/Constants.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374354793756" ignored="false" />
     <file path="/Wall.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374092326265" ignored="false" />
     <file path="/board1.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373048543584" ignored="false" />
     <file path="/MainFrame.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373557305403" ignored="false" />
@@ -67,7 +63,7 @@
     <file path="/GameFactory.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374338935353" ignored="false" />
     <file path="/GameStateUpdatedListener.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373100006850" ignored="false" />
     <file path="/KeyboardInput.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373103995226" ignored="false" />
-    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374339165028" ignored="false" />
+    <file path="/Dummy.txt" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374353499594" ignored="false" />
     <file path="/RandomTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373736065727" ignored="false" />
     <file path="/Mouse.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373557271524" ignored="false" />
     <file path="/MouseControlledTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373741418610" ignored="false" />
@@ -133,16 +129,16 @@
     <file path="/CompoundAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373914384812" ignored="false" />
     <file path="/ActionSequence.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374128136707" ignored="false" />
     <file path="/MoveTankToAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374083290758" ignored="false" />
-    <file path="/GameModel.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374343801710" ignored="false" />
+    <file path="/GameModel.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374389740313" ignored="false" />
     <file path="$PROJECT_DIR$/../../../groovy/orientdb_api_topology.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373981072809" ignored="false" />
     <file path="/orientdb_api_topology.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1373980811975" ignored="false" />
     <file path="/ActionCompound.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374128128797" ignored="false" />
     <file path="/GoapIda.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374254239308" ignored="false" />
-    <file path="/Goal.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345818304" ignored="false" />
+    <file path="/Goal.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374351427010" ignored="false" />
     <file path="/NoneAction.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374000018262" ignored="false" />
     <file path="$PROJECT_DIR$/../../../groovy/zobrist_hashing.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374068164682" ignored="false" />
     <file path="/zobrist_hashing.groovy" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374068067249" ignored="false" />
-    <file path="/GoalMoveTo.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374254209896" ignored="false" />
+    <file path="/GoalMoveTo.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374389573387" ignored="false" />
     <file path="/ActionMoveTankUp.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374083529244" ignored="false" />
     <file path="/ActionMoveTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374185238860" ignored="false" />
     <file path="/DummyTankOperator.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374083679144" ignored="false" />
@@ -174,12 +170,20 @@
     <file path="$PROJECT_DIR$/../battlematrix2/src/main/java/za/co/entelect/competition/ai/planning/ActionCompound.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374342693689" ignored="false" />
     <file path="/ActionFire.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345493023" ignored="false" />
     <file path="/GameModelProp.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374343632603" ignored="false" />
-    <file path="/GameModelPropKey.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374344772363" ignored="false" />
+    <file path="/GameModelPropKey.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374354257359" ignored="false" />
     <file path="/ActionDestroyEnemyBase.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346028298" ignored="false" />
-    <file path="/ActionMoveTo.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345490609" ignored="false" />
-    <file path="/GoalDestroyEnemyBase.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374345963259" ignored="false" />
-    <file path="/GoalDestroyEnemyTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346111506" ignored="false" />
-    <file path="/ActionDestroyEnemyBaseRam.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374346346006" ignored="false" />
+    <file path="/ActionMoveTo.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374355043634" ignored="false" />
+    <file path="/GoalDestroyEnemyBase.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374389590996" ignored="false" />
+    <file path="/GoalDestroyEnemyTank.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374389608937" ignored="false" />
+    <file path="/ActionDestroyEnemyBaseRam.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374355098506" ignored="false" />
+    <file path="/PathFinderGoal.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374385837422" ignored="false" />
+    <file path="/GoapTest.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374388685259" ignored="false" />
+    <file path="/ActionMoveToX.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374354312663" ignored="false" />
+    <file path="/ActionMoveToY.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374354358067" ignored="false" />
+    <file path="/PathFinderX.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374354708771" ignored="false" />
+    <file path="/GoalMoveToX.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374389626674" ignored="false" />
+    <file path="/ActionDestroyEnemyBaseFire.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374355562144" ignored="false" />
+    <file path="/ActionReload.java" changelist="e8bb9eb2-22a2-4f6d-9ca0-f1d78a743f21" time="1374356516595" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +243,19 @@
     <favorites_list name="battlematrix" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="GoapIda.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/planning/GoapIda.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="4" selection-start="1020" selection-end="1236" vertical-scroll-proportion="0.17128874">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -1059,7 +1075,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6043771" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23014587" sideWeight="0.49847096" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31442463" sideWeight="0.72782874" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31442463" sideWeight="0.72782874" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4204893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1202,15 +1218,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/planning/GoapIda.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="24" selection-start="743" selection-end="743" vertical-scroll-proportion="-1.0277325">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="22" selection-start="498" selection-end="498" vertical-scroll-proportion="0.26357827">
@@ -1277,6 +1284,15 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/domain/GameState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="234" column="5" selection-start="6357" selection-end="6357" vertical-scroll-proportion="5.9693875">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/za/co/entelect/competition/ai/planning/GoapIda.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="4" selection-start="1020" selection-end="1236" vertical-scroll-proportion="0.17128874">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

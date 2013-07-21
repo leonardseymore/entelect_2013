@@ -25,4 +25,6 @@ public abstract class Goal {
   */
 
   public abstract GameModel requiredState();
+
+  public abstract String getName();
 }

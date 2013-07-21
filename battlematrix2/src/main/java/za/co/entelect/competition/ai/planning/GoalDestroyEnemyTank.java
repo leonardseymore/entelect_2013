@@ -4,6 +4,8 @@ import za.co.entelect.competition.Constants;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GoalDestroyEnemyTank extends Goal {
 
@@ -11,7 +13,7 @@ public class GoalDestroyEnemyTank extends Goal {
 
   public GoalDestroyEnemyTank(String enemyTankId) {
     super(Constants.GOAL_DESTROY_ENEMY_BASE);
-    Collection<GameModelProp> requiredStates = new ArrayList<>();
+    Set<GameModelProp> requiredStates = new HashSet<>();
     requiredStates.add(new GameModelProp(enemyTankId, GameModelPropKey.Destroyed, true));
     requiredState = new GameModel(requiredStates);
   }
@@ -19,5 +21,10 @@ public class GoalDestroyEnemyTank extends Goal {
   @Override
   public GameModel requiredState() {
     return requiredState;
+  }
+
+  @Override
+  public String getName() {
+    return "GoalDestroyEnemyTank";
   }
 }

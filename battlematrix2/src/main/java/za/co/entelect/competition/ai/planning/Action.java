@@ -41,7 +41,7 @@ public abstract class Action implements Comparable<Action> {
     expiryTime = 0;
   }
 
-  public abstract int getCost(GameState gameState);
+  public abstract int getCost();
 
   public abstract Collection<GameModelProp> getPreconditions();
   public abstract Collection<GameModelProp> getEffects();
@@ -55,7 +55,5 @@ public abstract class Action implements Comparable<Action> {
     return result;
   }
 
-  public String getDescription() {
-    return  "action_desc";
-  }
+  public abstract String getName();
 }

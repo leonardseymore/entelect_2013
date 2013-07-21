@@ -12,14 +12,15 @@ public class ActionDestroyEnemyBaseRam extends Action {
   private Collection<GameModelProp> preconditions = new ArrayList<>();
   private Collection<GameModelProp> effects = new ArrayList<>();
 
-  public ActionDestroyEnemyBaseRam(String tankId, String enemyBaseId, Point enemyBasePos) {
+  public ActionDestroyEnemyBaseRam(String tankId, String enemyBaseId, int enemyBasePosX, int enemyBasePosY) {
     this.tankId = tankId;
-    preconditions.add(new GameModelProp(tankId, GameModelPropKey.IsAt, enemyBasePos));
+    preconditions.add(new GameModelProp(tankId, GameModelPropKey.IsAtX, enemyBasePosX));
+    preconditions.add(new GameModelProp(tankId, GameModelPropKey.IsAtY, enemyBasePosY));
     effects.add(new GameModelProp(enemyBaseId, GameModelPropKey.Destroyed, true));
   }
 
   @Override
-  public int getCost(GameState gameState) {
+  public int getCost() {
     return 1;
   }
 
@@ -36,5 +37,10 @@ public class ActionDestroyEnemyBaseRam extends Action {
   @Override
   public Collection<GameModelProp> getEffects() {
     return effects;
+  }
+
+  @Override
+  public String getName() {
+    return "ActionDestroyEnemyBaseRam";
   }
 }

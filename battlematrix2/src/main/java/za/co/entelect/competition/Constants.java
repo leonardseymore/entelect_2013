@@ -34,4 +34,7 @@ public class Constants {
 
   public static final int GOAL_DESTROY_ENEMY_BASE = 1000;
   public static final int GOAL_DESTROY_ENEMY_TANK = 500;
+  public static final int GOAL_MOVE_TO = 100;
+  public static final int GOAL_MOVE_TO_X = 50;
+  public static final int GOAL_MOVE_TO_Y = 50;
 }

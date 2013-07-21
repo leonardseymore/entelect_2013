@@ -1,12 +1,59 @@
 package za.co.entelect.competition.ai.planning;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 
-public class GameModel {
-  private Collection<GameModelProp> props = new HashSet<>();
+public class GameModel implements Cloneable {
 
-  public GameModel(Collection<GameModelProp> props) {
+  Set<GameModelProp> props;
+
+  public GameModel() {
+    props = new HashSet<>();
+  }
+
+  public GameModel(Set<GameModelProp> props) {
     this.props = props;
   }
+
+  public Collection<GameModelProp> getProps() {
+    return props;
+  }
+
+  public Object getProp(GameModelPropKey key) {
+    for (GameModelProp prop : props) {
+      if (prop.key == key) {
+        return prop.value;
+      }
+    }
+    return null;
+  }
+
+  public void addProp(GameModelProp prop) {
+    props.add(prop);
+  }
+
+  public boolean isSatisfiedBy(GameModel gameModel) {
+    for (GameModelProp prop : props) {
+      if (!prop.value.equals(gameModel.getProp(prop.key))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public GameModel clone() {
+    Set<GameModelProp> newProps = new HashSet<>();
+    for (GameModelProp prop : props) {
+      newProps.add(prop);
+    }
+    GameModel clone = new GameModel(newProps);
+    return clone;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(props.toString());
+    return builder.toString();
+  }
 }
+
