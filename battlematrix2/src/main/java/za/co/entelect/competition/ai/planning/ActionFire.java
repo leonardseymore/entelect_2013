@@ -8,22 +8,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
 
-public class ActionMoveToY extends Action {
+public class ActionFire extends Action {
 
   private String tankId;
   private Collection<GameModelProp> preconditions = new ArrayList<>();
   private Collection<GameModelProp> effects = new ArrayList<>();
-  private Stack<PathFinder.Node> path;
 
-  public ActionMoveToY(String tankId, int y, Stack<PathFinder.Node> path) {
+  public ActionFire(String tankId) {
     this.tankId = tankId;
-    this.path = path;
-    effects.add(new GameModelProp(tankId, GameModelPropKey.IsAtY, y));
+    preconditions.add(new GameModelProp(tankId, GameModelPropKey.CanFire, true));
+    effects.add(new GameModelProp(tankId, GameModelPropKey.Fired, true));
   }
 
   @Override
   public int getCost() {
-    return path.size();
+    return 1;
   }
 
   @Override
@@ -43,6 +42,6 @@ public class ActionMoveToY extends Action {
 
   @Override
   public String getName() {
-    return "ActionMoveToX";
+    return "ActionFire";
   }
 }

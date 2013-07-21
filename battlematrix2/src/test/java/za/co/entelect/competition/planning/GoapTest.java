@@ -52,14 +52,12 @@ public class GoapTest {
 
     Stack<PathFinder.Node> movePath = PathFinder.closestPathAStar(gameStateBasic, tank, targetX, targetY, false);
     if (movePath != null) {
-      actions.add(new ActionMoveToX(Ids.Y1, targetX, movePath));
       actions.add(new ActionDestroyEnemyBaseFire(Ids.Y1, Ids.OPPONENT_BASE, targetX, targetY));
       actions.add(new ActionMoveTo(Ids.Y1, targetX, targetY, movePath));
-      actions.add(new ActionReload(Ids.Y1));
     }
     Goal goal = new GoalDestroyEnemyBase(Ids.OPPONENT_BASE);
     long start = System.currentTimeMillis();
-    Queue<PathFinderGoal.Node> path = PathFinderGoal.closestPathAStar(new GameModel(), goal, actions);
+    Queue<PathFinderGoal.Node> path = PathFinderGoal.closestPathAStar(gameStateBasic.toGameModel(), goal, actions);
     System.out.println("Plan took [" + (System.currentTimeMillis() - start) + "ms]");
     assertNotNull(path);
     for (PathFinderGoal.Node node : path) {
@@ -91,15 +89,45 @@ public class GoapTest {
 
     Stack<PathFinder.Node> movePath = PathFinder.closestPathAStar(gameStateBasic, tank, targetX, targetY, false);
     if (movePath != null) {
-      actions.add(new ActionMoveToX(Ids.Y1, targetX, movePath));
       actions.add(new ActionDestroyEnemyBaseFire(Ids.Y1, Ids.OPPONENT_BASE, targetX, targetY));
-      actions.add(new ActionMoveTo(Ids.Y1, targetX, targetY, movePath));
     }
     Goal goal = new GoalDestroyEnemyBase(Ids.OPPONENT_BASE);
     long start = System.currentTimeMillis();
-    Queue<PathFinderGoal.Node> path = PathFinderGoal.closestPathAStar(new GameModel(), goal, actions);
+    Queue<PathFinderGoal.Node> path = PathFinderGoal.closestPathAStar(gameStateBasic.toGameModel(), goal, actions);
     System.out.println("Exaustive search took [" + (System.currentTimeMillis() - start) + "ms]");
     assertNull(path);
+  }
+
+  @Test
+  public void testGoalFire() {
+    StringBuilder dot = new StringBuilder();
+    dot.append("digraph GoalFire {\n");
+    dot.append(" edge [fontsize=8];\n");
+    Collection<Action> actions = new ArrayList<>();
+    actions.add(new ActionFire(Ids.Y1));
+    Goal goal = new GoalFire(Ids.Y1);
+    long start = System.currentTimeMillis();
+    Queue<PathFinderGoal.Node> path = PathFinderGoal.closestPathAStar(gameStateBasic.toGameModel(), goal, actions);
+    System.out.println("Plan took [" + (System.currentTimeMillis() - start) + "ms]");
+    assertNotNull(path);
+    for (PathFinderGoal.Node node : path) {
+      Action action = node.getAction();
+      if (action != null) {
+        dot.append(action.getName());
+        dot.append(" -> ");
+      }
+    }
+    dot.append(goal.getName() + "\n");
+    dot.append(goal.getName() + " [shape=\"box\", label=<" + goalToTable(goal) + ">]\n");
+    for (PathFinderGoal.Node node : path) {
+      Action action = node.getAction();
+      if (action != null) {
+        dot.append(action.getName() + " [label=<" + actionToTable(action) + ">]\n");
+      }
+    }
+    dot.append("}");
+    writeFile("testGoalFire.dot", dot.toString());
+    System.out.println(dot.toString());
   }
 
   private String goalToTable(Goal goal) {

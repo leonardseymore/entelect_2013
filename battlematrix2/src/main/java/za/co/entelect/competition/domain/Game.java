@@ -31,10 +31,10 @@ public class Game {
   }
 
   private void performAi() {
+    ActionManager.getInstance().execute(gameState);
     for (Tank tank : gameState.getTanks().values()) {
       tank.performAction(gameState);
     }
-    ActionManager.getInstance().execute(gameState);
   }
 
   private void updateBullets() {

@@ -26,7 +26,7 @@ public abstract class Action implements Comparable<Action> {
     return false;
   }
 
-  public boolean isComplete() {
+  public boolean isComplete(GameState gameState) {
     return true;
   }
 

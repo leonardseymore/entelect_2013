@@ -2,6 +2,9 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
+import za.co.entelect.competition.ai.planning.GameModel;
+import za.co.entelect.competition.ai.planning.GameModelProp;
+import za.co.entelect.competition.ai.planning.GameModelPropKey;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -180,5 +183,13 @@ public class GameState {
     for (Entity entity : idxId.values()) {
       entity.accept(visitor);
     }
+  }
+
+  public GameModel toGameModel() {
+    GameModel gameModel = new GameModel();
+    for (Tank tank : tanks.values()) {
+      gameModel.addProp(new GameModelProp(tank.getId(), GameModelPropKey.CanFire, tank.isCanFire()));
+    }
+    return gameModel;
   }
 }

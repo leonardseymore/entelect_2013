@@ -61,7 +61,7 @@ public class ActionManager {
 
     Collection<Action> actionsToRemoveFromActive = new HashSet<>();
     for (Action action : active) {
-      if (action.isComplete()) {
+      if (action.isComplete(gameState)) {
         actionsToRemoveFromActive.add(action);
       } else {
         action.execute(gameState);

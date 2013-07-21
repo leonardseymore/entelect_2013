@@ -1,4 +1,5 @@
 import za.co.entelect.competition.ai.tankoperator.DummyTankOperator
+import za.co.entelect.competition.ai.tankoperator.MouseControlledTankOperator
 import za.co.entelect.competition.domain.Direction
 import za.co.entelect.competition.domain.Ids
 import za.co.entelect.competition.domain.Player
@@ -39,7 +40,7 @@ def getTank1() {
 }
 
 def getTank2() {
-  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new DummyTankOperator())
+  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new MouseControlledTankOperator())
 }
 
 def getTank3() {
