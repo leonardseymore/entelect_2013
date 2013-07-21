@@ -1,5 +1,7 @@
 package za.co.entelect.competition.domain;
 
+import za.co.entelect.competition.ai.planning.ActionManager;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,11 +22,19 @@ public class Game {
    * 4) Collisions are checked for.
    */
   public void update() {
+    performAi();
     for (int i = 0; i < 2; i++) {
       updateBullets();
     }
     updateTanks();
     fireTanks();
+  }
+
+  private void performAi() {
+    for (Tank tank : gameState.getTanks().values()) {
+      tank.performAction(gameState);
+    }
+    ActionManager.getInstance().execute(gameState);
   }
 
   private void updateBullets() {

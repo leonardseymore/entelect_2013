@@ -117,6 +117,10 @@ public class Tank extends Entity {
     return bullet;
   }
 
+  public void performAction(GameState gameState) {
+    tankOperator.execute(gameState, this);
+  }
+
   @Override
   public void accept(GameElementVisitor visitor) {
     visitor.visit(this);
