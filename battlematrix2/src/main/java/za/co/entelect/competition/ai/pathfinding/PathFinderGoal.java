@@ -1,15 +1,9 @@
 package za.co.entelect.competition.ai.pathfinding;
 
-import org.apache.log4j.Logger;
-import za.co.entelect.competition.Util;
 import za.co.entelect.competition.ai.planning.Action;
 import za.co.entelect.competition.ai.planning.GameModel;
 import za.co.entelect.competition.ai.planning.GameModelProp;
 import za.co.entelect.competition.ai.planning.Goal;
-import za.co.entelect.competition.domain.Entity;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
-import za.co.entelect.competition.domain.Trackable;
 
 import java.util.*;
 

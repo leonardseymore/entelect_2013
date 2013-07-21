@@ -2,6 +2,7 @@ package za.co.entelect.competition;
 
 import za.co.entelect.competition.domain.Base;
 import za.co.entelect.competition.domain.Entity;
+import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
 
 import java.awt.*;

@@ -1,7 +1,6 @@
-import za.co.entelect.competition.Constants
 import za.co.entelect.competition.ai.tankoperator.DummyTankOperator
 import za.co.entelect.competition.domain.Direction
-import za.co.entelect.competition.domain.IdGenerator
+import za.co.entelect.competition.domain.Ids
 import za.co.entelect.competition.domain.Player
 import za.co.entelect.competition.domain.Tank
 
@@ -36,17 +35,17 @@ wwwwwwwwwwwwwwwwwwww"""
 }
 
 def getTank1() {
-  return new Tank(IdGenerator.Y1, Player.YOU, Direction.UP, new DummyTankOperator())
+  return new Tank(Ids.Y1, Player.YOU, Direction.UP, new DummyTankOperator())
 }
 
 def getTank2() {
-  return new Tank(IdGenerator.Y2, Player.YOU, Direction.DOWN, new DummyTankOperator())
+  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new DummyTankOperator())
 }
 
 def getTank3() {
-  return new Tank(IdGenerator.O1, Player.OPPONENT, Direction.RIGHT, new DummyTankOperator())
+  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new DummyTankOperator())
 }
 
 def getTank4() {
-  return new Tank(IdGenerator.O2, Player.OPPONENT, Direction.LEFT, new DummyTankOperator())
+  return new Tank(Ids.O2, Player.OPPONENT, Direction.LEFT, new DummyTankOperator())
 }

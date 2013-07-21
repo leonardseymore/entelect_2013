@@ -1,11 +1,14 @@
 package za.co.entelect.competition.domain;
 
+import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameState {
+
+  public static final Logger logger = Logger.getLogger(GameState.class);
 
   private int w;
   private int h;
@@ -24,21 +27,17 @@ public class GameState {
     this.idxPos = new Entity[w][h];
   }
 
-  public void update() {
-
-  }
-
   public void setWalls(Walls walls) {
     this.walls = walls;
   }
 
   public void setYourBase(int x, int y) {
-    yourBase = new Base(IdGenerator.YOUR_BASE, x, y, Player.YOU);
+    yourBase = new Base(Ids.YOUR_BASE, x, y, Player.YOU);
     addEntity(yourBase);
   }
 
   public void setOpponentBase(int x, int y) {
-    opponentBase = new Base(IdGenerator.OPPONENT_BASE, x, y, Player.OPPONENT);
+    opponentBase = new Base(Ids.OPPONENT_BASE, x, y, Player.OPPONENT);
     addEntity(opponentBase);
   }
 
@@ -60,6 +59,37 @@ public class GameState {
   public void removeBullet(Bullet bullet) {
     tanks.remove(bullet.getId());
     removeEntity(bullet);
+  }
+
+  public void removeBase(Base base) {
+    if (base.isYourBase()) {
+      //yourBase = null;
+      logger.debug("Game over, you lost!");
+    } else {
+      //opponentBase = null;
+      logger.debug("Game over, you WON!");
+    }
+    removeEntity(base);
+  }
+
+  public Base getYourBase() {
+    return yourBase;
+  }
+
+  public Base getOpponentBase() {
+    return opponentBase;
+  }
+
+  public Map<String, Tank> getTanks() {
+    return tanks;
+  }
+
+  public Map<String, Bullet> getBullets() {
+    return bullets;
+  }
+
+  public Walls getWalls() {
+    return walls;
   }
 
   private void addEntity(Entity entity) {
@@ -115,16 +145,8 @@ public class GameState {
     return w;
   }
 
-  public void setW(int w) {
-    this.w = w;
-  }
-
   public int getH() {
     return h;
-  }
-
-  public void setH(int h) {
-    this.h = h;
   }
 
   public boolean canTankBeMovedTo(Tank tank, int x, int y) {

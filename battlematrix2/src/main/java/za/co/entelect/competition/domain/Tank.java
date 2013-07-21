@@ -7,6 +7,8 @@ public class Tank extends Entity {
   private Player owner;
   private Direction direction;
   private TankOperator tankOperator;
+  private TankAction nextAction = TankAction.NONE;
+  private boolean canFire = true;
 
   public Tank(String id, Player owner, Direction direction, TankOperator tankOperator) {
     this(id, 0, 0, owner, direction, tankOperator);
@@ -73,6 +75,46 @@ public class Tank extends Entity {
         break;
     }
     return bulletPos;
+  }
+
+  public TankAction getNextAction() {
+    return nextAction;
+  }
+
+  public void setNextAction(TankAction nextAction) {
+    this.nextAction = nextAction;
+  }
+
+  public boolean isCanFire() {
+    return canFire;
+  }
+
+  public void setCanFire(boolean canFire) {
+    this.canFire = canFire;
+  }
+
+  public Bullet createBullet() {
+    int[] bulletPos = turretPos();
+    Bullet bullet = new Bullet("BULLET" + id, bulletPos[0], bulletPos[1], this, direction);
+    int newX = bullet.getX();
+    int newY = bullet.getY();
+    switch (direction) {
+      case UP:
+        newY--;
+        break;
+      case RIGHT:
+        newX++;
+        break;
+      case DOWN:
+        newY++;
+        break;
+      case LEFT:
+        newX--;
+        break;
+    }
+    bullet.setX(newX);
+    bullet.setY(newY);
+    return bullet;
   }
 
   @Override

@@ -2,8 +2,9 @@ package za.co.entelect.competition.swing;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
+import za.co.entelect.competition.domain.Game;
 import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.IdGenerator;
+import za.co.entelect.competition.domain.Ids;
 import za.co.entelect.competition.domain.Tank;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class GUI extends JFrame {
   }
 
   private GameState gameState;
+  private Game game;
   private Canvas canvas;
   private boolean printHelp;
   private double zoomFactor = 1;
@@ -39,6 +41,7 @@ public class GUI extends JFrame {
 
   public GUI(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
+    this.game = new Game(gameState);
     this.zoomFactor = zoomFactor;
 
     setIgnoreRepaint(true);
@@ -101,21 +104,21 @@ public class GUI extends JFrame {
           selectedTank = null;
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-          selectedTank = (Tank)gameState.getEntity(IdGenerator.Y1);
+          selectedTank = (Tank)gameState.getEntity(Ids.Y1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
-          selectedTank = (Tank)gameState.getEntity(IdGenerator.Y2);
+          selectedTank = (Tank)gameState.getEntity(Ids.Y2);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
-          selectedTank = (Tank)gameState.getEntity(IdGenerator.O1);
+          selectedTank = (Tank)gameState.getEntity(Ids.O1);
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
-          selectedTank = (Tank)gameState.getEntity(IdGenerator.O2);
+          selectedTank = (Tank)gameState.getEntity(Ids.O2);
         }
         if (paused) {
           continue;
         }
-        gameState.update();
+        game.update();
 
         g = bi.createGraphics();
         g.setFont(arial);
@@ -144,7 +147,7 @@ public class GUI extends JFrame {
 
           int x = 10;
           int y = 10;
-          g.drawString("u=user map (default), c=clearance map, z=zobrist map", x, y += 12);
+          g.drawString("u=user map (default), c=clearance map", x, y += 12);
           g.drawString("p toggle pause", x, y += 12);
         }
 

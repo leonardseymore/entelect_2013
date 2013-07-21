@@ -1,8 +1,6 @@
 package za.co.entelect.competition.ai.pathfinding;
 
-import org.apache.log4j.Logger;
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.domain.Entity;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
 import za.co.entelect.competition.domain.Trackable;
@@ -11,21 +9,11 @@ import java.util.*;
 
 public class PathFinder {
 
-  private static Logger logger = Logger.getLogger(PathFinder.class);
-
-  private GameState gameState;
-  private Tank tank;
-
-  public PathFinder(GameState gameState, Tank tank) {
-    this.tank = tank;
-    this.gameState = gameState;
-  }
-
-  public Stack<Node> closestPathAStar(int startX, int startY, int endX, int endY, boolean closest) {
+  public static Stack<Node> closestPathAStar(GameState gameState, Tank tank, int endX, int endY, boolean closest) {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
-    Node start = new Node(startX, startY, gameState.getEntityAt(startX, startY));
+    Node start = new Node(tank.getX(), tank.getY());
     start.goalCost = heuristic(start, endX, endY);
     open.add(start);
 
@@ -44,7 +32,7 @@ public class PathFinder {
 
       open.remove(currentNode);
       closed.add(currentNode);
-      for (Node toNode : getAvailableNeighbors(currentNode)) {
+      for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode)) {
         toNode.goalCost = heuristic(toNode, endX, endY);
         toNode.parent = currentNode;
 
@@ -64,14 +52,14 @@ public class PathFinder {
       }
     }
 
-    if (closest && closestNode != null) {
+    if (closest) {
       return pathToNode(closestNode);
     }
 
     return null;
   }
 
-  private Collection<Node> getAvailableNeighbors(Node node) {
+  private static Collection<Node> getAvailableNeighbors(GameState gameState, Tank tank, Node node) {
     Collection<Node> neighbors = new ArrayList<>();
 
     int x = node.x;
@@ -82,26 +70,26 @@ public class PathFinder {
         if (i == x && j == y) {
           continue;
         }
-        ifCanMoveToAdd(i, j, neighbors);
+        ifCanMoveToAdd(gameState, tank, i, j, neighbors);
       }
     }
     return neighbors;
   }
 
-  private boolean ifCanMoveToAdd(int x, int y, Collection<Node> neighbors) {
+  private static boolean ifCanMoveToAdd(GameState gameState, Tank tank, int x, int y, Collection<Node> neighbors) {
     boolean canMoveTo = gameState.canTankBeMovedTo(tank, x, y);
     if (canMoveTo) {
-      neighbors.add(new Node(x, y, gameState.getEntityAt(x, y)));
+      neighbors.add(new Node(x, y));
     }
     return canMoveTo;
   }
 
-  public int heuristic(PathFinder.Node node, int endX, int endY) {
+  public static int heuristic(PathFinder.Node node, int endX, int endY) {
     int dist = Util.manhattanDist(node.x, node.y, endX, endY);
     return dist;
   }
 
-  private Stack<Node> pathToNode(Node currentNode) {
+  private static Stack<Node> pathToNode(Node currentNode) {
     Stack<Node> path = new Stack<>();
     do {
       path.add(currentNode);
@@ -110,19 +98,17 @@ public class PathFinder {
     return path;
   }
 
-  public class Node implements Trackable, Comparable<Node> {
+  public static class Node implements Trackable, Comparable<Node> {
     int x;
     int y;
     int goalCost;
     int runningCost;
-    Entity entity;
 
     Node parent;
 
-    public Node(int x, int y, Entity entity) {
+    public Node(int x, int y) {
       this.x = x;
       this.y = y;
-      this.entity = entity;
     }
 
     @Override
@@ -177,7 +163,6 @@ public class PathFinder {
       sb.append(", y=").append(y);
       sb.append(", goalCost=").append(goalCost);
       sb.append(", runningCost=").append(runningCost);
-      sb.append(", entity=").append(entity);
       sb.append('}');
       return sb.toString();
     }
