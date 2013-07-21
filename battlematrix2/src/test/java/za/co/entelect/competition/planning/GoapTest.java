@@ -22,6 +22,8 @@ import java.util.Collection;
 import java.util.Queue;
 import java.util.Stack;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(JUnit4.class)
@@ -83,12 +85,16 @@ public class GoapTest {
     PathFinder pathFinder = new PathFinder(gameStateBasic, tank);
     Stack<PathFinder.Node> movePath = pathFinder.closestPathAStar(tank.getX(), tank.getY(), targetX, targetY, false);
     if (movePath != null) {
-      actions.add(new ActionMoveTo(IdGenerator.Y1, targetX, targetY, movePath));
+      actions.add(new ActionMoveToX(IdGenerator.Y1, targetX, movePath));
       actions.add(new ActionDestroyEnemyBaseFire(IdGenerator.Y1, IdGenerator.OPPONENT_BASE, targetX, targetY));
+      actions.add(new ActionMoveTo(IdGenerator.Y1, targetX, targetY, movePath));
       actions.add(new ActionReload(IdGenerator.Y1));
     }
     Goal goal = new GoalDestroyEnemyBase(IdGenerator.OPPONENT_BASE);
+    long start = System.currentTimeMillis();
     Queue<PathFinderGoal.Node> path = PathFinderGoal.closestPathAStar(new GameModel(), goal, actions);
+    System.out.println("Plan took [" + (System.currentTimeMillis() - start) + "ms]");
+    assertNotNull(path);
     for (PathFinderGoal.Node node : path) {
       Action action = node.getAction();
       if (action != null) {
@@ -107,6 +113,27 @@ public class GoapTest {
     dot.append("}");
     writeFile("testGoalDestroyEnemyBase.dot", dot.toString());
     System.out.println(dot.toString());
+  }
+
+  @Test
+  public void testGoalDestroyEnemyBaseNoValidPlan() {
+    Tank tank = (Tank)gameStateBasic.getEntity(IdGenerator.Y1);
+    int targetX = tank.getX() + 10;
+    int targetY = tank.getY() + 5;
+    Collection<Action> actions = new ArrayList<>();
+
+    PathFinder pathFinder = new PathFinder(gameStateBasic, tank);
+    Stack<PathFinder.Node> movePath = pathFinder.closestPathAStar(tank.getX(), tank.getY(), targetX, targetY, false);
+    if (movePath != null) {
+      actions.add(new ActionMoveToX(IdGenerator.Y1, targetX, movePath));
+      actions.add(new ActionDestroyEnemyBaseFire(IdGenerator.Y1, IdGenerator.OPPONENT_BASE, targetX, targetY));
+      actions.add(new ActionMoveTo(IdGenerator.Y1, targetX, targetY, movePath));
+    }
+    Goal goal = new GoalDestroyEnemyBase(IdGenerator.OPPONENT_BASE);
+    long start = System.currentTimeMillis();
+    Queue<PathFinderGoal.Node> path = PathFinderGoal.closestPathAStar(new GameModel(), goal, actions);
+    System.out.println("Exaustive search took [" + (System.currentTimeMillis() - start) + "ms]");
+    assertNull(path);
   }
 
   private String goalToTable(Goal goal) {

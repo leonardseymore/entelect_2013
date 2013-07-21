@@ -55,5 +55,22 @@ public class GameModel implements Cloneable {
     builder.append(props.toString());
     return builder.toString();
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof GameModel)) return false;
+
+    GameModel gameModel = (GameModel) o;
+
+    if (props != null ? !props.equals(gameModel.props) : gameModel.props != null) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return props != null ? props.hashCode() : 0;
+  }
 }
 

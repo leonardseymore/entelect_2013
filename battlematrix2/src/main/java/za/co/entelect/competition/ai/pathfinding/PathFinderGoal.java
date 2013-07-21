@@ -130,5 +130,22 @@ public class PathFinderGoal {
     public int compareTo(Node o) {
       return runningCost > o.runningCost ? +1 : runningCost < o.runningCost ? -1 : 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Node)) return false;
+
+      Node node = (Node) o;
+
+      if (gameModel != null ? !gameModel.equals(node.gameModel) : node.gameModel != null) return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return gameModel != null ? gameModel.hashCode() : 0;
+    }
   }
 }
