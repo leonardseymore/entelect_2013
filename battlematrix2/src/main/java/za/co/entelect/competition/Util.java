@@ -1,8 +1,19 @@
 package za.co.entelect.competition;
 
+import za.co.entelect.competition.ai.pathfinding.PathFinder;
+import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
+import za.co.entelect.competition.ai.planning.*;
 import za.co.entelect.competition.domain.*;
+import za.co.entelect.competition.domain.Point;
 
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Stack;
 
 public class Util {
 
@@ -61,5 +72,64 @@ public class Util {
       buffer.append("\n");
     }
     return buffer.toString();
+  }
+
+  public static String toDot(Plan plan) {
+    StringBuilder dot = new StringBuilder();
+
+    dot.append("digraph GoalMoveTo {\n");
+    dot.append(" edge [fontsize=8];\n");
+    Stack<PathFinderGoal.Node> steps = plan.getSteps();
+    for (PathFinderGoal.Node node : steps) {
+      Action action = node.getAction();
+      if (action != null) {
+        dot.append(action.getName());
+        dot.append(" -> ");
+      }
+    }
+    Goal goal = plan.getGoal();
+    dot.append(goal.getName() + "\n");
+    dot.append(goal.getName() + " [shape=\"box\", label=<" + goalToTable(goal) + ">]\n");
+    for (PathFinderGoal.Node node : steps) {
+      Action action = node.getAction();
+      if (action != null) {
+        dot.append(action.getName() + " [label=<" + actionToTable(action) + ">]\n");
+      }
+    }
+    dot.append("}");
+    return dot.toString();
+  }
+
+  private static String goalToTable(Goal goal) {
+    StringBuilder buffer = new StringBuilder();
+    buffer.append("<table>");
+    buffer.append("<tr><td>" + goal.getName() + "</td><td>Key</td><td>Value</td></tr>");
+    for (GameModelProp gameModelProp : goal.requiredState().getProps()) {
+      buffer.append("<tr><td>Requires</td><td>" + gameModelProp.key + "</td><td>" + gameModelProp.value + "</td></tr>");
+    }
+    buffer.append("</table>");
+    return buffer.toString();
+  }
+
+  private static String actionToTable(Action action) {
+    StringBuilder buffer = new StringBuilder();
+    buffer.append("<table>");
+    buffer.append("<tr><td>" + action.getName() + "</td><td>Key</td><td>Value</td></tr>");
+    for (GameModelProp gameModelProp : action.getEffects()) {
+      buffer.append("<tr><td>Effect</td><td>" + gameModelProp.key + "</td><td>" + gameModelProp.value + "</td></tr>");
+    }
+    for (GameModelProp gameModelProp : action.getPreconditions()) {
+      buffer.append("<tr><td>Precondition</td><td>" + gameModelProp.key + "</td><td>" + gameModelProp.value + "</td></tr>");
+    }
+    buffer.append("</table>");
+    return buffer.toString();
+  }
+
+  public static void writeFile(File dir, String filename, String contents) {
+    try (BufferedWriter out = new BufferedWriter(new FileWriter(new File(dir, filename)))) {
+      out.write(contents.toString());
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
   }
 }

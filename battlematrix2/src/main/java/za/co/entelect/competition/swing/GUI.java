@@ -154,10 +154,10 @@ public class GUI extends JFrame {
         if (gameState.isGameOver()) {
           g.setColor(new Color(123,123,123,190));
           g.fillRect(0, 0, getWidth(), getHeight());
-          g.setColor(Color.white);
           int x = 10;
           int y = 10;
           String winner = gameState.getYourBase() == null ? "You loose!" : "You WIN!";
+          g.setColor(gameState.getYourBase() == null ? Constants.COLOR_SWING_TANK_OPPONENT : Constants.COLOR_SWING_TANK_YOU);
           g.drawString("Game Over: " + winner, x, y += 12);
         }
 

@@ -15,7 +15,7 @@ public class ActionAlignToTarget extends Action {
     if (targetId == null) {
       return;
     }
-    effects.add(new GameModelProp(tank.getId(), GameModelPropKey.InLine, targetId));
+    effects.add(new GameModelProp(tank.getId(), GameModelPropKey.AlignedTo, targetId));
   }
 
   @Override

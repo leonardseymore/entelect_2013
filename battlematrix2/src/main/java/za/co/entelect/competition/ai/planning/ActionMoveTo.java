@@ -45,9 +45,6 @@ public class ActionMoveTo extends Action {
     if (target == null) {
       return;
     }
-    if (path == null) {
-
-    }
     TankAction tankAction = Seek.seekPath(gameState, tank, path);
     tank.setNextAction(tankAction);
   }

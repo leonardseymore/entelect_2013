@@ -36,12 +36,13 @@ public class ClearanceMapRenderer implements GameElementVisitor {
 
     for (int y = 0; y < gameState.getH(); y++) {
       for (int x = 0; x < gameState.getW(); x++) {
-        Entity e = gameState.getEntityAt(x, y);
+        GameElement e = gameState.getElementAt(x, y);
         if (e != null) {
-          if (e != null) {
-            g.setColor(Util.getColor(e));
+          Entity entity = gameState.getEntityAt(x, y);
+          if (entity != null) {
+            g.setColor(Util.getColor(entity));
           } else {
-            g.setColor(Color.green);
+            g.setColor(Constants.COLOR_SWING_WALL);
           }
         } else if (selectedTank != null && gameState.canTankBeMovedTo(selectedTank, x, y)) {
           g.setColor(Color.pink);

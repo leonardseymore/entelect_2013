@@ -247,6 +247,11 @@ public class Game {
   }
 
   private Collision checkEntityCollision(Bullet bullet) {
+    GameElement gameElement = gameState.getElementAt(bullet.getX(), bullet.getY());
+    if (gameElement == GameElement.WALL) {
+      return new Collision(bullet, null, CollisionType.BulletWall);
+    }
+
     Entity e = gameState.getEntityAt(bullet.getX(), bullet.getY());
     if (e != null && e != bullet) {
       return handleCollision(bullet, e);
@@ -305,8 +310,6 @@ public class Game {
       type = CollisionType.TankBullet;
     } else if (s.getGameElement() == GameElement.BULLET && t.getGameElement() == GameElement.BULLET) {
       type = CollisionType.BulletBullet;
-    } else if (s.getGameElement() == GameElement.BULLET && t.getGameElement() == GameElement.WALL) {
-      type = CollisionType.BulletWall;
     }
     return new Collision(s, t, type);
   }

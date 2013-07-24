@@ -1,6 +1,5 @@
 package za.co.entelect.competition.ai.planning;
 
-import za.co.entelect.competition.Util;
 import za.co.entelect.competition.domain.*;
 
 public class ActionLookAtTarget extends Action {
@@ -16,7 +15,7 @@ public class ActionLookAtTarget extends Action {
     if (targetId == null) {
       return;
     }
-    preconditions.add(new GameModelProp(tank.getId(), GameModelPropKey.InLine, targetId));
+    preconditions.add(new GameModelProp(tank.getId(), GameModelPropKey.AlignedTo, targetId));
     effects.add(new GameModelProp(tank.getId(), GameModelPropKey.LookAt, targetId));
   }
 
@@ -40,6 +39,24 @@ public class ActionLookAtTarget extends Action {
     } else if (target.getX() < tank.getX() && tank.getDirection() != Direction.LEFT) {
       tank.setNextAction(TankAction.LEFT);
     }
+  }
+
+  @Override
+  public boolean isComplete(GameState gameState) {
+    Entity target = gameState.getEntity(targetId);
+    if (target == null) {
+      return false;
+    }
+    if (target.getY() < tank.getY() && tank.getDirection() != Direction.UP) {
+      return false;
+    } else if (target.getX() > tank.getX() && tank.getDirection() != Direction.RIGHT) {
+      return false;
+    } else if (target.getY() > tank.getY() && tank.getDirection() != Direction.DOWN) {
+      return false;
+    } else if (target.getX() < tank.getX() && tank.getDirection() != Direction.LEFT) {
+      return false;
+    }
+    return true;
   }
 
   @Override

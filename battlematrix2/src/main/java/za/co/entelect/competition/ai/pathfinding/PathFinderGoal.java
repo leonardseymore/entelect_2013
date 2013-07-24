@@ -12,7 +12,7 @@ public class PathFinderGoal {
       return null;
     }
     steps.pop();
-    return new Plan(steps);
+    return new Plan(goal, steps);
   }
 
   public static Stack<Node> closestPathAStar(GameModel startState, Goal goal, Collection<Action> actions) {
