@@ -16,24 +16,24 @@ def getSize() {
 
 def getMap() {
   return """wwwwwwwwwwwwwwwwwwww
-w                  w
-w  w          wo   w
-w  w         www   w
-w  wwwwww  w  w3   w
-w          w       w
 wwwwwwwwwwwwwwwwwwww
-w  w               w
-w  wwww w  w    w  w
+w  w       3  wo   w
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
 w  w    w  w  4 w  w
 w  w 1  w  w    w  w
-w  w    w  w wwww  w
-w               w  w
 wwwwwwwwwwwwwwwwwwww
-w       w          w
-w    w  w  wwwwww  w
-w   www         w  w
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwww
 w   yw 2        w  w
-w                  w
+wwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwww"""
 }
 
