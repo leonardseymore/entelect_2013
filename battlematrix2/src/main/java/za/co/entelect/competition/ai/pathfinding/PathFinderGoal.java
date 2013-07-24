@@ -1,16 +1,22 @@
 package za.co.entelect.competition.ai.pathfinding;
 
-import za.co.entelect.competition.ai.planning.Action;
-import za.co.entelect.competition.ai.planning.GameModel;
-import za.co.entelect.competition.ai.planning.GameModelProp;
-import za.co.entelect.competition.ai.planning.Goal;
+import za.co.entelect.competition.ai.planning.*;
 
 import java.util.*;
 
 public class PathFinderGoal {
 
-  public static Queue<Node> closestPathAStar(GameModel startState, Goal goal, Collection<Action> actions) {
-    Queue<Node> open = new PriorityQueue<>();
+  public static Plan getPlan(GameModel startState, Goal goal, Collection<Action> actions) {
+    Stack<Node> steps = closestPathAStar(startState, goal, actions);
+    if (steps == null) {
+      return null;
+    }
+    steps.pop();
+    return new Plan(steps);
+  }
+
+  public static Stack<Node> closestPathAStar(GameModel startState, Goal goal, Collection<Action> actions) {
+    Stack<Node> open = new Stack<>();
     Collection<Node> closed = new HashSet<>();
 
     GameModel requiredState = goal.requiredState();
@@ -21,7 +27,7 @@ public class PathFinderGoal {
     Node closestNode = start;
 
     while (!open.isEmpty()) {
-      Node currentNode = open.poll();
+      Node currentNode = open.pop();
 
       if (currentNode.goalCost < closestNode.goalCost) {
         closestNode = currentNode;
@@ -70,7 +76,6 @@ public class PathFinderGoal {
       neighbor.parent = node;
       neighbor.goalCost = action.getCost();
       neighbors.add(neighbor);
-
     }
     return neighbors;
   }
@@ -86,8 +91,8 @@ public class PathFinderGoal {
     return numUnsatisfiedProps;
   }
 
-  private static Queue<Node> pathToNode(Node currentNode) {
-    Queue<Node> path = new LinkedList<>();
+  private static Stack<Node> pathToNode(Node currentNode) {
+    Stack<Node> path = new Stack<>();
     do {
       path.add(currentNode);
       currentNode = currentNode.parent;
@@ -140,6 +145,15 @@ public class PathFinderGoal {
     @Override
     public int hashCode() {
       return gameModel != null ? gameModel.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+      if (action != null) {
+      return action.getName();
+      } else {
+        return "NO ACTION";
+      }
     }
   }
 }

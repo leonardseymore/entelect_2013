@@ -1,28 +1,29 @@
 package za.co.entelect.competition.ai.movement;
 
+import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
+
+import java.util.Stack;
 
 public class Seek {
 
-  protected Tank tank;
-  protected Trackable target;
-  protected GameState gameState;
-                 
-  public Seek(GameState gameState, Tank tank, Trackable target) {
-    this.tank = tank;
-    this.target = target;
-    this.gameState = gameState;
+  public static TankAction seekPath(GameState gameState, Tank tank, Stack<PathFinder.Node> path) {
+    if (path == null || path.isEmpty()) {
+      return TankAction.NONE;
+    }
+
+    Trackable target = path.peek();
+    while ((tank.getX() == target.getX() && tank.getY() == target.getY()) && !path.isEmpty()) {
+      target = path.pop();
+    }
+    return seek(gameState, tank, target);
   }
 
-  public Trackable getTarget() {
-    return target;
-  }
+  public static TankAction seek(GameState gameState, Tank tank, Trackable target) {
+    if (tank.getX() == target.getX() && tank.getY() == target.getY()) {
+      return TankAction.NONE;
+    }
 
-  public void setTarget(Trackable target) {
-    this.target = target;
-  }
-
-  private TankAction seek() {
     if (target.getX() > tank.getX()
       && gameState.canTankBeMovedTo(tank, tank.getX() + 1, tank.getY())) {
       return TankAction.RIGHT;
@@ -44,12 +45,5 @@ public class Seek {
     }
 
     return TankAction.NONE;
-  }
-
-  public TankAction getAction() {
-    if (tank.getX() == target.getX() && tank.getY() == target.getY()) {
-      return TankAction.NONE;
-    }
-    return seek();
   }
 }

@@ -22,6 +22,7 @@ public class GameState {
   private Map<String, Entity> idxId = new HashMap<>();
   private Walls walls;
   private Entity[][] idxPos;
+  private boolean gameOver = false;
 
   public GameState(int w, int h) {
     this.w = w;
@@ -60,19 +61,45 @@ public class GameState {
   }
 
   public void removeBullet(Bullet bullet) {
-    tanks.remove(bullet.getId());
+    bullets.remove(bullet.getId());
     removeEntity(bullet);
+    bullet.getTank().setCanFire(true);
+  }
+
+  public void moveBullet(Bullet bullet) {
+    idxPos[bullet.getPrevX()][bullet.getPrevY()] = null;
+    idxPos[bullet.getX()][bullet.getY()] = bullet;
+  }
+
+  public void moveTank(Tank tank, Rectangle oldRect) {
+    for (int x = oldRect.getLeft(); x <= oldRect.getRight(); x++) {
+      for (int y = oldRect.getTop(); y <= oldRect.getBottom(); y++) {
+        idxPos[x][y] = null;
+      }
+    }
+
+    Rectangle r = tank.getRect();
+    for (int x = r.getLeft(); x <= r.getRight(); x++) {
+      for (int y = r.getTop(); y <= r.getBottom(); y++) {
+        idxPos[x][y] = tank;
+      }
+    }
   }
 
   public void removeBase(Base base) {
     if (base.isYourBase()) {
-      //yourBase = null;
+      yourBase = null;
       logger.debug("Game over, you lost!");
     } else {
-      //opponentBase = null;
+      opponentBase = null;
       logger.debug("Game over, you WON!");
     }
     removeEntity(base);
+    gameOver = true;
+  }
+
+  public boolean isGameOver() {
+    return gameOver;
   }
 
   public Base getYourBase() {

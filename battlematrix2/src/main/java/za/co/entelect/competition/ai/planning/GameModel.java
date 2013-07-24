@@ -1,5 +1,7 @@
 package za.co.entelect.competition.ai.planning;
 
+import za.co.entelect.competition.ai.blackboard.Blackboard;
+
 import java.util.*;
 
 public class GameModel implements Cloneable {

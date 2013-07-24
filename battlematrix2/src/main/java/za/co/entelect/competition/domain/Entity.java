@@ -4,6 +4,8 @@ public abstract class Entity {
   protected String id;
   protected int x;
   protected int y;
+  private int prevX;
+  private int prevY;
   protected int w;
   protected int h;
   protected GameElement gameElement;
@@ -34,6 +36,7 @@ public abstract class Entity {
   }
 
   public void setX(int x) {
+    prevX = this.x;
     this.x = x;
   }
 
@@ -42,6 +45,7 @@ public abstract class Entity {
   }
 
   public void setY(int y) {
+    prevY = this.y;
     this.y = y;
   }
 
@@ -59,6 +63,14 @@ public abstract class Entity {
 
   public void setH(int h) {
     this.h = h;
+  }
+
+  public int getPrevX() {
+    return prevX;
+  }
+
+  public int getPrevY() {
+    return prevY;
   }
 
   public GameElement getGameElement() {

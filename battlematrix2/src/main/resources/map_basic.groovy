@@ -1,5 +1,6 @@
 import za.co.entelect.competition.ai.tankoperator.DummyTankOperator
 import za.co.entelect.competition.ai.tankoperator.MouseControlledTankOperator
+import za.co.entelect.competition.ai.tankoperator.TimmyTankOperator
 import za.co.entelect.competition.domain.Direction
 import za.co.entelect.competition.domain.Ids
 import za.co.entelect.competition.domain.Player
@@ -16,7 +17,8 @@ def getMap() {
   return """wwwwwwwwwwwwwwwwwwww
 w                  w
 w               o  w
-w   4         3    w
+w             3    w
+w       4          w
 w                  w
 w                  w
 w                  w
@@ -27,9 +29,8 @@ w                  w
 w                  w
 w                  w
 w                  w
+w  1      2        w
 w                  w
-w                  w
-w    1          2  w
 w  y               w
 w                  w
 wwwwwwwwwwwwwwwwwwww"""
@@ -44,7 +45,7 @@ def getTank2() {
 }
 
 def getTank3() {
-  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new DummyTankOperator())
+  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new TimmyTankOperator())
 }
 
 def getTank4() {

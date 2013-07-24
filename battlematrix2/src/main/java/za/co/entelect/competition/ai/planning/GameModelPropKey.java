@@ -1,5 +1,5 @@
 package za.co.entelect.competition.ai.planning;
 
 public enum  GameModelPropKey {
-  CanFire, Fired, IsAtX, IsAtY, Destroyed
+  CanFire, IsAtX, IsAtY, Destroyed, LookAt, InLine
 }

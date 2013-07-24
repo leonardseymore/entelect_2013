@@ -34,6 +34,12 @@ public class PathFinder {
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode)) {
         toNode.goalCost = heuristic(toNode, endX, endY);
+        if (currentNode.getX() != toNode.getX()) {
+          toNode.goalCost += 1;
+        }
+        if (currentNode.getY() != toNode.getY()) {
+          toNode.goalCost += 1;
+        }
         toNode.parent = currentNode;
 
         if (closed.contains(toNode)) {
@@ -119,16 +125,6 @@ public class PathFinder {
     @Override
     public int getY() {
       return y;
-    }
-
-    @Override
-    public int getW() {
-      return 1;
-    }
-
-    @Override
-    public int getH() {
-      return 1;
     }
 
     @Override

@@ -151,6 +151,16 @@ public class GUI extends JFrame {
           g.drawString("p toggle pause", x, y += 12);
         }
 
+        if (gameState.isGameOver()) {
+          g.setColor(new Color(123,123,123,190));
+          g.fillRect(0, 0, getWidth(), getHeight());
+          g.setColor(Color.white);
+          int x = 10;
+          int y = 10;
+          String winner = gameState.getYourBase() == null ? "You loose!" : "You WIN!";
+          g.drawString("Game Over: " + winner, x, y += 12);
+        }
+
         graphics = buffer.getDrawGraphics();
         graphics.drawImage(bi, 0, 0, null);
         if (!buffer.contentsLost()) {

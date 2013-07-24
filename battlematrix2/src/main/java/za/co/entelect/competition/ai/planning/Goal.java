@@ -2,12 +2,14 @@ package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.domain.GameState;
 
-public abstract class Goal {
+public abstract class Goal implements Comparable<Goal> {
 
   protected int priority;
+  protected GameModel requiredState;
 
   public Goal(int priority) {
     this.priority = priority;
+    this.requiredState = new GameModel();
   }
 
   public int getPriority() {
@@ -18,13 +20,14 @@ public abstract class Goal {
     this.priority = priority;
   }
 
-  /*
-  public boolean isFulfilled(GameState gameState) {
-    return gameState.isInState(requiredState());
+  public GameModel requiredState() {
+    return requiredState;
   }
-  */
-
-  public abstract GameModel requiredState();
 
   public abstract String getName();
+
+  @Override
+  public int compareTo(Goal o) {
+    return priority > o.priority ? +1 : priority < o.priority ? -1 : 0;
+  }
 }

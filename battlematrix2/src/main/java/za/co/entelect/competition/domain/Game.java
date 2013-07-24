@@ -1,11 +1,14 @@
 package za.co.entelect.competition.domain;
 
-import za.co.entelect.competition.ai.planning.ActionManager;
+import org.apache.log4j.Logger;
+import za.co.entelect.competition.ai.planning.Plan;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class Game {
+
+  private static final Logger logger = Logger.getLogger(Game.class);
 
   private GameState gameState;
 
@@ -22,6 +25,10 @@ public class Game {
    * 4) Collisions are checked for.
    */
   public void update() {
+    if (gameState.isGameOver()) {
+      return;
+    }
+
     performAi();
     for (int i = 0; i < 2; i++) {
       updateBullets();
@@ -31,9 +38,21 @@ public class Game {
   }
 
   private void performAi() {
-    ActionManager.getInstance().execute(gameState);
     for (Tank tank : gameState.getTanks().values()) {
       tank.performAction(gameState);
+      Plan plan = tank.getPlan();
+      if (plan == null)  {
+        continue;
+      }
+      if (plan.isComplete()) {
+        tank.setPlan(null);
+        logger.debug("Done with plan for tank [" + tank.getId() + "]");
+      } else if (!plan.isValid(gameState)) {
+        tank.setPlan(null);
+        logger.debug("Invalid plan [" + plan + "] for tank [" + tank.getId() + "]");
+      } else {
+        plan.run(gameState);
+      }
     }
   }
 
@@ -78,10 +97,13 @@ public class Game {
               gameState.getWalls().destroyWalls(x, y, bullet.getDirection());
               break;
           }
+        } else {
+          gameState.moveBullet(bullet);
         }
       }
     }
     for (Bullet bullet : bulletsToRemove) {
+      gameState.moveBullet(bullet);
       gameState.removeBullet(bullet);
     }
   }
@@ -91,6 +113,32 @@ public class Game {
     for (Tank tank : gameState.getTanks().values()) {
       TankAction nextAction = tank.getNextAction();
       if (nextAction == TankAction.UP || nextAction == TankAction.RIGHT || nextAction == TankAction.DOWN || nextAction == TankAction.LEFT) {
+        switch (nextAction) {
+          case UP:
+            if (tank.getDirection() != Direction.UP) {
+              tank.setDirection(Direction.UP);
+              continue;
+            }
+            break;
+          case RIGHT:
+            if (tank.getDirection() != Direction.RIGHT) {
+              tank.setDirection(Direction.RIGHT);
+              continue;
+            }
+            break;
+          case DOWN:
+            if (tank.getDirection() != Direction.DOWN) {
+              tank.setDirection(Direction.DOWN);
+              continue;
+            }
+            break;
+          case LEFT:
+            if (tank.getDirection() != Direction.LEFT) {
+              tank.setDirection(Direction.LEFT);
+              continue;
+            }
+            break;
+        }
         int oldX = tank.getX();
         int oldY = tank.getY();
 
@@ -135,11 +183,11 @@ public class Game {
         if (rect.getLeft() >= 0 && rect.getRight() < gameState.getW()
           && rect.getTop() >= 0 && rect.getBottom() < gameState.getH()) {
           if (x != oldX || y != oldY) {
+            Rectangle oldRect = tank.getRect();
             tank.setX(x);
             tank.setY(y);
             Collision collision = checkEntityCollision(tank);
             if (collision != null) {
-
               switch (collision.type) {
                 case TankBase:
                   tanksToRemove.add(tank);
@@ -150,6 +198,8 @@ public class Game {
                   gameState.removeBullet((Bullet) collision.target);
                   break;
               }
+            } else {
+              gameState.moveTank(tank, oldRect);
             }
           }
         }
@@ -189,6 +239,7 @@ public class Game {
           }
         }
       }
+      tank.setNextAction(TankAction.NONE);
     }
     for (Tank tank : tanksToRemove) {
       gameState.removeTank(tank);

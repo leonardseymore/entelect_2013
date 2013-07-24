@@ -1,14 +1,19 @@
 package za.co.entelect.competition.ai.planning;
 
 import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.domain.Tank;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class Action implements Comparable<Action> {
 
+  private boolean executed = false;
   protected double priority;
   protected boolean canInterrupt = true;
   protected int expiryTime;
+  protected Collection<GameModelProp> preconditions = new ArrayList<>();
+  protected Collection<GameModelProp> effects = new ArrayList<>();
 
   public double getPriority() {
     return priority;
@@ -27,14 +32,17 @@ public abstract class Action implements Comparable<Action> {
   }
 
   public boolean isComplete(GameState gameState) {
-    return true;
+    return executed;
   }
+
+  public abstract boolean isValid(GameState gameState);
 
   protected abstract void doExecute(GameState gameState);
 
   public void execute(GameState gameState) {
     expiryTime--;
     doExecute(gameState);
+    executed = true;
   }
 
   public void cancel() {
@@ -43,8 +51,13 @@ public abstract class Action implements Comparable<Action> {
 
   public abstract int getCost();
 
-  public abstract Collection<GameModelProp> getPreconditions();
-  public abstract Collection<GameModelProp> getEffects();
+  public Collection<GameModelProp> getPreconditions() {
+    return preconditions;
+  }
+
+  public Collection<GameModelProp> getEffects() {
+    return effects;
+  }
 
   @Override
   public int compareTo(Action o) {

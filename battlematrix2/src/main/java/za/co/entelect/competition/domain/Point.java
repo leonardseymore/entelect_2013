@@ -1,6 +1,6 @@
 package za.co.entelect.competition.domain;
 
-public class Point {
+public class Point implements Trackable {
   private int x;
   private int y;
 
