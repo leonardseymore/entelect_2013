@@ -56,11 +56,15 @@ public class TimmyTankOperator implements TankOperator {
           tank.getBlackboard().setTargetId(enemyBaseId);
 
           ActionAlignToTarget actionAlignToTarget = new ActionAlignToTarget(gameState, tank);
-          ActionLookAtTarget actionLookAtTarget = new ActionLookAtTarget(gameState, tank);
-          if (!actionLookAtTarget.isComplete(gameState)) {
-            actionLookAtTarget.execute(gameState);
+          if (!actionAlignToTarget.isComplete(gameState)) {
+            actionAlignToTarget.execute(gameState);
           } else {
-            tank.setNextAction(TankAction.FIRE);
+            ActionLookAtTarget actionLookAtTarget = new ActionLookAtTarget(gameState, tank);
+            if (!actionLookAtTarget.isComplete(gameState)) {
+              actionLookAtTarget.execute(gameState);
+            } else {
+              tank.setNextAction(TankAction.FIRE);
+            }
           }
         }
       }

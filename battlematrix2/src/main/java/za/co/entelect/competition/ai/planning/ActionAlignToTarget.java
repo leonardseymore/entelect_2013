@@ -45,15 +45,15 @@ public class ActionAlignToTarget extends Action {
     }
 
     if (moveInX) {
-      if (target.getX() < tank.getX()) {
+      if (target.getX() < tank.getX() && gameState.canMoveInDirection(tank, Direction.LEFT)) {
         tank.setNextAction(TankAction.LEFT);
-      } else if (target.getX() > tank.getX()) {
+      } else if (target.getX() > tank.getX() && gameState.canMoveInDirection(tank, Direction.RIGHT)) {
         tank.setNextAction(TankAction.RIGHT);
       }
     } else {
-      if (target.getY() < tank.getY()) {
+      if (target.getY() < tank.getY() && gameState.canMoveInDirection(tank, Direction.UP)) {
         tank.setNextAction(TankAction.UP);
-      } else if (target.getY() > tank.getY()) {
+      } else if (target.getY() > tank.getY() && gameState.canMoveInDirection(tank, Direction.DOWN)) {
         tank.setNextAction(TankAction.DOWN);
       }
     }

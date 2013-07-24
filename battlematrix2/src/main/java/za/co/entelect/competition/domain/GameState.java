@@ -200,6 +200,22 @@ public class GameState {
     return true;
   }
 
+  public boolean canMoveInDirection(Tank tank, Direction dir) {
+    int x = tank.getX();
+    int y = tank.getY();
+    switch (dir) {
+      case UP:
+        return canTankBeMovedTo(tank, x, y - 1);
+      case RIGHT:
+        return canTankBeMovedTo(tank, x + 1, y);
+      case DOWN:
+        return canTankBeMovedTo(tank, x, y + 1);
+      case LEFT:
+        return canTankBeMovedTo(tank, x - 1, y);
+    }
+    return false;
+  }
+
   public boolean isInBounds(int x, int y) {
     return walls.isInBounds(x, y);
   }

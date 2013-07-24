@@ -149,14 +149,14 @@ public class Game {
         switch (tank.getNextAction()) {
           case UP:
             direction = Direction.UP;
-            if (canMoveInDirection(tank, Direction.UP)) {
+            if (gameState.canMoveInDirection(tank, Direction.UP)) {
               y--;
               rect.traspose(0, -1);
             }
             break;
           case RIGHT:
             direction = Direction.RIGHT;
-            if (canMoveInDirection(tank, Direction.RIGHT)) {
+            if (gameState.canMoveInDirection(tank, Direction.RIGHT)) {
               x++;
               rect.traspose(1, 0);
             }
@@ -164,7 +164,7 @@ public class Game {
             break;
           case DOWN:
             direction = Direction.DOWN;
-            if (canMoveInDirection(tank, Direction.DOWN)) {
+            if (gameState.canMoveInDirection(tank, Direction.DOWN)) {
               y++;
               rect.traspose(0, 1);
             }
@@ -172,7 +172,7 @@ public class Game {
             break;
           case LEFT:
             direction = Direction.LEFT;
-            if (canMoveInDirection(tank, Direction.LEFT)) {
+            if (gameState.canMoveInDirection(tank, Direction.LEFT)) {
               x--;
               rect.traspose(-1, 0);
             }
@@ -312,21 +312,5 @@ public class Game {
       type = CollisionType.BulletBullet;
     }
     return new Collision(s, t, type);
-  }
-
-  public boolean canMoveInDirection(Tank tank, Direction dir) {
-    int x = tank.getX();
-    int y = tank.getY();
-    switch (dir) {
-      case UP:
-        return gameState.canTankBeMovedTo(tank, x, y - 1);
-      case RIGHT:
-        return gameState.canTankBeMovedTo(tank, x + 1, y);
-      case DOWN:
-        return gameState.canTankBeMovedTo(tank, x, y + 1);
-      case LEFT:
-        return gameState.canTankBeMovedTo(tank, x - 1, y);
-    }
-    return false;
   }
 }
