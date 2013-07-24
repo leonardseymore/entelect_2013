@@ -1,18 +1,17 @@
 package za.co.entelect.competition;
 
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
-import za.co.entelect.competition.ai.planning.*;
+import za.co.entelect.competition.ai.planning.goap.Action;
+import za.co.entelect.competition.ai.planning.goap.GameModelProp;
+import za.co.entelect.competition.ai.planning.goap.Goal;
+import za.co.entelect.competition.ai.planning.goap.Plan;
 import za.co.entelect.competition.domain.*;
-import za.co.entelect.competition.domain.Point;
 
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Stack;
 
 public class Util {

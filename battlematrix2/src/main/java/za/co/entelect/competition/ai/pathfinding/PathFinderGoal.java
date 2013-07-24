@@ -1,6 +1,6 @@
 package za.co.entelect.competition.ai.pathfinding;
 
-import za.co.entelect.competition.ai.planning.*;
+import za.co.entelect.competition.ai.planning.goap.*;
 
 import java.util.*;
 

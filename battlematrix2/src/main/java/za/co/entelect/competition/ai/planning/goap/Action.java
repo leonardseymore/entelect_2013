@@ -1,7 +1,6 @@
-package za.co.entelect.competition.ai.planning;
+package za.co.entelect.competition.ai.planning.goap;
 
 import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.planning;
+package za.co.entelect.competition.ai.planning.goap;
 
 public class GameModelProp<T> {
   public String subjectId;

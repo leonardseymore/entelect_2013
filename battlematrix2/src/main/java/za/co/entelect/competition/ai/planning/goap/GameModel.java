@@ -1,6 +1,4 @@
-package za.co.entelect.competition.ai.planning;
-
-import za.co.entelect.competition.ai.blackboard.Blackboard;
+package za.co.entelect.competition.ai.planning.goap;
 
 import java.util.*;
 

@@ -1,14 +1,12 @@
-package za.co.entelect.competition.ai.planning;
+package za.co.entelect.competition.ai.planning.goap;
 
 import za.co.entelect.competition.ai.movement.Seek;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
-import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Point;
 import za.co.entelect.competition.domain.Tank;
 import za.co.entelect.competition.domain.TankAction;
 
-import java.util.Collection;
 import java.util.Stack;
 
 public class ActionMoveTo extends Action {

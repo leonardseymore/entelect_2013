@@ -2,7 +2,7 @@ package za.co.entelect.competition.domain;
 
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.ai.blackboard.Blackboard;
-import za.co.entelect.competition.ai.planning.Plan;
+import za.co.entelect.competition.ai.planning.goap.Plan;
 
 public class Tank extends Entity {
 

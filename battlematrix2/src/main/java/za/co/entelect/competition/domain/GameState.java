@@ -2,9 +2,9 @@ package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.ai.planning.GameModel;
-import za.co.entelect.competition.ai.planning.GameModelProp;
-import za.co.entelect.competition.ai.planning.GameModelPropKey;
+import za.co.entelect.competition.ai.planning.goap.GameModel;
+import za.co.entelect.competition.ai.planning.goap.GameModelProp;
+import za.co.entelect.competition.ai.planning.goap.GameModelPropKey;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.planning;
+package za.co.entelect.competition.ai.planning.goap;
 
 import za.co.entelect.competition.domain.*;
 

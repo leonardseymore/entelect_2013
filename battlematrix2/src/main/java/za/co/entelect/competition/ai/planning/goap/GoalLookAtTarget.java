@@ -1,9 +1,6 @@
-package za.co.entelect.competition.ai.planning;
+package za.co.entelect.competition.ai.planning.goap;
 
 import za.co.entelect.competition.Constants;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class GoalLookAtTarget extends Goal {
 

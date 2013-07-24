@@ -1,12 +1,7 @@
-package za.co.entelect.competition.ai.planning;
+package za.co.entelect.competition.ai.planning.goap;
 
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.ai.movement.Seek;
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
-
-import java.util.Collection;
-import java.util.Stack;
 
 public class ActionDestroyTarget extends Action {
 

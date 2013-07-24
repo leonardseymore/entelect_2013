@@ -1,6 +1,4 @@
-package za.co.entelect.competition.ai.planning;
-
-import za.co.entelect.competition.domain.GameState;
+package za.co.entelect.competition.ai.planning.goap;
 
 public abstract class Goal implements Comparable<Goal> {
 

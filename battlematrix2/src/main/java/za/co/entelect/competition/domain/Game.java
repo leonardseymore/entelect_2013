@@ -1,7 +1,7 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.planning.Plan;
+import za.co.entelect.competition.ai.planning.goap.Plan;
 
 import java.util.ArrayList;
 import java.util.Collection;

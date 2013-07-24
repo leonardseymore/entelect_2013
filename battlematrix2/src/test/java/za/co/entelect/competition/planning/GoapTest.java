@@ -7,7 +7,7 @@ import org.junit.runners.JUnit4;
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
-import za.co.entelect.competition.ai.planning.*;
+import za.co.entelect.competition.ai.planning.goap.*;
 import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Ids;
 import za.co.entelect.competition.domain.Point;

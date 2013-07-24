@@ -1,16 +1,13 @@
 package za.co.entelect.competition.ai.tankoperator;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
-import za.co.entelect.competition.ai.planning.*;
+import za.co.entelect.competition.ai.planning.goap.*;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.swing.Mouse;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Queue;
-import java.util.Stack;
 
 public class MouseControlledTankOperator implements TankOperator {
 

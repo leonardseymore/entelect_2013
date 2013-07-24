@@ -1,4 +1,4 @@
-package za.co.entelect.competition.ai.planning;
+package za.co.entelect.competition.ai.planning.goap;
 
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
