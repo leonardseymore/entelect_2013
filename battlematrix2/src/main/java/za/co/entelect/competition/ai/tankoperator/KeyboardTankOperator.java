@@ -1,15 +1,10 @@
 package za.co.entelect.competition.ai.tankoperator;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
-import za.co.entelect.competition.ai.planning.*;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.swing.Keyboard;
-import za.co.entelect.competition.swing.Mouse;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class KeyboardTankOperator implements TankOperator {
 

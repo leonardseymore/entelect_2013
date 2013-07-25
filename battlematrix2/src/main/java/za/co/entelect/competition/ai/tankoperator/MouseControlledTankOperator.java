@@ -1,17 +1,23 @@
 package za.co.entelect.competition.ai.tankoperator;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.pathfinding.PathFinderGoal;
-import za.co.entelect.competition.ai.planning.goap.*;
+import za.co.entelect.competition.ai.movement.Seek;
+import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.swing.Mouse;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Stack;
 
-public class MouseControlledTankOperator implements TankOperator {
+public class MouseControlledTankOperator implements TankOperator, PathAware {
 
   private static final Logger logger = Logger.getLogger(MouseControlledTankOperator.class);
+
+  private Stack<PathFinder.Node> path;
+
+  @Override
+  public Stack<PathFinder.Node> getPath() {
+    return path;
+  }
 
   @Override
   public void execute(GameState gameState, Tank tank) {
@@ -21,12 +27,11 @@ public class MouseControlledTankOperator implements TankOperator {
       int targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
       logger.debug("New target set (" + targetX + "," + targetY + ")");
 
-      Collection<Action> actions = new ArrayList<>();
-      tank.getBlackboard().setTargetLocation(new Point(targetX, targetY));
-      actions.add(new ActionMoveTo(gameState, tank));
-      Goal goal = new GoalMoveTo(tank.getId(), targetX, targetY);
-      Plan plan = PathFinderGoal.getPlan(gameState.toGameModel(), goal, actions);
-      tank.setPlan(plan);
+      path = PathFinder.closestPathAStar(gameState, tank, targetX, targetY, false);
+    }
+    if (path != null) {
+      TankAction tankAction = Seek.seekPath(gameState, tank, path);
+      tank.setNextAction(tankAction);
     }
   }
 }

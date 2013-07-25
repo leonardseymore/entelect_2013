@@ -1,7 +1,6 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.planning.goap.Plan;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,19 +39,7 @@ public class Game {
   private void performAi() {
     for (Tank tank : gameState.getTanks().values()) {
       tank.performAction(gameState);
-      Plan plan = tank.getPlan();
-      if (plan == null)  {
-        continue;
-      }
-      if (plan.isComplete()) {
-        tank.setPlan(null);
-        logger.debug("Done with plan for tank [" + tank.getId() + "]");
-      } else if (!plan.isValid(gameState)) {
-        tank.setPlan(null);
-        logger.debug("Invalid plan [" + plan + "] for tank [" + tank.getId() + "]");
-      } else {
-        plan.run(gameState);
-      }
+      // TODO: do ai
     }
   }
 

@@ -1,8 +1,6 @@
 package za.co.entelect.competition.domain;
 
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.ai.blackboard.Blackboard;
-import za.co.entelect.competition.ai.planning.goap.Plan;
 
 public class Tank extends Entity {
 
@@ -11,8 +9,6 @@ public class Tank extends Entity {
   private TankOperator tankOperator;
   private TankAction nextAction = TankAction.NONE;
   private boolean canFire = true;
-  private Blackboard blackboard = new Blackboard();
-  private Plan plan;
 
   public Tank(String id, Player owner, Direction direction, TankOperator tankOperator) {
     this(id, 0, 0, owner, direction, tankOperator);
@@ -31,18 +27,6 @@ public class Tank extends Entity {
 
   public void setOwner(Player owner) {
     this.owner = owner;
-  }
-
-  public Blackboard getBlackboard() {
-    return blackboard;
-  }
-
-  public Plan getPlan() {
-    return plan;
-  }
-
-  public void setPlan(Plan plan) {
-    this.plan = plan;
   }
 
   public Direction getDirection() {
