@@ -37,7 +37,10 @@ public class GUI extends JFrame {
   private Tank selectedTank;
 
   private Map map = Map.USER;
-  private Font arial = new Font("Arial", Font.BOLD, 10);;
+  private Font arial = new Font("Arial", Font.BOLD, 10);
+
+  private int frameSleep = 20;
+  private int frameSleepMultiplier = 1;
 
   public GUI(GameState gameState, double zoomFactor) {
     this.gameState = gameState;
@@ -115,6 +118,12 @@ public class GUI extends JFrame {
         if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
           selectedTank = (Tank)gameState.getEntity(Ids.O2);
         }
+        if (keyboard.keyDownOnce(KeyEvent.VK_F)) {
+          frameSleepMultiplier = Math.max(frameSleepMultiplier - 1, 0);
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_S)) {
+          frameSleepMultiplier++;
+        }
         if (paused) {
           continue;
         }
@@ -149,6 +158,7 @@ public class GUI extends JFrame {
           int y = 10;
           g.drawString("u=user map (default), c=clearance map", x, y += 12);
           g.drawString("p toggle pause", x, y += 12);
+          g.drawString("frame sleep: " + frameSleep * frameSleepMultiplier, x, y += 12);
         }
 
         if (gameState.isGameOver()) {
@@ -168,7 +178,7 @@ public class GUI extends JFrame {
         }
 
         try {
-          Thread.sleep(33);
+          Thread.sleep(frameSleep * frameSleepMultiplier);
         } catch (InterruptedException ex) {
           logger.warn("Thread interrupted", ex);
         }

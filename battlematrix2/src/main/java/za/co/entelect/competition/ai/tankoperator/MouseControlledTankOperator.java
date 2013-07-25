@@ -28,10 +28,14 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
       logger.debug("New target set (" + targetX + "," + targetY + ")");
 
       path = PathFinder.closestPathAStar(gameState, tank, targetX, targetY, true);
+      if (path != null) {
+        path.pop();
+      }
     }
-    if (path != null) {
-      TankAction tankAction = Seek.seekPath(gameState, tank, path);
-      tank.setNextAction(tankAction);
+    if (path != null && path.size() > 0) {
+    //  PathFinder.Node node = path.pop();
+      //tank.setNextAction(node.getTankAction());
+      tank.setNextAction(Seek.seekPath(gameState, tank, path));
     }
   }
 }

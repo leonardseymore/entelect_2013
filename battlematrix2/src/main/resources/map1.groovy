@@ -15,9 +15,9 @@ def getSize() {
 }
 
 def getMap() {
-  return """wwwwwwwwwwwwwwwwwwww
-w                  w
-w  w          wo   w
+  return """wwwwwwww o wwwwwwwww
+w      wwwww       w
+w  w          w    w
 w  w         www   w
 w  wwwwww  w  w3   w
 w          w       w
@@ -32,9 +32,9 @@ wwwwwwwwwwwwwwwwwwww
 w       w          w
 w    w  w  wwwwww  w
 w   www         w  w
-w   yw 2        w  w
-w                  w
-wwwwwwwwwwwwwwwwwwww"""
+w    w 2        w  w
+w      wwwww       w
+wwwwwwww y wwwwwwwww"""
 }
 
 def getTank1() {

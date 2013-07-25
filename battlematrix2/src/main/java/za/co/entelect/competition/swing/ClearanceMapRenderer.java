@@ -45,7 +45,11 @@ public class ClearanceMapRenderer implements GameElementVisitor {
             g.setColor(Constants.COLOR_SWING_WALL);
           }
         } else if (selectedTank != null && gameState.canTankBeMovedTo(selectedTank, x, y)) {
-          g.setColor(Color.pink);
+          if ((x + y) % 2 == 0) {
+            g.setColor(Color.pink);
+          } else {
+            g.setColor(Color.pink.darker());
+          }
         } else {
           g.setColor(Color.darkGray);
         }

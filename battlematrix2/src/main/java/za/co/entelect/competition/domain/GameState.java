@@ -150,6 +150,9 @@ public class GameState {
   }
 
   public GameElement getElementAt(int x, int y) {
+    if (!isInBounds(x, y)) {
+      return null;
+    }
     Entity entity = idxPos[x][y];
     if (entity != null) {
       return entity.getGameElement();

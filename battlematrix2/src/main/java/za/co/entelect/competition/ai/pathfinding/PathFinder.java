@@ -1,9 +1,7 @@
 package za.co.entelect.competition.ai.pathfinding;
 
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
-import za.co.entelect.competition.domain.Trackable;
+import za.co.entelect.competition.domain.*;
 
 import java.util.*;
 
@@ -32,26 +30,59 @@ public class PathFinder {
 
       open.remove(currentNode);
       closed.add(currentNode);
-      for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode)) {
-        toNode.goalCost = heuristic(toNode, endX, endY);
-        if (currentNode.getX() != toNode.getX()) {
-          toNode.goalCost += 1;
-        }
-        if (currentNode.getY() != toNode.getY()) {
-          toNode.goalCost += 1;
-        }
-        toNode.parent = currentNode;
+      for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode, endX, endY)) {
+        int goalCost = currentNode.goalCost;
 
+        // its cheaper to keep moving in the same direction than to rotate
+        if (toNode.y < currentNode.getY()) {
+          toNode.tankAction = TankAction.UP;
+          toNode.direction = Direction.UP;
+          if (toNode.direction != Direction.UP) {
+            toNode.y = currentNode.getY();
+            goalCost += 1;
+          }
+        }
+        if (toNode.x > currentNode.getX()) {
+          toNode.tankAction = TankAction.RIGHT;
+          toNode.direction = Direction.RIGHT;
+          if (toNode.direction != Direction.RIGHT) {
+            toNode.x = currentNode.getX();
+            goalCost += 1;
+          }
+        }
+        if (toNode.y > currentNode.getY()) {
+          toNode.tankAction = TankAction.DOWN;
+          toNode.direction = Direction.DOWN;
+          if (toNode.direction != Direction.DOWN) {
+            toNode.y = currentNode.getY();
+            goalCost += 1;
+          }
+        }
+        if (toNode.x < currentNode.getX()) {
+          toNode.tankAction = TankAction.LEFT;
+          toNode.direction = Direction.LEFT;
+          if (toNode.direction != Direction.LEFT) {
+            toNode.x = currentNode.getX();
+            goalCost += 1;
+          }
+        }
+
+        int estGoalCost = goalCost + heuristic(toNode, endX, endY);
         if (closed.contains(toNode)) {
-          continue;
+          if (toNode.runningCost > estGoalCost) {
+            closed.remove(toNode);
+            toNode.parent = currentNode;
+          } else {
+            continue;
+          }
         }
 
         if (!open.contains(toNode)) {
-          toNode.runningCost = currentNode.runningCost + toNode.goalCost;
+          toNode.runningCost = estGoalCost;
           open.add(toNode);
         } else {
-          if (toNode.runningCost < currentNode.runningCost + toNode.goalCost) {
-            toNode.runningCost = currentNode.runningCost + toNode.goalCost;
+          if (toNode.runningCost < estGoalCost) {
+            toNode.runningCost = estGoalCost;
             toNode.parent = currentNode;
           }
         }
@@ -65,30 +96,24 @@ public class PathFinder {
     return null;
   }
 
-  private static Collection<Node> getAvailableNeighbors(GameState gameState, Tank tank, Node node) {
+  private static Collection<Node> getAvailableNeighbors(GameState gameState, Tank tank, Node node, int endX, int endY) {
     Collection<Node> neighbors = new ArrayList<>();
-
-    int x = node.x;
-    int y = node.y;
-
-    for (int i = x - 1; i <= x + 1; i++) {
-      for (int j = y - 1; j <= y + 1; j++) {
-        if (i == x && j == y) {
-          continue;
-        }
-        ifCanMoveToAdd(gameState, tank, i, j, neighbors);
-      }
-    }
+    testNeighbor(gameState, tank, node, endX, endY, node.getX(), node.getY() - 1, neighbors);
+    testNeighbor(gameState, tank, node, endX, endY, node.getX() + 1, node.getY(), neighbors);
+    testNeighbor(gameState, tank, node, endX, endY, node.getX(), node.getY() + 1, neighbors);
+    testNeighbor(gameState, tank, node, endX, endY, node.getX() - 1, node.getY(), neighbors);
     return neighbors;
   }
 
-  private static boolean ifCanMoveToAdd(GameState gameState, Tank tank, int x, int y, Collection<Node> neighbors) {
+  private static void testNeighbor(GameState gameState, Tank tank, Node node, int endX, int endY, int x, int y, Collection<Node> neighbors) {
     boolean canMoveTo = gameState.canTankBeMovedTo(tank, x, y);
     if (canMoveTo) {
-      neighbors.add(new Node(x, y));
+      Node toNode = new Node(x, y);
+      toNode.parent = node;
+      neighbors.add(toNode);
     }
-    return canMoveTo;
   }
+
 
   public static int heuristic(PathFinder.Node node, int endX, int endY) {
     int dist = Util.manhattanDist(node.x, node.y, endX, endY);
@@ -111,6 +136,8 @@ public class PathFinder {
     int runningCost;
 
     Node parent;
+    TankAction tankAction;
+    Direction direction;
 
     public Node(int x, int y) {
       this.x = x;
@@ -125,6 +152,10 @@ public class PathFinder {
     @Override
     public int getY() {
       return y;
+    }
+
+    public TankAction getTankAction() {
+      return tankAction;
     }
 
     @Override
