@@ -40,6 +40,15 @@ public class GameModel implements Cloneable {
     return true;
   }
 
+  public boolean satisfies(Collection<GameModelProp> properties) {
+    for (GameModelProp prop : properties) {
+      if (!props.contains(prop)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   public GameModel clone() {
     Set<GameModelProp> newProps = new HashSet<>();
     for (GameModelProp prop : props) {

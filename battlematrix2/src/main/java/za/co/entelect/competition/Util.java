@@ -5,6 +5,7 @@ import za.co.entelect.competition.ai.planning.goap.Action;
 import za.co.entelect.competition.ai.planning.goap.GameModelProp;
 import za.co.entelect.competition.ai.planning.goap.Goal;
 import za.co.entelect.competition.ai.planning.goap.Plan;
+import za.co.entelect.competition.ai.planning.htn.Planner;
 import za.co.entelect.competition.domain.*;
 
 import java.awt.*;
@@ -97,6 +98,22 @@ public class Util {
     }
     dot.append("}");
     return dot.toString();
+  }
+
+  public static String toDot(Planner planner) {
+    StringBuilder dot = new StringBuilder();
+    dot.append("digraph Planner {\n");
+    dot.append(" edge [fontsize=8];\n");
+    toDot(planner, dot);
+    dot.append("}");
+    return dot.toString();
+  }
+
+  private static void toDot(Planner planner, StringBuilder dot) {
+    for (Planner child : planner.getChildren()) {
+      dot.append(" " + planner.getDesc() + " -> " + child.getDesc() + "\n");
+      toDot(child, dot);
+    }
   }
 
   private static String goalToTable(Goal goal) {
