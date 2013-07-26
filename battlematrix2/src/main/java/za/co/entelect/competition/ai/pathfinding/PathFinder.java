@@ -32,41 +32,6 @@ public class PathFinder {
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode, endX, endY)) {
         int goalCost = currentNode.goalCost;
-
-        // its cheaper to keep moving in the same direction than to rotate
-        if (toNode.y < currentNode.getY()) {
-          toNode.tankAction = TankAction.UP;
-          toNode.direction = Direction.UP;
-          if (toNode.direction != Direction.UP) {
-            toNode.y = currentNode.getY();
-            goalCost += 1;
-          }
-        }
-        if (toNode.x > currentNode.getX()) {
-          toNode.tankAction = TankAction.RIGHT;
-          toNode.direction = Direction.RIGHT;
-          if (toNode.direction != Direction.RIGHT) {
-            toNode.x = currentNode.getX();
-            goalCost += 1;
-          }
-        }
-        if (toNode.y > currentNode.getY()) {
-          toNode.tankAction = TankAction.DOWN;
-          toNode.direction = Direction.DOWN;
-          if (toNode.direction != Direction.DOWN) {
-            toNode.y = currentNode.getY();
-            goalCost += 1;
-          }
-        }
-        if (toNode.x < currentNode.getX()) {
-          toNode.tankAction = TankAction.LEFT;
-          toNode.direction = Direction.LEFT;
-          if (toNode.direction != Direction.LEFT) {
-            toNode.x = currentNode.getX();
-            goalCost += 1;
-          }
-        }
-
         int estGoalCost = goalCost + heuristic(toNode, endX, endY);
         if (closed.contains(toNode)) {
           if (toNode.runningCost > estGoalCost) {
