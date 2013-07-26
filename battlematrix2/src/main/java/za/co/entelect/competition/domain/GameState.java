@@ -3,8 +3,7 @@ package za.co.entelect.competition.domain;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameState {
 
@@ -17,6 +16,8 @@ public class GameState {
   private Map<String, Tank> tanks = new HashMap<>();
   private Map<String, Bullet> bullets = new HashMap<>();
   private Map<String, Entity> idxId = new HashMap<>();
+  private Map<String, Tank> yourTanks = new HashMap<>();
+  private Map<String, Tank> opponentTanks = new HashMap<>();
   private Walls walls;
   private Entity[][] idxPos;
   private boolean gameOver = false;
@@ -43,12 +44,24 @@ public class GameState {
   }
 
   public void addTank(Tank tank) {
-    tanks.put(tank.getId(), tank);
+    String id = tank.getId();
+    tanks.put(id, tank);
+    if (tank.getOwner() == Player.YOU) {
+      yourTanks.put(id, tank);
+    } else {
+      opponentTanks.put(id, tank);
+    }
     addEntity(tank);
   }
 
   public void removeTank(Tank tank) {
-    tanks.remove(tank.getId());
+    String id = tank.getId();
+    tanks.remove(id);
+    if (tank.getOwner() == Player.YOU) {
+      yourTanks.remove(id);
+    } else {
+      opponentTanks.remove(id);
+    }
     removeEntity(tank);
   }
 
@@ -101,6 +114,14 @@ public class GameState {
 
   public Base getYourBase() {
     return yourBase;
+  }
+
+  public Map<String, Tank> getYourTanks() {
+    return yourTanks;
+  }
+
+  public Map<String, Tank> getOpponentTanks() {
+    return opponentTanks;
   }
 
   public Base getOpponentBase() {

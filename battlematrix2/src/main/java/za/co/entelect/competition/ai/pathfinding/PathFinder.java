@@ -101,8 +101,6 @@ public class PathFinder {
     int runningCost;
 
     Node parent;
-    TankAction tankAction;
-    Direction direction;
 
     public Node(int x, int y) {
       this.x = x;
@@ -117,10 +115,6 @@ public class PathFinder {
     @Override
     public int getY() {
       return y;
-    }
-
-    public TankAction getTankAction() {
-      return tankAction;
     }
 
     @Override
