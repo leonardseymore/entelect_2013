@@ -9,6 +9,7 @@ import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.Rectangle;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Stack;
 
 public class ClearanceMapRenderer implements GameElementVisitor {
@@ -21,16 +22,32 @@ public class ClearanceMapRenderer implements GameElementVisitor {
   private Tank selectedTank;
   private GameState gameState;
 
-  public ClearanceMapRenderer(Graphics2D g, Tank selectedTank) {
+  public ClearanceMapRenderer() {
+  }
+
+  public void setG(Graphics2D g) {
     this.g = g;
-    this.selectedTank = selectedTank;
   }
 
   @Override
   public void visit(GameState gameState) {
-    if (verbose) {
-      logger.debug("Visiting gameState [" + gameState + "]");
+    Keyboard keyboard = Keyboard.getInstance();
+    if (keyboard.keyDownOnce(KeyEvent.VK_0)) {
+      selectedTank = null;
     }
+    if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
+      selectedTank = (Tank)gameState.getEntity(Ids.Y1);
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
+      selectedTank = (Tank)gameState.getEntity(Ids.Y2);
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
+      selectedTank = (Tank)gameState.getEntity(Ids.O1);
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
+      selectedTank = (Tank)gameState.getEntity(Ids.O2);
+    }
+
     g.setColor(Constants.COLOR_SWING_BOARD);
     g.fillRect(0, 0, gameState.getW(), gameState.getH());
 

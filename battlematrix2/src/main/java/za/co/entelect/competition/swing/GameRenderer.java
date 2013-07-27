@@ -19,7 +19,10 @@ public class GameRenderer implements GameElementVisitor {
 
   private Graphics2D g;
 
-  public GameRenderer(Graphics2D g) {
+  public GameRenderer() {
+  }
+
+  public void setG(Graphics2D g) {
     this.g = g;
   }
 

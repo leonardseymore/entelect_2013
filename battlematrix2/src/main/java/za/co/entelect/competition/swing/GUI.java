@@ -21,6 +21,10 @@ public class GUI extends JFrame {
   public static final int DEFAULT_WIDTH = 500;
   public static final int DEFAULT_HEIGHT = 520;
 
+  private GameRenderer gameRenderer = new GameRenderer();
+  private ClearanceMapRenderer clearanceMapRenderer = new ClearanceMapRenderer();
+  private InfluenceMapRenderer influenceMapRenderer = new InfluenceMapRenderer();
+
   private static enum Map {
     USER, CLEARANCE, INFLUENCE
   }
@@ -34,7 +38,6 @@ public class GUI extends JFrame {
   private Keyboard keyboard;
   private Mouse mouse;
   private boolean paused = false;
-  private Tank selectedTank;
 
   private Map map = Map.USER;
   private Font arial = new Font("Arial", Font.BOLD, 10);
@@ -106,21 +109,6 @@ public class GUI extends JFrame {
             setTitle(Constants.APP_TITLE);
           }
         }
-        if (keyboard.keyDownOnce(KeyEvent.VK_0)) {
-          selectedTank = null;
-        }
-        if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-          selectedTank = (Tank)gameState.getEntity(Ids.Y1);
-        }
-        if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
-          selectedTank = (Tank)gameState.getEntity(Ids.Y2);
-        }
-        if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
-          selectedTank = (Tank)gameState.getEntity(Ids.O1);
-        }
-        if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
-          selectedTank = (Tank)gameState.getEntity(Ids.O2);
-        }
         if (keyboard.keyDownOnce(KeyEvent.VK_F)) {
           frameSleepMultiplier = Math.max(frameSleepMultiplier - 1, 0);
         }
@@ -139,23 +127,22 @@ public class GUI extends JFrame {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         AffineTransform t = g.getTransform();
+        g.scale(zoomFactor, zoomFactor);
         switch (map) {
           case USER:
-            g.scale(zoomFactor, zoomFactor);
-            gameState.accept(new GameRenderer(g));
-            g.setTransform(t);
+            gameRenderer.setG(g);
+            gameState.accept(gameRenderer);
             break;
           case CLEARANCE:
-            g.scale(zoomFactor, zoomFactor);
-            gameState.accept(new ClearanceMapRenderer(g, selectedTank));
-            g.setTransform(t);
+            clearanceMapRenderer.setG(g);
+            gameState.accept(clearanceMapRenderer);
             break;
           case INFLUENCE:
-            g.scale(zoomFactor, zoomFactor);
-            gameState.accept(new InfluenceMapRenderer(g));
-            g.setTransform(t);
+            influenceMapRenderer.setG(g);
+            gameState.accept(influenceMapRenderer);
             break;
         }
+        g.setTransform(t);
 
         if (printHelp) {
           g.setColor(new Color(123,123,123,190));

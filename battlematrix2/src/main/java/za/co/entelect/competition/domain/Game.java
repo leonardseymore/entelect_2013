@@ -35,6 +35,7 @@ public class Game {
     }
     updateTanks();
     fireTanks();
+    gameState.updateInfluenceMap();
   }
 
   private void performAi() {

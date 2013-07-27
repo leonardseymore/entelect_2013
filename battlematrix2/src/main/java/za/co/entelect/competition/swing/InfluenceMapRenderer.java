@@ -9,34 +9,68 @@ import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.domain.Rectangle;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Stack;
 
 public class InfluenceMapRenderer implements GameElementVisitor {
 
   public static final Logger logger = Logger.getLogger(InfluenceMapRenderer.class);
 
-  private boolean verbose = false;
-
   private Graphics2D g;
 
-  public InfluenceMapRenderer(Graphics2D g) {
+  private enum InfluenceMapType {
+    COMBINED, INFLUENCE, TENSION, VULNERABILITY
+  }
+
+  private InfluenceMapType mapType = InfluenceMapType.COMBINED;
+
+  public InfluenceMapRenderer() {
+  }
+
+  public void setG(Graphics2D g) {
     this.g = g;
   }
 
   @Override
   public void visit(GameState gameState) {
+    Keyboard keyboard = Keyboard.getInstance();
+    if (keyboard.keyDownOnce(KeyEvent.VK_0)) {
+      mapType = InfluenceMapType.COMBINED;
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
+      mapType = InfluenceMapType.INFLUENCE;
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
+      mapType = InfluenceMapType.TENSION;
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
+      mapType = InfluenceMapType.VULNERABILITY;
+    }
+
     g.setColor(Constants.COLOR_SWING_BOARD);
     g.fillRect(0, 0, gameState.getW(), gameState.getH());
 
-    InfluenceMap influenceMap = gameState.getInfluenceMap();
-    float[][] yInfluenceMap = influenceMap.getyInfluenceMap();
-    float[][] oInfluenceMap = influenceMap.getoInfluenceMap();
+    InfluenceMap imap = gameState.getInfluenceMap();
+    float[][] yInfluenceMap = imap.getyInfluenceMap();
+    float[][] oInfluenceMap = imap.getoInfluenceMap();
+    float[][] influenceMap = imap.getInfluenceMap();
     for (int x = 0; x < gameState.getW(); x++) {
       for (int y = 0; y < gameState.getH(); y++) {
-        Color ycolor = Color.getHSBColor(0, 0.66f, Math.min(1f,yInfluenceMap[x][y]));
-        Color ocolor = Color.getHSBColor(0, 1, Math.min(1f, oInfluenceMap[x][y]));
-
-        Color color = new Color(ocolor.getRed(), 0, ycolor.getBlue());
+        Color color = null;
+        float val;
+        switch (mapType) {
+          case INFLUENCE:
+            val = influenceMap[x][y];
+            if (val > 0) {
+              color = Color.getHSBColor(0.4f, 1, Math.min(1f, val));
+            } else if (val < 0) {
+              color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
+            }
+            break;
+          default:
+            color = new Color(Math.min(1f, oInfluenceMap[x][y]), 0, Math.min(1f, yInfluenceMap[x][y]));
+            break;
+        }
         g.setColor(color);
         g.fillRect(x, y, 1, 1);
       }
