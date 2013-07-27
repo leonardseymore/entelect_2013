@@ -27,7 +27,7 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
       int targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
       logger.debug("New target set (" + targetX + "," + targetY + ")");
 
-      path = PathFinder.closestPathAStar(gameState, tank, targetX, targetY, true);
+      path = PathFinder.closestPathAStar(gameState, tank, targetX, targetY);
       if (path != null) {
         path.pop();
       }

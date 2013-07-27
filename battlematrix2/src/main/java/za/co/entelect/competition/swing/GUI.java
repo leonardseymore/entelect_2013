@@ -22,7 +22,7 @@ public class GUI extends JFrame {
   public static final int DEFAULT_HEIGHT = 520;
 
   private static enum Map {
-    USER, CLEARANCE
+    USER, CLEARANCE, INFLUENCE
   }
 
   private GameState gameState;
@@ -95,6 +95,9 @@ public class GUI extends JFrame {
         if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
           map = Map.CLEARANCE;
         }
+        if (keyboard.keyDownOnce(KeyEvent.VK_I)) {
+          map = Map.INFLUENCE;
+        }
         if (keyboard.keyDownOnce(KeyEvent.VK_P)) {
           paused = !paused;
           if (paused) {
@@ -145,6 +148,11 @@ public class GUI extends JFrame {
           case CLEARANCE:
             g.scale(zoomFactor, zoomFactor);
             gameState.accept(new ClearanceMapRenderer(g, selectedTank));
+            g.setTransform(t);
+            break;
+          case INFLUENCE:
+            g.scale(zoomFactor, zoomFactor);
+            gameState.accept(new InfluenceMapRenderer(g));
             g.setTransform(t);
             break;
         }

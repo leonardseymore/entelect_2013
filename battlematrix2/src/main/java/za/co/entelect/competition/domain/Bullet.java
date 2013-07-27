@@ -31,6 +31,10 @@ public class Bullet extends Entity {
     this.direction = direction;
   }
 
+  public boolean isYourBullet() {
+    return tank.isYourTank();
+  }
+
   @Override
   public void accept(GameElementVisitor visitor) {
     visitor.visit(this);

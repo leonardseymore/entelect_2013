@@ -28,6 +28,7 @@ public class Game {
       return;
     }
 
+    gameState.updateInfluenceMap();
     performAi();
     for (int i = 0; i < 2; i++) {
       updateBullets();

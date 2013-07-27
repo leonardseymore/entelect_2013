@@ -7,7 +7,7 @@ import java.util.*;
 
 public class PathFinder {
 
-  public static Stack<Node> closestPathAStar(GameState gameState, Tank tank, int endX, int endY, boolean closest) {
+  public static Stack<Node> closestPathAStar(GameState gameState, Tank tank, int endX, int endY) {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
@@ -15,14 +15,8 @@ public class PathFinder {
     start.goalCost = heuristic(start, endX, endY);
     open.add(start);
 
-    Node closestNode = start;
-
     while (!open.isEmpty()) {
       Node currentNode = open.poll();
-
-      if (currentNode.goalCost < closestNode.goalCost) {
-        closestNode = currentNode;
-      }
 
       if (currentNode.x == endX && currentNode.y == endY) {
         return pathToNode(currentNode);
@@ -52,10 +46,6 @@ public class PathFinder {
           }
         }
       }
-    }
-
-    if (closest) {
-      return pathToNode(closestNode);
     }
 
     return null;

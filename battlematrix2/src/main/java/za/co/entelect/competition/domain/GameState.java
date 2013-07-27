@@ -21,12 +21,14 @@ public class GameState {
   private Walls walls;
   private Entity[][] idxPos;
   private boolean gameOver = false;
+  private InfluenceMap influenceMap;
 
   public GameState(int w, int h) {
     this.w = w;
     this.h = h;
     this.walls = new Walls(w, h);
     this.idxPos = new Entity[w][h];
+    this.influenceMap = new InfluenceMap(this);
   }
 
   public void setWalls(Walls walls) {
@@ -247,5 +249,13 @@ public class GameState {
     for (Entity entity : idxId.values()) {
       entity.accept(visitor);
     }
+  }
+
+  public void updateInfluenceMap() {
+    influenceMap.update();
+  }
+
+  public InfluenceMap getInfluenceMap() {
+    return influenceMap;
   }
 }
