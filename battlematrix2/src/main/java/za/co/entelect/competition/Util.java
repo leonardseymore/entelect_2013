@@ -15,6 +15,10 @@ public class Util {
     return Math.abs(startX - endX) + Math.abs(startY - endY);
   }
 
+  public static int manhattanDist(Entity s, Entity t) {
+    return Math.abs(s.getX() - t.getX()) + Math.abs(s.getY() - t.getY());
+  }
+
   public static Color getColor(Entity entity) {
     switch (entity.getGameElement()) {
       case BASE:

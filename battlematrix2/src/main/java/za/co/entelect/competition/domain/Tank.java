@@ -1,9 +1,11 @@
 package za.co.entelect.competition.domain;
 
 import za.co.entelect.competition.Constants;
+import za.co.entelect.competition.ai.blackboard.Blackboard;
 
 public class Tank extends Entity {
 
+  private Blackboard blackboard;
   private Player owner;
   private Direction direction;
   private TankOperator tankOperator;
@@ -12,6 +14,7 @@ public class Tank extends Entity {
 
   public Tank(String id, Player owner, Direction direction, TankOperator tankOperator) {
     this(id, 0, 0, owner, direction, tankOperator);
+    this.blackboard = new Blackboard();
   }
 
   public Tank(String id, int x, int y, Player owner, Direction direction, TankOperator tankOperator) {
@@ -19,6 +22,14 @@ public class Tank extends Entity {
     this.owner = owner;
     this.direction = direction;
     this.tankOperator = tankOperator;
+  }
+
+  public Blackboard getBlackboard() {
+    return blackboard;
+  }
+
+  public void setBlackboard(Blackboard blackboard) {
+    this.blackboard = blackboard;
   }
 
   public Player getOwner() {

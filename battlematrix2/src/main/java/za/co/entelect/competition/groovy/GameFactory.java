@@ -41,33 +41,44 @@ public class GameFactory {
     int h = size[1];
     String mapDesc = (String) inv.invokeFunction("getMap");
     Map map = parseMap(mapDesc, w, h);
-    Tank tank1 = (Tank) inv.invokeFunction("getTank1");
-    Point tank1Pos = map.getTank1Pos();
-    tank1.setX(tank1Pos.getX());
-    tank1.setY(tank1Pos.getY());
-    Tank tank2 = (Tank) inv.invokeFunction("getTank2");
-    Point tank2Pos = map.getTank2Pos();
-    tank2.setX(tank2Pos.getX());
-    tank2.setY(tank2Pos.getY());
-    Tank tank3 = (Tank) inv.invokeFunction("getTank3");
-    Point tank3Pos = map.getTank3Pos();
-    tank3.setX(tank3Pos.getX());
-    tank3.setY(tank3Pos.getY());
-    Tank tank4 = (Tank) inv.invokeFunction("getTank4");
-    Point tank4Pos = map.getTank4Pos();
-    tank4.setX(tank4Pos.getX());
-    tank4.setY(tank4Pos.getY());
+
     Point ybase = map.getyBase();
     Point obase = map.getoBase();
 
     GameState gameState = new GameState(w, h);
+    gameState.setWalls(map.walls);
     gameState.setYourBase(ybase.getX(), ybase.getY());
     gameState.setOpponentBase(obase.getX(), obase.getY());
-    gameState.addTank(tank1);
-    gameState.addTank(tank2);
-    gameState.addTank(tank3);
-    gameState.addTank(tank4);
-    gameState.setWalls(map.walls);
+
+
+    Point tank1Pos = map.getTank1Pos();
+    if (tank1Pos != null) {
+      Tank tank1 = (Tank) inv.invokeFunction("getTank1");
+      tank1.setX(tank1Pos.getX());
+      tank1.setY(tank1Pos.getY());
+      gameState.addTank(tank1);
+    }
+    Point tank2Pos = map.getTank2Pos();
+    if (tank2Pos != null) {
+      Tank tank2 = (Tank) inv.invokeFunction("getTank2");
+      tank2.setX(tank2Pos.getX());
+      tank2.setY(tank2Pos.getY());
+      gameState.addTank(tank2);
+    }
+    Point tank3Pos = map.getTank3Pos();
+    if (tank3Pos != null) {
+      Tank tank3 = (Tank) inv.invokeFunction("getTank3");
+      tank3.setX(tank3Pos.getX());
+      tank3.setY(tank3Pos.getY());
+      gameState.addTank(tank3);
+    }
+    Point tank4Pos = map.getTank4Pos();
+    if (tank3Pos != null) {
+      Tank tank4 = (Tank) inv.invokeFunction("getTank4");
+      tank4.setX(tank4Pos.getX());
+      tank4.setY(tank4Pos.getY());
+      gameState.addTank(tank4);
+    }
     return gameState;
   }
 

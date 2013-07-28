@@ -1,8 +1,6 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.ai.rules.Strategy;
-import za.co.entelect.competition.ai.rules.StrategyManager;
 import za.co.entelect.competition.ai.rules.TacticsManager;
 
 import java.util.ArrayList;
@@ -13,20 +11,17 @@ public class Game {
   private static final Logger logger = Logger.getLogger(Game.class);
 
   private GameState gameState;
-  private StrategyManager strategyManager;
   private TacticsManager tacticsManager;
 
   public Game(GameState gameState) {
     this.gameState = gameState;
     gameState.regenerateDirichletDomains();
     gameState.updateInfluenceMap();
-    gameState.updateTacticsModel();
-    this.strategyManager = new StrategyManager(gameState);
     this.tacticsManager = new TacticsManager(gameState);
   }
 
-  public StrategyManager getStrategyManager() {
-    return strategyManager;
+  public TacticsManager getTacticsManager() {
+    return tacticsManager;
   }
 
   /**
@@ -49,12 +44,10 @@ public class Game {
     updateTanks();
     fireTanks();
     gameState.updateInfluenceMap();
-    gameState.updateTacticsModel();
   }
 
   private void performAi() {
-    Strategy strategy = strategyManager.getStrategy();
-    tacticsManager.setTankOrders(strategy);
+    tacticsManager.update();
     for (Tank tank : gameState.getTanks().values()) {
       tank.performAction(gameState);
       // TODO: do ai
