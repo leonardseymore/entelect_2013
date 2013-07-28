@@ -1,8 +1,6 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
-import za.co.entelect.competition.Util;
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.ai.tactics.FloodFillInfluence;
 
 import java.util.Collection;

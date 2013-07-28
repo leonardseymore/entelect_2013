@@ -18,7 +18,6 @@ public class TacticsManager {
 
   public void setTankOrders(Strategy strategy) {
     Tank y1 = (Tank)gameState.getEntity(Ids.Y1);
-    if (y1 != null) {
-    }
+    //switch (strategy.getY1Directive())
   }
 }

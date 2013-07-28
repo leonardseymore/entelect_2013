@@ -19,7 +19,7 @@ public class InfluenceMapRenderer implements GameElementVisitor {
   private Graphics2D g;
 
   private enum InfluenceMapType {
-    COMBINED, INFLUENCEY, INFLUENCEO
+    COMBINED, YINFLUENCE, OINFLUENCE, INFLUENCEY, INFLUENCEO
   }
 
   private InfluenceMapType mapType = InfluenceMapType.COMBINED;
@@ -38,9 +38,15 @@ public class InfluenceMapRenderer implements GameElementVisitor {
       mapType = InfluenceMapType.COMBINED;
     }
     if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-      mapType = InfluenceMapType.INFLUENCEY;
+      mapType = InfluenceMapType.YINFLUENCE;
     }
     if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
+      mapType = InfluenceMapType.OINFLUENCE;
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
+      mapType = InfluenceMapType.INFLUENCEY;
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
       mapType = InfluenceMapType.INFLUENCEO;
     }
 
@@ -56,6 +62,16 @@ public class InfluenceMapRenderer implements GameElementVisitor {
         float[][] influenceMap;
         float val;
         switch (mapType) {
+          case YINFLUENCE:
+            influenceMap = imap.getyInfluenceMap();
+            val = influenceMap[x][y];
+            color = Color.getHSBColor(0.66f, 1, Math.min(1f, Math.abs(val)));
+            break;
+          case OINFLUENCE:
+            influenceMap = imap.getoInfluenceMap();
+            val = influenceMap[x][y];
+            color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
+            break;
           case INFLUENCEY:
             influenceMap = imap.getInfluenceYMap();
             val = influenceMap[x][y];
@@ -63,7 +79,6 @@ public class InfluenceMapRenderer implements GameElementVisitor {
               color = Color.getHSBColor(0.66f, 1, Math.min(1f, val));
             } else if (val < 0) {
               color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
-            } else {
             }
             break;
           case INFLUENCEO:

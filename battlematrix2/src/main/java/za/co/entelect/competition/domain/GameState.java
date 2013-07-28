@@ -22,6 +22,8 @@ public class GameState {
   private Entity[][] idxPos;
   private boolean gameOver = false;
   private InfluenceMap influenceMap;
+  private TacticsModel tacticsModel;
+  private DirichletDomains dirichletDomains;
 
   public GameState(int w, int h) {
     this.w = w;
@@ -29,6 +31,8 @@ public class GameState {
     this.walls = new Walls(w, h);
     this.idxPos = new Entity[w][h];
     this.influenceMap = new InfluenceMap(this);
+    this.tacticsModel = new TacticsModel(this);
+    this.dirichletDomains = new DirichletDomains(this);
   }
 
   public void setWalls(Walls walls) {
@@ -257,5 +261,21 @@ public class GameState {
 
   public InfluenceMap getInfluenceMap() {
     return influenceMap;
+  }
+
+  public void updateTacticsModel() {
+    tacticsModel.update();
+  }
+
+  public TacticsModel getTacticsModel() {
+    return tacticsModel;
+  }
+
+  public void regenerateDirichletDomains() {
+    dirichletDomains.regenerate();
+  }
+
+  public DirichletDomains getDirichletDomains() {
+    return dirichletDomains;
   }
 }

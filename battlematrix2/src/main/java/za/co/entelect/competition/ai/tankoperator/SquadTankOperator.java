@@ -8,6 +8,5 @@ public class SquadTankOperator implements TankOperator {
 
   @Override
   public void execute(GameState gameState, Tank tank) {
-
   }
 }

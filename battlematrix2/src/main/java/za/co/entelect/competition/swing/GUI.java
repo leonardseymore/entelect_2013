@@ -24,9 +24,10 @@ public class GUI extends JFrame {
   private GameRenderer gameRenderer = new GameRenderer();
   private ClearanceMapRenderer clearanceMapRenderer = new ClearanceMapRenderer();
   private InfluenceMapRenderer influenceMapRenderer = new InfluenceMapRenderer();
+  private DirichletDomainRenderer dirichletDomainRenderer = new DirichletDomainRenderer();
 
   private static enum Map {
-    USER, CLEARANCE, INFLUENCE
+    USER, CLEARANCE, INFLUENCE, DIRICHLET
   }
 
   private GameState gameState;
@@ -101,6 +102,9 @@ public class GUI extends JFrame {
         if (keyboard.keyDownOnce(KeyEvent.VK_I)) {
           map = Map.INFLUENCE;
         }
+        if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
+          map = Map.DIRICHLET;
+        }
         if (keyboard.keyDownOnce(KeyEvent.VK_P)) {
           paused = !paused;
           if (paused) {
@@ -140,6 +144,10 @@ public class GUI extends JFrame {
           case INFLUENCE:
             influenceMapRenderer.setG(g);
             gameState.accept(influenceMapRenderer);
+            break;
+          case DIRICHLET:
+            dirichletDomainRenderer.setG(g);
+            gameState.accept(dirichletDomainRenderer);
             break;
         }
         g.setTransform(t);

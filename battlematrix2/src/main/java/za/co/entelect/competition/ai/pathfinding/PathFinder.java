@@ -1,5 +1,6 @@
 package za.co.entelect.competition.ai.pathfinding;
 
+import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.domain.*;
 
@@ -7,9 +8,13 @@ import java.util.*;
 
 public class PathFinder {
 
-  private static final float INFLUENCE_COST = 40;
+  private static final float INFLUENCE_COST = 80;
 
   public static Stack<Node> closestPathAStar(GameState gameState, Tank tank, int endX, int endY) {
+    return closestPathAStar(gameState, tank, endX, endY, false);
+  }
+
+  public static Stack<Node> closestPathAStar(GameState gameState, Tank tank, int endX, int endY, boolean closest) {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
 
@@ -17,8 +22,14 @@ public class PathFinder {
     start.goalCost = heuristic(start, endX, endY);
     open.add(start);
 
+    Node closestNode = start;
+
     while (!open.isEmpty()) {
       Node currentNode = open.poll();
+
+      if (currentNode.goalCost < closestNode.goalCost) {
+        closestNode = currentNode;
+      }
 
       if (currentNode.x == endX && currentNode.y == endY) {
         return pathToNode(currentNode);
@@ -27,14 +38,16 @@ public class PathFinder {
       open.remove(currentNode);
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode)) {
+        toNode.goalCost = heuristic(toNode, endX, endY);
         int goalCost = currentNode.goalCost;
-        float estGoalCost = goalCost + heuristic(toNode, endX, endY);
-        estGoalCost += tacticalCost(gameState, tank, toNode);
+        float estGoalCost = goalCost + toNode.goalCost;
+        //estGoalCost += tacticalCost(gameState, tank, toNode);
         assert estGoalCost >= 0;
         if (closed.contains(toNode)) {
           if (toNode.runningCost > estGoalCost) {
             closed.remove(toNode);
             toNode.parent = currentNode;
+            toNode.runningCost = estGoalCost;
           } else {
             continue;
           }
@@ -50,6 +63,10 @@ public class PathFinder {
           }
         }
       }
+    }
+
+    if (closest) {
+      return pathToNode(closestNode);
     }
 
     return null;
@@ -72,12 +89,27 @@ public class PathFinder {
   }
 
   private static void testNeighbor(GameState gameState, Tank tank, Node node, int x, int y, Collection<Node> neighbors) {
-    boolean canMoveTo = gameState.canTankBeMovedTo(tank, x, y);
+    boolean canMoveTo = canTankBeMovedTo(gameState, tank, x, y);
     if (canMoveTo) {
       Node toNode = new Node(x, y);
       toNode.parent = node;
       neighbors.add(toNode);
     }
+  }
+
+  private static boolean canTankBeMovedTo(GameState gameState, Tank tank, int x, int y) {
+    Walls walls = gameState.getWalls();
+    for (int j = y - Constants.TANK_HALF_SIZE; j <= y + Constants.TANK_HALF_SIZE; j++) {
+      for (int i = x - Constants.TANK_HALF_SIZE; i <= x + Constants.TANK_HALF_SIZE; i++) {
+        if (!gameState.isInBounds(i, j)) {
+          return false;
+        }
+        if (walls.hasWall(i, j)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
 
