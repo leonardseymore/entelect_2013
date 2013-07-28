@@ -16,6 +16,7 @@ public class Game {
 
   public Game(GameState gameState) {
     this.gameState = gameState;
+    gameState.updateInfluenceMap();
     this.strategyManager = new StrategyManager(gameState);
   }
 
@@ -36,7 +37,6 @@ public class Game {
       return;
     }
 
-    gameState.updateInfluenceMap();
     performAi();
     for (int i = 0; i < 2; i++) {
       updateBullets();

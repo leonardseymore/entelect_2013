@@ -42,7 +42,7 @@ public class GUI extends JFrame {
   private Map map = Map.USER;
   private Font arial = new Font("Arial", Font.BOLD, 10);
 
-  private int frameSleep = 20;
+  private int frameSleep = 33;
   private int frameSleepMultiplier = 1;
 
   public GUI(GameState gameState, double zoomFactor) {

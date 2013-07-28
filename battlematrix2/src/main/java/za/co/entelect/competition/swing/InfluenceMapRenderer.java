@@ -52,7 +52,7 @@ public class InfluenceMapRenderer implements GameElementVisitor {
     float[][] oInfluenceMap = imap.getoInfluenceMap();
     for (int x = 0; x < gameState.getW(); x++) {
       for (int y = 0; y < gameState.getH(); y++) {
-        Color color = null;
+        Color color = Color.black;
         float[][] influenceMap;
         float val;
         switch (mapType) {
@@ -60,16 +60,17 @@ public class InfluenceMapRenderer implements GameElementVisitor {
             influenceMap = imap.getInfluenceYMap();
             val = influenceMap[x][y];
             if (val > 0) {
-              color = Color.getHSBColor(0.4f, 1, Math.min(1f, val));
+              color = Color.getHSBColor(0.66f, 1, Math.min(1f, val));
             } else if (val < 0) {
               color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
+            } else {
             }
             break;
           case INFLUENCEO:
             influenceMap = imap.getInfluenceOMap();
             val = influenceMap[x][y];
             if (val > 0) {
-              color = Color.getHSBColor(0.4f, 1, Math.min(1f, val));
+              color = Color.getHSBColor(0.66f, 1, Math.min(1f, val));
             } else if (val < 0) {
               color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
             }

@@ -12,8 +12,7 @@ public class InfluenceMap {
   private static final Logger logger = Logger.getLogger(InfluenceMap.class);
 
   private static final float TANK_INFLUENCE = 20f;
-  private static final float BULLET_INFLUENCE = 4f;
-  private static final float DECAY_RATE = 0f;
+  private static final float BULLET_INFLUENCE = 8f;
 
   private int w;
   private int h;
@@ -73,6 +72,64 @@ public class InfluenceMap {
         }
       }
     }
+    for (Bullet bullet : gameState.getBullets().values()) {
+      inf: for (int i = 1; i < BULLET_INFLUENCE; i++) {
+        float influence = BULLET_INFLUENCE / i;
+        int x = bullet.getX();
+        int y = bullet.getY();
+        int target;
+        switch (bullet.getDirection()) {
+          case UP:
+            target = y - i;
+            if (!gameState.isInBounds(x, target) || gameState.getElementAt(x, target) != null) {
+              break inf;
+            }
+
+            if (bullet.isYourBullet()) {
+              yInfluenceMap[x][target] += influence;
+            } else {
+              oInfluenceMap[x][target] += influence;
+            }
+            break;
+          case RIGHT:
+            target = x + i;
+            if (!gameState.isInBounds(target, y) || gameState.getElementAt(target, y) != null) {
+              break inf;
+            }
+
+            if (bullet.isYourBullet()) {
+              yInfluenceMap[target][y] += influence;
+            } else {
+              oInfluenceMap[target][y] += influence;
+            }
+            break;
+          case DOWN:
+            target = y + i;
+            if (!gameState.isInBounds(x, target) || gameState.getElementAt(x, target) != null) {
+              break inf;
+            }
+
+            if (bullet.isYourBullet()) {
+              yInfluenceMap[x][target] += influence;
+            } else {
+              oInfluenceMap[x][target] += influence;
+            }
+            break;
+          case LEFT:
+            target = x - i;
+            if (!gameState.isInBounds(target, y) || gameState.getElementAt(target, y) != null) {
+              break inf;
+            }
+
+            if (bullet.isYourBullet()) {
+              yInfluenceMap[target][y] += influence;
+            } else {
+              oInfluenceMap[target][y] += influence;
+            }
+            break;
+        }
+      }
+    }
 
     // calculate influence maps
     for (int j = 0; j < h; j++) {
@@ -82,5 +139,9 @@ public class InfluenceMap {
       }
     }
     //logger.debug("Influence map generation took [" + (System.currentTimeMillis() - start) + "ms]");
+  }
+
+  public float[][] getEnemyInfluence(Tank tank) {
+    return tank.isYourTank() ? getoInfluenceMap() : getyInfluenceMap();
   }
 }

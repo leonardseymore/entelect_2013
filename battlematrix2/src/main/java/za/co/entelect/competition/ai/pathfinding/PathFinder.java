@@ -7,7 +7,7 @@ import java.util.*;
 
 public class PathFinder {
 
-  private static final float INFLUENCE_COST = 20;
+  private static final float INFLUENCE_COST = 40;
 
   public static Stack<Node> closestPathAStar(GameState gameState, Tank tank, int endX, int endY) {
     Queue<Node> open = new PriorityQueue<>();
@@ -26,10 +26,10 @@ public class PathFinder {
 
       open.remove(currentNode);
       closed.add(currentNode);
-      for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode, endX, endY)) {
+      for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode)) {
         int goalCost = currentNode.goalCost;
         float estGoalCost = goalCost + heuristic(toNode, endX, endY);
-        estGoalCost += tacticalCost(gameState, tank, currentNode, toNode, endX, endY);
+        estGoalCost += tacticalCost(gameState, tank, toNode);
         assert estGoalCost >= 0;
         if (closed.contains(toNode)) {
           if (toNode.runningCost > estGoalCost) {
@@ -55,25 +55,23 @@ public class PathFinder {
     return null;
   }
 
-  private static float tacticalCost(GameState gameState, Tank tank, Node currentNode, Node toNode, int endX, int endY) {
-    float influence = gameState.getInfluenceMap().getInfluenceMap(tank.getOwner())[toNode.getX()][toNode.getY()];
-    if (influence < 0) {
-      return Math.abs(influence) * INFLUENCE_COST;
-    } else {
-      return 0;
-    }
+  private static float tacticalCost(GameState gameState, Tank tank, Node toNode) {
+    float influence = gameState.getInfluenceMap().getEnemyInfluence(tank)[toNode.getX()][toNode.getY()];
+    return Math.abs(influence) * INFLUENCE_COST;
   }
 
-  private static Collection<Node> getAvailableNeighbors(GameState gameState, Tank tank, Node node, int endX, int endY) {
+  private static Collection<Node> getAvailableNeighbors(GameState gameState, Tank tank, Node node) {
     Collection<Node> neighbors = new ArrayList<>();
-    testNeighbor(gameState, tank, node, endX, endY, node.getX(), node.getY() - 1, neighbors);
-    testNeighbor(gameState, tank, node, endX, endY, node.getX() + 1, node.getY(), neighbors);
-    testNeighbor(gameState, tank, node, endX, endY, node.getX(), node.getY() + 1, neighbors);
-    testNeighbor(gameState, tank, node, endX, endY, node.getX() - 1, node.getY(), neighbors);
+    int x = node.getX();
+    int y = node.getY();
+    testNeighbor(gameState, tank, node, x, y - 1, neighbors);
+    testNeighbor(gameState, tank, node, x + 1, y, neighbors);
+    testNeighbor(gameState, tank, node, x, y + 1, neighbors);
+    testNeighbor(gameState, tank, node, x - 1, y, neighbors);
     return neighbors;
   }
 
-  private static void testNeighbor(GameState gameState, Tank tank, Node node, int endX, int endY, int x, int y, Collection<Node> neighbors) {
+  private static void testNeighbor(GameState gameState, Tank tank, Node node, int x, int y, Collection<Node> neighbors) {
     boolean canMoveTo = gameState.canTankBeMovedTo(tank, x, y);
     if (canMoveTo) {
       Node toNode = new Node(x, y);
