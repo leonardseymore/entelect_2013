@@ -154,6 +154,7 @@ public class GUI extends JFrame {
           g.drawString("u=user map (default), c=clearance map", x, y += 12);
           g.drawString("p toggle pause", x, y += 12);
           g.drawString("frame sleep: " + frameSleep * frameSleepMultiplier, x, y += 12);
+          g.drawString(game.getStrategyManager().toString(), x, y += 12);
         }
 
         if (gameState.isGameOver()) {

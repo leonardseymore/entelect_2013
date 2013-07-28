@@ -7,26 +7,44 @@ import java.util.*;
 
 public class StrategyManager {
 
-  public Strategy getStrategy(GameState gameState) {
+  private enum OverallStrategy {
+    BALANCED, AGGRESSIVE, FATALITY, OFFENSIVE, WEARY
+  }
+
+  private GameState gameState;
+  private OverallStrategy overallStrategy;
+  private Strategy lastStrategy;
+
+  public StrategyManager(GameState gameState) {
+    this.gameState = gameState;
+  }
+
+  public Strategy getStrategy() {
     Map<String, Tank> yTanks = gameState.getYourTanks();
     Map<String, Tank> oTanks = gameState.getOpponentTanks();
 
     Strategy strategy = null;
     if (yTanks.size() == 2 && oTanks.size() == 2) {
-      strategy = getBalancedStrategy(gameState);
+      overallStrategy = OverallStrategy.BALANCED;
+      strategy = getBalancedStrategy();
     } else if (yTanks.size() == 2 && oTanks.size() == 1) {
-      strategy = getAggressiveStrategy(gameState);
+      overallStrategy = OverallStrategy.AGGRESSIVE;
+      strategy = getAggressiveStrategy();
     } else if (yTanks.size() == 2 && oTanks.size() == 0) {
-      strategy = getFatalityStrategy(gameState);
+      overallStrategy = OverallStrategy.FATALITY;
+      strategy = getFatalityStrategy();
     } else if (yTanks.size() == 1 && oTanks.size() == 2) {
-      strategy = getOffensiveStrategy(gameState);
+      overallStrategy = OverallStrategy.OFFENSIVE;
+      strategy = getOffensiveStrategy();
     } else if (yTanks.size() == 1 && oTanks.size() == 1) {
-      strategy = getWearyStrategy(gameState);
+      overallStrategy = OverallStrategy.WEARY;
+      strategy = getWearyStrategy();
     }
+    lastStrategy = strategy;
     return strategy;
   }
 
-  private Strategy getBalancedStrategy(GameState gameState) {
+  private Strategy getBalancedStrategy() {
     Map<String, Tank> yTanks = gameState.getYourTanks();
     Tank y1 = yTanks.get(Ids.Y1);
     Tank y2 = yTanks.get(Ids.Y2);
@@ -36,25 +54,25 @@ public class StrategyManager {
     Directive y1Directive;
     Directive y2Directive;
     if (disty1 < disty2) {
-      y1Directive = getClosestTarget(gameState, y1);
+      y1Directive = getClosestTarget(y1);
       y2Directive = Directive.DefendYourBase;
     } else {
       y1Directive = Directive.DefendYourBase;
-      y2Directive = getClosestTarget(gameState, y1);
+      y2Directive = getClosestTarget(y1);
     }
     Strategy strategy = new Strategy(y1Directive, y2Directive);
     return strategy;
   }
 
-  private Strategy getAggressiveStrategy(GameState gameState) {
+  private Strategy getAggressiveStrategy() {
     Map<String, Tank> yTanks = gameState.getYourTanks();
     Tank y1 = yTanks.get(Ids.Y1);
     Tank y2 = yTanks.get(Ids.Y2);
-    Strategy strategy = new Strategy(getClosestTarget(gameState, y1), getClosestTarget(gameState, y2));
+    Strategy strategy = new Strategy(getClosestTarget(y1), getClosestTarget(y2));
     return strategy;
   }
 
-  private Strategy getFatalityStrategy(GameState gameState) {
+  private Strategy getFatalityStrategy() {
     Map<String, Tank> yTanks = gameState.getYourTanks();
     Tank y1 = yTanks.get(Ids.Y1);
     Tank y2 = yTanks.get(Ids.Y2);
@@ -74,7 +92,7 @@ public class StrategyManager {
     return strategy;
   }
 
-  private Strategy getOffensiveStrategy(GameState gameState) {
+  private Strategy getOffensiveStrategy() {
     Map<String, Tank> yTanks = gameState.getYourTanks();
     Tank y1 = yTanks.get(Ids.Y1);
     Tank y2 = yTanks.get(Ids.Y2);
@@ -84,7 +102,7 @@ public class StrategyManager {
     return strategy;
   }
 
-  private Strategy getWearyStrategy(GameState gameState) {
+  private Strategy getWearyStrategy() {
     Map<String, Tank> yTanks = gameState.getYourTanks();
     Tank y1 = yTanks.get(Ids.Y1);
     Tank y2 = yTanks.get(Ids.Y2);
@@ -94,7 +112,7 @@ public class StrategyManager {
     return strategy;
   }
 
-  private Directive getClosestTarget(GameState gameState, Tank yt) {
+  private Directive getClosestTarget(Tank yt) {
     Map<String, Tank> oTanks = gameState.getOpponentTanks();
     Tank o1 = oTanks.get(Ids.O1);
     Tank o2 = oTanks.get(Ids.O2);
@@ -119,5 +137,14 @@ public class StrategyManager {
     } else {
       return Directive.AttackO2;
     }
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("{");
+    sb.append("OverallStrategy=").append(overallStrategy);
+    sb.append(", LastStrategy=").append(lastStrategy);
+    sb.append("}");
+    return sb.toString();
   }
 }

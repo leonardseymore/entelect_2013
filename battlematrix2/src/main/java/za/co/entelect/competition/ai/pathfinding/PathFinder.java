@@ -7,6 +7,8 @@ import java.util.*;
 
 public class PathFinder {
 
+  private static final float INFLUENCE_COST = 20;
+
   public static Stack<Node> closestPathAStar(GameState gameState, Tank tank, int endX, int endY) {
     Queue<Node> open = new PriorityQueue<>();
     Collection<Node> closed = new HashSet<>();
@@ -26,7 +28,9 @@ public class PathFinder {
       closed.add(currentNode);
       for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode, endX, endY)) {
         int goalCost = currentNode.goalCost;
-        int estGoalCost = goalCost + heuristic(toNode, endX, endY);
+        float estGoalCost = goalCost + heuristic(toNode, endX, endY);
+        estGoalCost += tacticalCost(gameState, tank, currentNode, toNode, endX, endY);
+        assert estGoalCost >= 0;
         if (closed.contains(toNode)) {
           if (toNode.runningCost > estGoalCost) {
             closed.remove(toNode);
@@ -49,6 +53,15 @@ public class PathFinder {
     }
 
     return null;
+  }
+
+  private static float tacticalCost(GameState gameState, Tank tank, Node currentNode, Node toNode, int endX, int endY) {
+    float influence = gameState.getInfluenceMap().getInfluenceMap(tank.getOwner())[toNode.getX()][toNode.getY()];
+    if (influence < 0) {
+      return Math.abs(influence) * INFLUENCE_COST;
+    } else {
+      return 0;
+    }
   }
 
   private static Collection<Node> getAvailableNeighbors(GameState gameState, Tank tank, Node node, int endX, int endY) {
@@ -88,7 +101,7 @@ public class PathFinder {
     int x;
     int y;
     int goalCost;
-    int runningCost;
+    float runningCost;
 
     Node parent;
 

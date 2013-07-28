@@ -1,6 +1,8 @@
 package za.co.entelect.competition.domain;
 
 import org.apache.log4j.Logger;
+import za.co.entelect.competition.ai.rules.Strategy;
+import za.co.entelect.competition.ai.rules.StrategyManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,9 +12,15 @@ public class Game {
   private static final Logger logger = Logger.getLogger(Game.class);
 
   private GameState gameState;
+  private StrategyManager strategyManager;
 
   public Game(GameState gameState) {
     this.gameState = gameState;
+    this.strategyManager = new StrategyManager(gameState);
+  }
+
+  public StrategyManager getStrategyManager() {
+    return strategyManager;
   }
 
   /**
@@ -39,6 +47,7 @@ public class Game {
   }
 
   private void performAi() {
+    Strategy strategy = this.strategyManager.getStrategy();
     for (Tank tank : gameState.getTanks().values()) {
       tank.performAction(gameState);
       // TODO: do ai

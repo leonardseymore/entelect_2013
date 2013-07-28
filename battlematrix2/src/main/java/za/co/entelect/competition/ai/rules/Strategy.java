@@ -26,4 +26,13 @@ public class Strategy {
   public void setY2Directive(Directive y2Directive) {
     this.y2Directive = y2Directive;
   }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("{");
+    sb.append("y1=").append(y1Directive);
+    sb.append(", y2=").append(y2Directive);
+    sb.append("}");
+    return sb.toString();
+  }
 }

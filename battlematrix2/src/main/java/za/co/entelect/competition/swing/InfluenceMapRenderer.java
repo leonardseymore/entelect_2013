@@ -19,7 +19,7 @@ public class InfluenceMapRenderer implements GameElementVisitor {
   private Graphics2D g;
 
   private enum InfluenceMapType {
-    COMBINED, INFLUENCE, TENSION, VULNERABILITY
+    COMBINED, INFLUENCEY, INFLUENCEO
   }
 
   private InfluenceMapType mapType = InfluenceMapType.COMBINED;
@@ -38,13 +38,10 @@ public class InfluenceMapRenderer implements GameElementVisitor {
       mapType = InfluenceMapType.COMBINED;
     }
     if (keyboard.keyDownOnce(KeyEvent.VK_1)) {
-      mapType = InfluenceMapType.INFLUENCE;
+      mapType = InfluenceMapType.INFLUENCEY;
     }
     if (keyboard.keyDownOnce(KeyEvent.VK_2)) {
-      mapType = InfluenceMapType.TENSION;
-    }
-    if (keyboard.keyDownOnce(KeyEvent.VK_3)) {
-      mapType = InfluenceMapType.VULNERABILITY;
+      mapType = InfluenceMapType.INFLUENCEO;
     }
 
     g.setColor(Constants.COLOR_SWING_BOARD);
@@ -53,13 +50,23 @@ public class InfluenceMapRenderer implements GameElementVisitor {
     InfluenceMap imap = gameState.getInfluenceMap();
     float[][] yInfluenceMap = imap.getyInfluenceMap();
     float[][] oInfluenceMap = imap.getoInfluenceMap();
-    float[][] influenceMap = imap.getInfluenceMap();
     for (int x = 0; x < gameState.getW(); x++) {
       for (int y = 0; y < gameState.getH(); y++) {
         Color color = null;
+        float[][] influenceMap;
         float val;
         switch (mapType) {
-          case INFLUENCE:
+          case INFLUENCEY:
+            influenceMap = imap.getInfluenceYMap();
+            val = influenceMap[x][y];
+            if (val > 0) {
+              color = Color.getHSBColor(0.4f, 1, Math.min(1f, val));
+            } else if (val < 0) {
+              color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
+            }
+            break;
+          case INFLUENCEO:
+            influenceMap = imap.getInfluenceOMap();
             val = influenceMap[x][y];
             if (val > 0) {
               color = Color.getHSBColor(0.4f, 1, Math.min(1f, val));
@@ -83,7 +90,7 @@ public class InfluenceMapRenderer implements GameElementVisitor {
     for (int j = 0; j < walls.getH(); j++) {
       for (int i = 0; i < walls.getW(); i++) {
         if (walls.hasWall(i, j)) {
-          g.fillRect(i, j, 1, 1);
+        //  g.fillRect(i, j, 1, 1);
         }
       }
     }
