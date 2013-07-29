@@ -56,6 +56,7 @@ public class InfluenceMapRenderer implements GameElementVisitor {
     InfluenceMap imap = gameState.getInfluenceMap();
     float[][] yInfluenceMap = imap.getyInfluenceMap();
     float[][] oInfluenceMap = imap.getoInfluenceMap();
+    int[][] frontLine = imap.getFrontLine();
     for (int x = 0; x < gameState.getW(); x++) {
       for (int y = 0; y < gameState.getH(); y++) {
         Color color = Color.black;
@@ -93,6 +94,9 @@ public class InfluenceMapRenderer implements GameElementVisitor {
           default:
             color = new Color(Math.min(1f, oInfluenceMap[x][y]), 0, Math.min(1f, yInfluenceMap[x][y]));
             break;
+        }
+        if (frontLine[x][y] == 1) {
+          color = Color.CYAN;
         }
         g.setColor(color);
         g.fillRect(x, y, 1, 1);

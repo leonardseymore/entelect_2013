@@ -73,7 +73,7 @@ public class GameFactory {
       gameState.addTank(tank3);
     }
     Point tank4Pos = map.getTank4Pos();
-    if (tank3Pos != null) {
+    if (tank4Pos != null) {
       Tank tank4 = (Tank) inv.invokeFunction("getTank4");
       tank4.setX(tank4Pos.getX());
       tank4.setY(tank4Pos.getY());

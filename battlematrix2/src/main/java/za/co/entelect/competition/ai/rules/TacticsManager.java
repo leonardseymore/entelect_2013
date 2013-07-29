@@ -27,6 +27,8 @@ public class TacticsManager {
     if (oTanks.size() == 0) {
       strategy = Strategy.FATALITY;
       fatality();
+    } else if (yTanks.size() == 0) {
+      // cry silently
     } else if (yTanks.size() > oTanks.size()) {
       strategy = Strategy.AGGRESSIVE;
       aggressive();
@@ -130,7 +132,7 @@ public class TacticsManager {
     return closestTank;
   }
 
-  private void moveToFrontLines(Tank otherTank) {
+  private void moveToFrontLines(Tank yt) {
     //To change body of created methods use File | Settings | File Templates.
   }
 
@@ -158,7 +160,11 @@ public class TacticsManager {
   }
 
   private void weary() {
-    defendBaseWithClosestTank();
+    if (getYbaseThreats().size() > 0) {
+      defendBaseWithClosestTank();
+    } else {
+      attackBaseWithClosestTank();
+    }
   }
 
   private void defensive() {
