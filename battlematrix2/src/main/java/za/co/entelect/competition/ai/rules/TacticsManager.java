@@ -10,7 +10,7 @@ import java.util.*;
 public class TacticsManager {
 
   private enum Strategy {
-    FATALITY, AGGRESSIVE, BALANCED, DEFENSIVE
+    FATALITY, AGGRESSIVE, BALANCED, DEFENSIVE, WEARY
   }
 
   private GameState gameState;
@@ -31,8 +31,13 @@ public class TacticsManager {
       strategy = Strategy.AGGRESSIVE;
       aggressive();
     } else if (yTanks.size() == oTanks.size()) {
-      strategy = Strategy.BALANCED;
-      balanced();
+      if (yTanks.size() == 2) {
+        strategy = Strategy.BALANCED;
+        balanced();
+      } else {
+        strategy = Strategy.WEARY;
+        weary();
+      }
     } else if (yTanks.size() < oTanks.size()) {
       strategy = Strategy.DEFENSIVE;
       defensive();
@@ -74,6 +79,20 @@ public class TacticsManager {
     }
   }
 
+  private Tank defendBaseWithClosestTank() {
+    Base ybase = gameState.getYourBase();
+    Tank closestTank = getClosestTank(ybase);
+    defendBase(closestTank);
+    return closestTank;
+  }
+
+  private void defendBase(Tank yt) {
+    Base ybase = gameState.getYourBase();
+    yt.getBlackboard().setTarget(ybase);
+    Task tree = BehaviorTreeFactory.defendBase();
+    tree.run(gameState, yt);
+  }
+
   private Tank attackBaseWithClosestTank() {
     Base obase = gameState.getOpponentBase();
     Tank closestTank = getClosestTank(obase);
@@ -111,6 +130,10 @@ public class TacticsManager {
     return closestTank;
   }
 
+  private void moveToFrontLines(Tank otherTank) {
+    //To change body of created methods use File | Settings | File Templates.
+  }
+
   private void fatality() {
     attackBaseWithClosestTank();
   }
@@ -126,12 +149,20 @@ public class TacticsManager {
     if (threats.size() == 2) {
       attackBothTanks();
     } else if (threats.size() == 1) {
-      attackTank(threats.get(0));
+      Tank yt = attackTank(threats.get(0));
+      defendBase(getOtherTank(yt));
+    } else {
+      Tank yt = defendBaseWithClosestTank();
+      moveToFrontLines(getOtherTank(yt));
     }
   }
 
-  private void defensive() {
+  private void weary() {
+    defendBaseWithClosestTank();
+  }
 
+  private void defensive() {
+    defendBaseWithClosestTank();
   }
 
   @Override

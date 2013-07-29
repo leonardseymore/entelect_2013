@@ -12,6 +12,6 @@ public class AppSwing {
     app.setVisible(true);
     Thread gameThread = new Thread(app);
     gameThread.start();
-    Console console = new Console(new IO(System.in, System.out, System.err), gameState);
+    //Console console = new Console(new IO(System.in, System.out, System.err), gameState);
   }
 }

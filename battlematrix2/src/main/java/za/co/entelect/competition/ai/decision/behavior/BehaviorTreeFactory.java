@@ -6,8 +6,13 @@ public class BehaviorTreeFactory {
 
   public static final Logger logger = Logger.getLogger(BehaviorTreeFactory.class);
 
-  private static Task attackBase;
+  private static Task defendBase;
+  static {
+    defendBase = new MoveToClosest();
+    logger.debug("DefendBase behavior tree\n" + defendBase.toDot("DefendBase"));
+  }
 
+  private static Task attackBase;
   static {
     attackBase = new Selector()
       .a(
@@ -27,7 +32,6 @@ public class BehaviorTreeFactory {
   }
 
   private static Task attackTank;
-
   static {
     attackTank = new Selector()
       .a(
@@ -42,6 +46,10 @@ public class BehaviorTreeFactory {
           .a(new LookAt())
       );
     logger.debug("AttackTank behavior tree\n" + attackTank.toDot("AttackTank"));
+  }
+
+  public static Task defendBase() {
+    return defendBase;
   }
 
   public static Task attackBase() {

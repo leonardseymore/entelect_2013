@@ -19,7 +19,7 @@ public class GUI extends JFrame implements Runnable {
   private static final Logger logger = Logger.getLogger(GUI.class);
 
   public static final int DEFAULT_WIDTH = 500;
-  public static final int DEFAULT_HEIGHT = 520;
+  public static final int DEFAULT_HEIGHT = 620;
 
   private GameRenderer gameRenderer = new GameRenderer();
   private ClearanceMapRenderer clearanceMapRenderer = new ClearanceMapRenderer();
@@ -39,11 +39,12 @@ public class GUI extends JFrame implements Runnable {
   private Keyboard keyboard;
   private Mouse mouse;
   private boolean paused = false;
+  private boolean drawPreviews = true;
 
   private Map map = Map.USER;
   private Font arial = new Font("Arial", Font.BOLD, 10);
 
-  private int frameSleep = 33;
+  private int frameSleep = 10;
   private int frameSleepMultiplier = 1;
 
   public GUI(GameState gameState, double zoomFactor) {
@@ -130,6 +131,7 @@ public class GUI extends JFrame implements Runnable {
         g.setColor(Constants.COLOR_SWING_BLANK);
         g.fillRect(0, 0, getWidth(), getHeight());
 
+
         AffineTransform t = g.getTransform();
         g.scale(zoomFactor, zoomFactor);
         switch (map) {
@@ -151,6 +153,19 @@ public class GUI extends JFrame implements Runnable {
             break;
         }
         g.setTransform(t);
+
+        if (drawPreviews) {
+          g.translate(0, 500);
+          clearanceMapRenderer.setG(g);
+          gameState.accept(clearanceMapRenderer);
+          g.translate(100, 0);
+          influenceMapRenderer.setG(g);
+          gameState.accept(influenceMapRenderer);
+          g.translate(100, 0);
+          dirichletDomainRenderer.setG(g);
+          gameState.accept(dirichletDomainRenderer);
+          g.setTransform(t);
+        }
 
         if (printHelp) {
           g.setColor(new Color(123,123,123,190));
