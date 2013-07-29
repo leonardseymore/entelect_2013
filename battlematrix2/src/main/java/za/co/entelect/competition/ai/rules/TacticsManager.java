@@ -62,11 +62,9 @@ public class TacticsManager {
   }
 
   private void aggressive() {
-
   }
 
   private void balanced() {
-
   }
 
   private void defensive() {

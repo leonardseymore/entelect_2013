@@ -1,8 +1,13 @@
 package za.co.entelect.competition.ai.decision.behavior;
 
+import org.apache.log4j.Logger;
+
 public class BehaviorTreeFactory {
+
+  public static final Logger logger = Logger.getLogger(BehaviorTreeFactory.class);
+
   public static Task attackBase() {
-    return new Sequence()
+    Task tree = new Sequence()
       .addChild(new MoveToClosest())
       .addChild(
         new Selector()
@@ -14,5 +19,7 @@ public class BehaviorTreeFactory {
           .addChild(new Fire())
       )
       .addChild(new Fire());
+    //logger.debug("AttackBase behavior tree\n" + tree.toDot());
+    return tree;
   }
 }
