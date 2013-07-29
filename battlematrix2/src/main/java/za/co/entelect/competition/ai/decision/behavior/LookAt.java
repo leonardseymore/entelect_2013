@@ -27,4 +27,9 @@ public class LookAt extends Task {
     }
     return Result.Complete;
   }
+
+  @Override
+  protected String getLabel() {
+    return "LookAt";
+  }
 }

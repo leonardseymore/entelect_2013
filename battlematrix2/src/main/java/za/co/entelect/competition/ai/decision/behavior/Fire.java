@@ -8,4 +8,9 @@ public class Fire extends Task {
     tank.setNextAction(TankAction.FIRE);
     return Result.Complete;
   }
+
+  @Override
+  protected String getLabel() {
+    return "Fire";
+  }
 }

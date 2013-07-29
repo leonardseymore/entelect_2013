@@ -8,17 +8,17 @@ public class BehaviorTreeFactory {
 
   public static Task attackBase() {
     Task tree = new Sequence()
-      .addChild(new MoveToClosest())
-      .addChild(
+      .a(new MoveToClosest())
+      .a(
         new Selector()
-          .addChild(
+          .a(
             new Sequence()
-              .addChild(new InLine())
-              .addChild(new LookAt())
+              .a(new InLine())
+              .a(new LookAt())
           )
-          .addChild(new Fire())
+          .a(new Fire())
       )
-      .addChild(new Fire());
+      .a(new Fire());
     //logger.debug("AttackBase behavior tree\n" + tree.toDot());
     return tree;
   }

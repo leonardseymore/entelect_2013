@@ -13,4 +13,9 @@ public class Inverse extends Decorator {
     Result result = child.run(gameState, tank);
     return result == Result.Complete ? Result.Fail : Result.Complete;
   }
+
+  @Override
+  protected String getLabel() {
+    return "~" + child.getLabel();
+  }
 }

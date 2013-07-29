@@ -15,4 +15,9 @@ public class InLine extends Task {
       return Result.Fail;
     }
   }
+
+  @Override
+  protected String getLabel() {
+    return "InLine?";
+  }
 }

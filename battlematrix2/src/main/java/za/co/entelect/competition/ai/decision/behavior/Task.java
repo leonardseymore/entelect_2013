@@ -17,7 +17,7 @@ public abstract class Task {
     this.children = new ArrayList<>();
   }
 
-  public Task addChild(Task child) {
+  public Task a(Task child) {
     children.add(child);
     return this;
   }
@@ -41,11 +41,15 @@ public abstract class Task {
         .append(" -> ")
         .append(childId)
         .append("\n")
+        .append("  ")
         .append(parentId)
-        .append(" [label=\"" + task.getClass().getSimpleName() + "\"]\n")
+        .append(" [label=\"" + task.getLabel() + "\"]\n")
+        .append("  ")
         .append(childId)
-        .append(" [label=\"" + child.getClass().getSimpleName() + "\"]\n");
+        .append(" [label=\"" + child.getLabel() + "\"]\n");
       toDot(child, buffer);
     }
   }
+
+  protected abstract String getLabel();
 }

@@ -24,4 +24,9 @@ public class MoveToClosest extends Task {
     }
     return Result.Complete;
   }
+
+  @Override
+  protected String getLabel() {
+    return "MoveToClosest";
+  }
 }

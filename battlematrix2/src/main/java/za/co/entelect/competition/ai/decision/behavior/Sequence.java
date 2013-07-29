@@ -14,4 +14,9 @@ public class Sequence extends Task {
     }
     return Result.Complete;
   }
+
+  @Override
+  protected String getLabel() {
+    return "->";
+  }
 }

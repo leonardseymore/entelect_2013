@@ -14,4 +14,9 @@ public class Selector extends Task {
     }
     return result;
   }
+
+  @Override
+  protected String getLabel() {
+    return "?";
+  }
 }
