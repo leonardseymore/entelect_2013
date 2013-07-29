@@ -4,15 +4,13 @@ import za.co.entelect.competition.domain.GameState;
 import za.co.entelect.competition.domain.Tank;
 
 public class Selector extends Task {
-  public Result run(GameState gameState, Tank tank) {
-    Result result = Result.Fail;
+  public boolean run(GameState gameState, Tank tank) {
     for (Task child : children) {
-      result = child.run(gameState, tank);
-      if (result == Result.Complete || result == Result.InProgress) {
-        break;
+      if (child.run(gameState, tank)) {
+        return true;
       }
     }
-    return result;
+    return false;
   }
 
   @Override

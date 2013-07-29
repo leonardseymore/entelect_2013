@@ -9,9 +9,8 @@ public class Inverse extends Decorator {
     super(child);
   }
 
-  public Result run(GameState gameState, Tank tank) {
-    Result result = child.run(gameState, tank);
-    return result == Result.Complete ? Result.Fail : Result.Complete;
+  public boolean run(GameState gameState, Tank tank) {
+    return !child.run(gameState, tank);
   }
 
   @Override

@@ -4,7 +4,7 @@ import za.co.entelect.competition.ai.blackboard.Blackboard;
 import za.co.entelect.competition.domain.*;
 
 public class LookAt extends Task {
-  public Result run(GameState gameState, Tank tank) {
+  public boolean run(GameState gameState, Tank tank) {
     Blackboard blackboard = tank.getBlackboard();
     Entity target = blackboard.getTarget();
     int targetX = target.getX();
@@ -14,18 +14,18 @@ public class LookAt extends Task {
     Direction direction = tank.getDirection();
     if (targetY < tankY && direction != Direction.UP) {
       tank.setNextAction(TankAction.UP);
-      return Result.InProgress;
+      return false;
     } else if (targetX > tankX && direction != Direction.RIGHT) {
       tank.setNextAction(TankAction.RIGHT);
-      return Result.InProgress;
+      return false;
     } else if (targetY > tankY && direction != Direction.DOWN) {
       tank.setNextAction(TankAction.DOWN);
-      return Result.InProgress;
+      return false;
     } else if (targetX < tankX && direction != Direction.LEFT) {
       tank.setNextAction(TankAction.LEFT);
-      return Result.InProgress;
+      return false;
     }
-    return Result.Complete;
+    return true;
   }
 
   @Override

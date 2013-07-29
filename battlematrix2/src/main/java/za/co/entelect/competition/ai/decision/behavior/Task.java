@@ -22,7 +22,7 @@ public abstract class Task {
     return this;
   }
 
-  public abstract Result run(GameState gameState, Tank tank);
+  public abstract boolean run(GameState gameState, Tank tank);
 
   public String toDot() {
     StringBuilder buffer = new StringBuilder();

@@ -5,14 +5,13 @@ import za.co.entelect.competition.domain.Tank;
 
 public class Sequence extends Task {
 
-  public Result run(GameState gameState, Tank tank) {
+  public boolean run(GameState gameState, Tank tank) {
     for (Task child : children) {
-      Result result = child.run(gameState, tank);
-      if (result == Result.Fail || result == Result.InProgress) {
-        return result;
+      if (!child.run(gameState, tank)) {
+        return false;
       }
     }
-    return Result.Complete;
+    return true;
   }
 
   @Override

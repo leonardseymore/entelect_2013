@@ -11,7 +11,7 @@ import za.co.entelect.competition.domain.TankAction;
 import java.util.Stack;
 
 public class MoveToClosest extends Task {
-  public Result run(GameState gameState, Tank tank) {
+  public boolean run(GameState gameState, Tank tank) {
     Blackboard blackboard = tank.getBlackboard();
     Entity target = blackboard.getTarget();
     Stack<PathFinder.Node> path = PathFinder.closestPathAStar(gameState, tank, target.getX(), target.getY(), true);
@@ -19,10 +19,10 @@ public class MoveToClosest extends Task {
       TankAction tankAction = Seek.seekPath(gameState, tank, path);
       if (tankAction != TankAction.NONE) {
         tank.setNextAction(tankAction);
-        return Result.InProgress;
+        return false;
       }
     }
-    return Result.Complete;
+    return true;
   }
 
   @Override
