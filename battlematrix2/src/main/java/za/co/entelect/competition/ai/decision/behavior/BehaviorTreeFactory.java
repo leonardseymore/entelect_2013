@@ -6,8 +6,9 @@ public class BehaviorTreeFactory {
 
   public static final Logger logger = Logger.getLogger(BehaviorTreeFactory.class);
 
-  public static Task attackBase() {
-    Task tree = new Sequence()
+  private static Task attackBase;
+  static {
+    attackBase = new Sequence()
       .a(new MoveToClosest())
       .a(
         new Selector()
@@ -19,7 +20,10 @@ public class BehaviorTreeFactory {
           .a(new Fire())
       )
       .a(new Fire());
-    //logger.debug("AttackBase behavior tree\n" + tree.toDot());
-    return tree;
+  }
+
+  public static Task attackBase() {
+    logger.debug("AttackBase behavior tree\n" + attackBase.toDot());
+    return attackBase;
   }
 }
