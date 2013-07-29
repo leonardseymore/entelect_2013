@@ -9,18 +9,46 @@ public class BehaviorTreeFactory {
   private static Task attackBase;
 
   static {
-    attackBase = new Sequence()
-      .a(new MoveToClosest())
+    attackBase = new Selector()
       .a(
         new Sequence()
+          .a(new CanFireAt())
+          .a(new Fire())
+      )
+      .a(
+        new Sequence()
+          .a(new MoveToClosest())
           .a(new InLine())
           .a(new LookAt())
+          .a(new Inverse(new FriendlyFire()))
+          .a(new Fire())
+      );
+    logger.debug("AttackBase behavior tree\n" + attackBase.toDot("AttackBase"));
+  }
+
+  private static Task attackTank;
+
+  static {
+    attackTank = new Selector()
+      .a(
+        new Sequence()
+          .a(new CanFireAt())
+          .a(new Fire())
       )
-      .a(new Fire());
-    logger.debug("AttackBase behavior tree\n" + attackBase.toDot());
+      .a(
+        new Sequence()
+          .a(new MoveToClosest())
+          .a(new InLine())
+          .a(new LookAt())
+      );
+    logger.debug("AttackTank behavior tree\n" + attackTank.toDot("AttackTank"));
   }
 
   public static Task attackBase() {
     return attackBase;
+  }
+
+  public static Task attackTank() {
+    return attackTank;
   }
 }

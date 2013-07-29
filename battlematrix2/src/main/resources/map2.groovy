@@ -38,7 +38,7 @@ wwwwwwwwwwwwwwwwwwww"""
 }
 
 def getTank1() {
-  return new Tank(Ids.Y1, Player.YOU, Direction.UP, new MouseControlledTankOperator())
+  return new Tank(Ids.Y1, Player.YOU, Direction.UP, new DummyTankOperator())
 }
 
 def getTank2() {
@@ -46,7 +46,7 @@ def getTank2() {
 }
 
 def getTank3() {
-  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new DummyTankOperator())
+  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new MouseControlledTankOperator())
 }
 
 def getTank4() {

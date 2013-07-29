@@ -16,6 +16,10 @@ public class DirichletDomains {
     return dirichletDomains[x][y];
   }
 
+  public Base getBase(Tank tank) {
+    return getBase(tank.getX(), tank.getY());
+  }
+
   public void regenerate() {
     long start = System.currentTimeMillis();
 
@@ -27,9 +31,9 @@ public class DirichletDomains {
       for (int i = 0; i < w; i++) {
         int disty = Util.manhattanDist(i, j, ybase.getX(), ybase.getY());
         int disto = Util.manhattanDist(i, j, obase.getX(), obase.getY());
-        if (disty > disto) {
+        if (disty < disto) {
           dirichletDomains[i][j] = ybase;
-        } else if (disty < disto) {
+        } else if (disty > disto) {
           dirichletDomains[i][j] = obase;
         }
       }

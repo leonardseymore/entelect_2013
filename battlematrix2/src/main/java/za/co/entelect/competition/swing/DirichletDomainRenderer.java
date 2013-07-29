@@ -38,7 +38,7 @@ public class DirichletDomainRenderer implements GameElementVisitor {
         if (base != null) {
           color = Util.getColor(base);
         }
-        g.setColor(color);
+        g.setColor(color.darker());
         g.fillRect(x, y, 1, 1);
       }
     }

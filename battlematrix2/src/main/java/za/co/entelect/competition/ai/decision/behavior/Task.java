@@ -24,9 +24,9 @@ public abstract class Task {
 
   public abstract boolean run(GameState gameState, Tank tank);
 
-  public String toDot() {
+  public String toDot(String name) {
     StringBuilder buffer = new StringBuilder();
-    buffer.append("digraph Task {\n");
+    buffer.append("digraph " + name + " {\n");
     toDot(this, buffer);
     buffer.append("}");
     return buffer.toString();

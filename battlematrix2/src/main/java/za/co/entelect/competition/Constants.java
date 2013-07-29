@@ -24,4 +24,7 @@ public class Constants {
   public static final String COLOR_PPM3_TANK_YOU = "0 0 255";
   public static final String COLOR_PPM3_TANK_OPPONENT = COLOR_SWING_TANK_OPPONENT.getRed() + " " + COLOR_SWING_TANK_OPPONENT.getGreen() + " " + COLOR_SWING_TANK_OPPONENT.getBlue();
   public static final String COLOR_PPM3_WALL = "120 120 120";
+
+  public static final int FIRE_RANGE = 16;
 }
+

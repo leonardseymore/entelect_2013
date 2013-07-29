@@ -39,6 +39,19 @@ public class TacticsManager {
     }
   }
 
+  private List<Tank> getYbaseThreats() {
+    Map<String, Tank> oTanks = gameState.getOpponentTanks();
+    DirichletDomains dirichletDomains = gameState.getDirichletDomains();
+    List<Tank> ybaseThreats = new ArrayList<>();
+    for (Tank ot : oTanks.values()) {
+      Base base = dirichletDomains.getBase(ot);
+      if (base != null && base.isYourBase()) {
+        ybaseThreats.add(ot);
+      }
+    }
+    return ybaseThreats;
+  }
+
   private Tank getClosestTank(Entity target) {
     Map<String, Tank> ytanks = gameState.getYourTanks();
     Tank closestTank = null;
@@ -52,19 +65,69 @@ public class TacticsManager {
     }
     return closestTank;
   }
+  private Tank getOtherTank(Tank tank) {
+    Map<String, Tank> ytanks = gameState.getYourTanks();
+    if (tank.getId() == Ids.Y1) {
+      return ytanks.get(Ids.Y2);
+    } else {
+      return ytanks.get(Ids.Y1);
+    }
+  }
 
-  private void fatality() {
+  private Tank attackBaseWithClosestTank() {
     Base obase = gameState.getOpponentBase();
     Tank closestTank = getClosestTank(obase);
-    closestTank.getBlackboard().setTarget(obase);
+    attackBase(closestTank);
+    return closestTank;
+  }
+
+  private void attackBase(Tank yt) {
+    Base obase = gameState.getOpponentBase();
+    yt.getBlackboard().setTarget(obase);
     Task tree = BehaviorTreeFactory.attackBase();
-    tree.run(gameState, closestTank);
+    tree.run(gameState, yt);
+  }
+
+  private void attackBothTanks() {
+    Map<String, Tank> otanks = gameState.getOpponentTanks();
+    Tank o1 = otanks.get(Ids.O1);
+    Tank closestTank = getClosestTank(o1);
+    closestTank.getBlackboard().setTarget(o1);
+    Task y1tree = BehaviorTreeFactory.attackTank();
+    y1tree.run(gameState, closestTank);
+
+    Tank o2 = otanks.get(Ids.O2);
+    Tank otherTank = getOtherTank(closestTank);
+    otherTank.getBlackboard().setTarget(o2);
+    Task y2tree = BehaviorTreeFactory.attackTank();
+    y2tree.run(gameState, otherTank);
+  }
+
+  private Tank attackTank(Tank ot) {
+    Tank closestTank = getClosestTank(ot);
+    closestTank.getBlackboard().setTarget(ot);
+    Task y1tree = BehaviorTreeFactory.attackTank();
+    y1tree.run(gameState, closestTank);
+    return closestTank;
+  }
+
+  private void fatality() {
+    attackBaseWithClosestTank();
   }
 
   private void aggressive() {
+    Tank ot = gameState.getOpponentTanks().values().iterator().next();
+    Tank yt = attackTank(ot);
+    attackBase(getOtherTank(yt));
   }
 
   private void balanced() {
+    List<Tank> threats = getYbaseThreats();
+    if (threats.size() == 2) {
+      attackBothTanks();
+    } else if (threats.size() == 1) {
+      attackTank(threats.get(0));
+    }
   }
 
   private void defensive() {

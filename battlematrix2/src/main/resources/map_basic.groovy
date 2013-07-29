@@ -42,11 +42,11 @@ def getTank1() {
 }
 
 def getTank2() {
-  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new MouseControlledTankOperator())
+  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new DummyTankOperator())
 }
 
 def getTank3() {
-  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new DummyTankOperator())
+  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new MouseControlledTankOperator())
 }
 
 def getTank4() {
