@@ -23,7 +23,7 @@ public class BehaviorTreeFactory {
   }
 
   public static Task attackBase() {
-    logger.debug("AttackBase behavior tree\n" + attackBase.toDot());
+    //logger.debug("AttackBase behavior tree\n" + attackBase.toDot());
     return attackBase;
   }
 }

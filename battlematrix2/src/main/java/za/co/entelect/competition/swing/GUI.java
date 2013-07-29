@@ -14,7 +14,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-public class GUI extends JFrame {
+public class GUI extends JFrame implements Runnable {
 
   private static final Logger logger = Logger.getLogger(GUI.class);
 
