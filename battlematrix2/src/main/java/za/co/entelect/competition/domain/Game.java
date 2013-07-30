@@ -149,14 +149,14 @@ public class Game {
             direction = Direction.UP;
             if (gameState.canMoveInDirection(tank, Direction.UP)) {
               y--;
-              rect.traspose(0, -1);
+              rect.translate(0, -1);
             }
             break;
           case RIGHT:
             direction = Direction.RIGHT;
             if (gameState.canMoveInDirection(tank, Direction.RIGHT)) {
               x++;
-              rect.traspose(1, 0);
+              rect.translate(1, 0);
             }
 
             break;
@@ -164,7 +164,7 @@ public class Game {
             direction = Direction.DOWN;
             if (gameState.canMoveInDirection(tank, Direction.DOWN)) {
               y++;
-              rect.traspose(0, 1);
+              rect.translate(0, 1);
             }
 
             break;
@@ -172,7 +172,7 @@ public class Game {
             direction = Direction.LEFT;
             if (gameState.canMoveInDirection(tank, Direction.LEFT)) {
               x--;
-              rect.traspose(-1, 0);
+              rect.translate(-1, 0);
             }
             break;
         }

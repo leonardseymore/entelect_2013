@@ -8,6 +8,9 @@ import za.co.entelect.competition.domain.Player
 import za.co.entelect.competition.domain.Tank
 import za.co.entelect.competition.groovy.GameFactory
 
+w = 20
+h = 20
+
 def getW() {
   return w
 }

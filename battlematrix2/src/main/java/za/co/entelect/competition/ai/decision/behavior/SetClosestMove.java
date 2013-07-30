@@ -10,7 +10,7 @@ import za.co.entelect.competition.domain.TankAction;
 
 import java.util.Stack;
 
-public class MoveToClosest extends Task {
+public class SetClosestMove extends Task {
   public boolean run(GameState gameState, Tank tank) {
     Blackboard blackboard = tank.getBlackboard();
     Entity target = blackboard.getTarget();
@@ -18,15 +18,15 @@ public class MoveToClosest extends Task {
     if (path != null && path.size() > 0) {
       TankAction tankAction = Seek.seekPath(gameState, tank, path);
       if (tankAction != TankAction.NONE) {
-        tank.setNextAction(tankAction);
-        return false;
+        blackboard.setNextTankAction(tankAction);
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   @Override
   protected String getLabel() {
-    return "MoveToClosest";
+    return "SetClosestMove";
   }
 }

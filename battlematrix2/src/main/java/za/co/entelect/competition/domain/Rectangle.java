@@ -46,7 +46,7 @@ public class Rectangle {
     this.left = left;
   }
 
-  public void traspose(int x, int y) {
+  public void translate(int x, int y) {
     top += y;
     right += x;
     bottom += y;
@@ -54,7 +54,12 @@ public class Rectangle {
   }
   
   public boolean intersects(Rectangle o) {
-    return  getLeft() <= o.getRight() && getRight() >= o.getLeft() &&
+    return getLeft() <= o.getRight() && getRight() >= o.getLeft() &&
       getTop() <= o.getBottom() && getBottom() >= o.getTop();
+  }
+
+  public boolean contains(int x, int y) {
+    return getLeft() <= x && getRight() >= x &&
+      getTop() <= y && getBottom() >= y;
   }
 }

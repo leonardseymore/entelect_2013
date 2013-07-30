@@ -3,16 +3,16 @@ package za.co.entelect.competition.ai.blackboard;
 import za.co.entelect.competition.domain.Bullet;
 import za.co.entelect.competition.domain.Direction;
 import za.co.entelect.competition.domain.Entity;
+import za.co.entelect.competition.domain.TankAction;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class Blackboard {
 
+  private TankAction nextTankAction;
   private Entity target;
   private Collection<Bullet> threatBullets = new ArrayList<>();
-  private int moveTimes;
-  private Direction moveTimesDirection;
 
   public Blackboard() {
   }
@@ -33,19 +33,11 @@ public class Blackboard {
     return threatBullets;
   }
 
-  public int getMoveTimes() {
-    return moveTimes;
+  public TankAction getNextTankAction() {
+    return nextTankAction;
   }
 
-  public void setMoveTimes(int moveTimes) {
-    this.moveTimes = moveTimes;
-  }
-
-  public Direction getMoveTimesDirection() {
-    return moveTimesDirection;
-  }
-
-  public void setMoveTimesDirection(Direction moveTimesDirection) {
-    this.moveTimesDirection = moveTimesDirection;
+  public void setNextTankAction(TankAction nextTankAction) {
+    this.nextTankAction = nextTankAction;
   }
 }

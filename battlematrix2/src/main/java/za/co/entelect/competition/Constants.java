@@ -26,7 +26,8 @@ public class Constants {
   public static final String COLOR_PPM3_WALL = "120 120 120";
 
   public static final float TANK_INFLUENCE = 5f;
-  public static final float BULLET_INFLUENCE = 2f;
-  public static final int FIRE_RANGE = 100;
+  public static final float BULLET_INFLUENCE = 0f;
+  public static final int FIRE_RANGE = 16;
+  public static final int MIN_TIME_TO_FACE_AND_DESTROY_INLINE_BULLET = 4;
 }
 

@@ -133,7 +133,8 @@ public class TacticsManager {
   }
 
   private void moveToFrontLines(Tank yt) {
-    //To change body of created methods use File | Settings | File Templates.
+    Task tree = BehaviorTreeFactory.avoidFire();
+    tree.run(gameState, yt);
   }
 
   private void fatality() {

@@ -1,6 +1,7 @@
 package za.co.entelect.competition;
 
 import za.co.entelect.competition.domain.*;
+import za.co.entelect.competition.domain.Rectangle;
 
 import java.awt.*;
 
@@ -62,6 +63,56 @@ public class RayCast {
           if (gameElement != null) {
             Entity entity = gameState.getEntityAt(i, startY);
             return rayCastTest.test(gameElement, entity);
+          }
+        }
+        break;
+    }
+    return false;
+  }
+
+  public static boolean castRay(GameState gameState, Rectangle rect, Direction direction, int startX, int startY) {
+    switch (direction) {
+      case UP:
+        for (int i = startY - 1; i > startY - Constants.FIRE_RANGE && i >= 0; i--) {
+          GameElement gameElement = gameState.getElementAt(startX, i);
+          if (rect.contains(startX, i)) {
+            return true;
+          }
+          if (gameElement != null) {
+            return false;
+          }
+        }
+        break;
+      case RIGHT:
+        for (int i = startX + 1; i < startX + Constants.FIRE_RANGE && i < gameState.getW() - 1; i++) {
+          GameElement gameElement = gameState.getElementAt(i, startY);
+          if (rect.contains(i, startY)) {
+            return true;
+          }
+          if (gameElement != null) {
+            return false;
+          }
+        }
+        break;
+      case DOWN:
+        for (int i = startY + 1; i < startY + Constants.FIRE_RANGE && i < gameState.getH() - 1; i++) {
+          GameElement gameElement = gameState.getElementAt(startX, i);
+          if (rect.contains(startX, i)) {
+            return true;
+          }
+          if (gameElement != null) {
+            return false;
+          }
+        }
+        break;
+      case LEFT:
+        for (int i = startX - 1; i > startX - Constants.FIRE_RANGE && i > 0; i--) {
+          GameElement gameElement = gameState.getElementAt(i, startY);
+          if (rect.contains(i, startY)) {
+            return true;
+          }
+          if (gameElement != null) {
+            return false;
           }
         }
         break;
