@@ -91,7 +91,7 @@ public class TacticsManager {
   private void defendBase(Tank yt) {
     Base ybase = gameState.getYourBase();
     yt.getBlackboard().setTarget(ybase);
-    Task tree = BehaviorTreeFactory.defendBase();
+    Task tree = BehaviorTreeFactory.defendBase;
     tree.run(gameState, yt);
   }
 
@@ -105,7 +105,7 @@ public class TacticsManager {
   private void attackBase(Tank yt) {
     Base obase = gameState.getOpponentBase();
     yt.getBlackboard().setTarget(obase);
-    Task tree = BehaviorTreeFactory.attackBase();
+    Task tree = BehaviorTreeFactory.attackBase;
     tree.run(gameState, yt);
   }
 
@@ -114,27 +114,26 @@ public class TacticsManager {
     Tank o1 = otanks.get(Ids.O1);
     Tank closestTank = getClosestTank(o1);
     closestTank.getBlackboard().setTarget(o1);
-    Task y1tree = BehaviorTreeFactory.attackTank();
+    Task y1tree = BehaviorTreeFactory.attackTank;
     y1tree.run(gameState, closestTank);
 
     Tank o2 = otanks.get(Ids.O2);
     Tank otherTank = getOtherTank(closestTank);
     otherTank.getBlackboard().setTarget(o2);
-    Task y2tree = BehaviorTreeFactory.attackTank();
+    Task y2tree = BehaviorTreeFactory.attackTank;
     y2tree.run(gameState, otherTank);
   }
 
   private Tank attackTank(Tank ot) {
     Tank closestTank = getClosestTank(ot);
-    closestTank.getBlackboard().setTarget(ot);
-    Task y1tree = BehaviorTreeFactory.attackTank();
-    y1tree.run(gameState, closestTank);
+    attackTank(closestTank, ot);
     return closestTank;
   }
 
-  private void moveToFrontLines(Tank yt) {
-    Task tree = BehaviorTreeFactory.avoidFire();
-    tree.run(gameState, yt);
+  private void attackTank(Tank yt, Tank ot) {
+    yt.getBlackboard().setTarget(ot);
+    Task y1tree = BehaviorTreeFactory.attackTank;
+    y1tree.run(gameState, yt);
   }
 
   private void fatality() {
@@ -156,16 +155,16 @@ public class TacticsManager {
       defendBase(getOtherTank(yt));
     } else {
       Tank yt = defendBaseWithClosestTank();
-      moveToFrontLines(getOtherTank(yt));
+      // TODO: pick closest tank
+      Tank ot = gameState.getOpponentTanks().get(Ids.O1);
+      Tank y2 = getOtherTank(yt);
+      attackTank(ot);
     }
   }
 
   private void weary() {
-    if (getYbaseThreats().size() > 0) {
-      defendBaseWithClosestTank();
-    } else {
-      attackBaseWithClosestTank();
-    }
+    Tank ot = gameState.getOpponentTanks().values().iterator().next();
+    attackTank(ot);
   }
 
   private void defensive() {

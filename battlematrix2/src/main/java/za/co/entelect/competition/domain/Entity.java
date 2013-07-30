@@ -1,6 +1,6 @@
 package za.co.entelect.competition.domain;
 
-public abstract class Entity {
+public abstract class Entity implements Trackable {
   protected String id;
   protected int x;
   protected int y;

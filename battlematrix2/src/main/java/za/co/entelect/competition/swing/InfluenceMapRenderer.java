@@ -19,7 +19,7 @@ public class InfluenceMapRenderer implements GameElementVisitor {
   private Graphics2D g;
 
   private enum InfluenceMapType {
-    COMBINED, YINFLUENCE, OINFLUENCE, INFLUENCEY, INFLUENCEO
+    COMBINED, YINFLUENCE, OINFLUENCE, INFLUENCEY, INFLUENCEO, TENSION, VULNERABILITY
   }
 
   private InfluenceMapType mapType = InfluenceMapType.COMBINED;
@@ -48,6 +48,12 @@ public class InfluenceMapRenderer implements GameElementVisitor {
     }
     if (keyboard.keyDownOnce(KeyEvent.VK_4)) {
       mapType = InfluenceMapType.INFLUENCEO;
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_5)) {
+      mapType = InfluenceMapType.TENSION;
+    }
+    if (keyboard.keyDownOnce(KeyEvent.VK_6)) {
+      mapType = InfluenceMapType.VULNERABILITY;
     }
 
     g.setColor(Constants.COLOR_SWING_BOARD);
@@ -91,12 +97,22 @@ public class InfluenceMapRenderer implements GameElementVisitor {
               color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
             }
             break;
+          case TENSION:
+            influenceMap = imap.getTensionMap();
+            val = influenceMap[x][y];
+            color = Color.getHSBColor(0.8f, 0.5f, Math.min(1f, Math.abs(val)));
+            break;
+          case VULNERABILITY:
+            influenceMap = imap.getVulnerabilityMap();
+            val = influenceMap[x][y];
+            color = Color.getHSBColor(0.2f, 0.0f, Math.min(1f, Math.abs(val)));
+            break;
           default:
             color = new Color(Math.min(1f, oInfluenceMap[x][y]), 0, Math.min(1f, yInfluenceMap[x][y]));
             break;
         }
         if (frontLine[x][y] == 1) {
-          color = Color.CYAN;
+          color = new Color(255, 255, 255, 80);
         }
         g.setColor(color);
         g.fillRect(x, y, 1, 1);

@@ -5,9 +5,9 @@ import za.co.entelect.competition.Constants;
 
 public class BehaviorTreeFactory {
 
-  public static final Logger logger = Logger.getLogger(BehaviorTreeFactory.class);
+  private static final Logger logger = Logger.getLogger(BehaviorTreeFactory.class);
 
-  private static Task fireAt;
+  public static Task fireAt;
   static {
     fireAt = new Sequence()
       .a(new CanFireAt())
@@ -16,7 +16,7 @@ public class BehaviorTreeFactory {
     logger.debug("FireAt behavior branch\n" + fireAt.toDot("FireAt"));
   }
 
-  private static Task move;
+  public static Task move;
   static {
     move = new Sequence()
       .a(new IsSafeMove())
@@ -25,7 +25,7 @@ public class BehaviorTreeFactory {
     logger.debug("Move behavior branch\n" + move.toDot("Move"));
   }
 
-  private static Task closestMove;
+  public static Task closestMove;
   static {
     closestMove = new Sequence()
       .a(new SetClosestMove())
@@ -33,7 +33,15 @@ public class BehaviorTreeFactory {
     logger.debug("ClosestMove behavior branch\n" + closestMove.toDot("Closest"));
   }
 
-  private static Task avoidFire;
+  public static Task moveToPos;
+  static {
+    moveToPos = new Sequence()
+      .a(new SetMove())
+      .a(move);
+    logger.debug("MoveToPos behavior branch\n" + moveToPos.toDot("MoveToPos"));
+  }
+
+  public static Task avoidFire;
   static {
     avoidFire = new Sequence()
       .a(new InFireLine())
@@ -53,7 +61,7 @@ public class BehaviorTreeFactory {
     logger.debug("AvoidFire behavior branch\n" + avoidFire.toDot("AvoidFire"));
   }
 
-  private static Task defendBase;
+  public static Task defendBase;
   static {
     defendBase = new Selector()
       .a(avoidFire)
@@ -61,7 +69,7 @@ public class BehaviorTreeFactory {
     logger.debug("DefendBase behavior tree\n" + defendBase.toDot("DefendBase"));
   }
 
-  private static Task attackBase;
+  public static Task attackBase;
   static {
     attackBase = new Selector()
       .a(avoidFire)
@@ -84,7 +92,15 @@ public class BehaviorTreeFactory {
     logger.debug("AttackBase behavior tree\n" + attackBase.toDot("AttackBase"));
   }
 
-  private static Task attackTank;
+  public static Task frontLine;
+  static {
+    frontLine = new Selector()
+      .a(avoidFire)
+      .a(moveToPos);
+    logger.debug("MoveToFrontLine behavior tree\n" + frontLine.toDot("MoveToFrontLine"));
+  }
+
+  public static Task attackTank;
   static {
     attackTank = new Selector()
       .a(avoidFire)
@@ -103,21 +119,5 @@ public class BehaviorTreeFactory {
             )
       );
     logger.debug("AttackTank behavior tree\n" + attackTank.toDot("AttackTank"));
-  }
-
-  public static Task avoidFire() {
-    return avoidFire;
-  }
-
-  public static Task defendBase() {
-    return defendBase;
-  }
-
-  public static Task attackBase() {
-    return attackBase;
-  }
-
-  public static Task attackTank() {
-    return attackTank;
   }
 }

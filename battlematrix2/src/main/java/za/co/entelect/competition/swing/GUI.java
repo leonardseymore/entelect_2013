@@ -44,7 +44,7 @@ public class GUI extends JFrame implements Runnable {
   private Map map = Map.USER;
   private Font arial = new Font("Arial", Font.BOLD, 10);
 
-  private int frameSleep = 33;
+  private int frameSleep = 10;
   private int frameSleepMultiplier = 1;
 
   public GUI(GameState gameState, double zoomFactor) {
@@ -120,10 +120,9 @@ public class GUI extends JFrame implements Runnable {
         if (keyboard.keyDownOnce(KeyEvent.VK_S)) {
           frameSleepMultiplier++;
         }
-        if (paused) {
-          continue;
+        if (!paused) {
+          game.update();
         }
-        game.update();
 
         g = bi.createGraphics();
         g.setFont(arial);
@@ -174,8 +173,7 @@ public class GUI extends JFrame implements Runnable {
 
           int x = 10;
           int y = 10;
-          g.drawString("u=user map (default), c=clearance, d=dirichlet, i=influence", x, y += 12);
-          g.drawString("p toggle pause", x, y += 12);
+          g.drawString("p=pause, u=user map (default), c=clearance, d=dirichlet, i=influence", x, y += 12);
           g.drawString(game.getTacticsManager().toString(), x, y += 12);
         }
 

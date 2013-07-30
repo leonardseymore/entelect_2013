@@ -17,7 +17,11 @@ public class InfluenceMap {
   private float[][] oInfluenceMap;
   private float[][] influenceYMap;
   private float[][] influenceOMap;
+  private float[][] tensionMap;
+  private float[][] vulnerabilityMap;
   private int[][] frontLine;
+  private int[] maxTension;
+  private int[] maxVulnerability;
 
   public InfluenceMap(GameState gameState) {
     this.gameState = gameState;
@@ -27,7 +31,11 @@ public class InfluenceMap {
     oInfluenceMap = new float[w][h];
     influenceYMap = new float[w][h];
     influenceOMap = new float[w][h];
+    tensionMap = new float[w][h];
+    vulnerabilityMap = new float[w][h];
     frontLine = new int[w][h];
+    maxTension = new int[2];
+    maxVulnerability = new int[2];
   }
 
   public float[][] getyInfluenceMap() {
@@ -48,6 +56,22 @@ public class InfluenceMap {
 
   public float[][] getInfluenceMap(Player player) {
     return player == Player.YOU ? getInfluenceYMap() : getInfluenceOMap();
+  }
+
+  public float[][] getTensionMap() {
+    return tensionMap;
+  }
+
+  public float[][] getVulnerabilityMap() {
+    return vulnerabilityMap;
+  }
+
+  public int[] getMaxTension() {
+    return maxTension;
+  }
+
+  public int[] getMaxVulnerability() {
+    return maxVulnerability;
   }
 
   public int[][] getFrontLine() {
@@ -134,10 +158,26 @@ public class InfluenceMap {
     }
 
     // calculate influence maps
+    float maxT = 0;
+    float maxV = 0;
     for (int j = 0; j < h; j++) {
       for (int i = 0; i < w; i++) {
         influenceYMap[i][j] = yInfluenceMap[i][j] - oInfluenceMap[i][j];
         influenceOMap[i][j] = oInfluenceMap[i][j] - yInfluenceMap[i][j];
+        float tension = yInfluenceMap[i][j] + oInfluenceMap[i][j];
+        tensionMap[i][j] = tension;
+        if (tension > maxT) {
+          maxT = tension;
+          maxTension[0] = i;
+          maxTension[1] = j;
+        }
+        float vulnerability = tensionMap[i][j] - Math.abs(influenceYMap[i][j]);
+        vulnerabilityMap[i][j] = vulnerability;
+        if (vulnerability > maxV) {
+          maxV = vulnerability;
+          maxVulnerability[0] = i;
+          maxVulnerability[1] = j;
+        }
       }
     }
     for (int j = 1; j < h - 1; j++) {
