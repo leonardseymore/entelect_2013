@@ -6,12 +6,21 @@ import za.co.entelect.competition.domain.Direction
 import za.co.entelect.competition.domain.Ids
 import za.co.entelect.competition.domain.Player
 import za.co.entelect.competition.domain.Tank
+import za.co.entelect.competition.groovy.GameFactory
 
 w = 20
 h = 20
 
-def getSize() {
-  return [w * 5, h * 5] as int[]
+def getW() {
+  return w
+}
+
+def getH() {
+  return h
+}
+
+def getType() {
+  return GameFactory.Type.By5
 }
 
 def getMap() {

@@ -12,10 +12,13 @@ import javax.script.ScriptException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class GameFactory {
+
+  public enum Type {
+    By5, Normal
+  }
+
   public static GameState fromFile(String filename) throws ScriptException, NoSuchMethodException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(GameFactory.class.getResourceAsStream(filename)));
     StringBuilder builder = new StringBuilder();
@@ -36,11 +39,18 @@ public class GameFactory {
     ScriptEngine scriptEngine = sem.getEngineByName("groovy");
     scriptEngine.eval(script);
     Invocable inv = (Invocable) scriptEngine;
-    int[] size = (int[]) inv.invokeFunction("getSize");
-    int w = size[0];
-    int h = size[1];
+    int w = (int) inv.invokeFunction("getW");
+    int h = (int) inv.invokeFunction("getH");
     String mapDesc = (String) inv.invokeFunction("getMap");
-    Map map = parseMap(mapDesc, w, h);
+    Type type = (Type) inv.invokeFunction("getType");
+    Map map;
+    if (type == Type.By5) {
+      w *= 5;
+      h *= 5;
+      map = parseMapBy5(mapDesc, w, h);
+    } else {
+      map = parseMap(mapDesc, w, h);
+    }
 
     Point ybase = map.getyBase();
     Point obase = map.getoBase();
@@ -49,8 +59,6 @@ public class GameFactory {
     gameState.setWalls(map.walls);
     gameState.setYourBase(ybase.getX(), ybase.getY());
     gameState.setOpponentBase(obase.getX(), obase.getY());
-
-
     Point tank1Pos = map.getTank1Pos();
     if (tank1Pos != null) {
       Tank tank1 = (Tank) inv.invokeFunction("getTank1");
@@ -82,7 +90,7 @@ public class GameFactory {
     return gameState;
   }
 
-  public static Map parseMap(String mapDesc, int w, int h) {
+  public static Map parseMapBy5(String mapDesc, int w, int h) {
     Map map = new Map(w, h);
     String[] lines = mapDesc.split("\n");
 
@@ -100,6 +108,43 @@ public class GameFactory {
                 map.addWall(ix, jy);
               }
             }
+            break;
+          case 'y':
+            map.setyBase(centerPoint);
+            break;
+          case 'o':
+            map.setoBase(centerPoint);
+            break;
+          case '1':
+            map.setTank1Pos(centerPoint);
+            break;
+          case '2':
+            map.setTank2Pos(centerPoint);
+            break;
+          case '3':
+            map.setTank3Pos(centerPoint);
+            break;
+          case '4':
+            map.setTank4Pos(centerPoint);
+            break;
+        }
+      }
+    }
+    return map;
+  }
+
+  public static Map parseMap(String mapDesc, int w, int h) {
+    Map map = new Map(w, h);
+    String[] lines = mapDesc.split("\n");
+
+    for (int j = 0; j < lines.length; j++) {
+      String line = lines[j];
+      for (int i = 0; i < line.length(); i++) {
+        Point centerPoint = new Point(i, j);
+        char c = line.charAt(i);
+        switch (c) {
+          case 'w':
+            map.addWall(i, j);
             break;
           case 'y':
             map.setyBase(centerPoint);

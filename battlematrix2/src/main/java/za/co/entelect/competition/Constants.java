@@ -27,6 +27,6 @@ public class Constants {
 
   public static final float TANK_INFLUENCE = 5f;
   public static final float BULLET_INFLUENCE = 2f;
-  public static final int FIRE_RANGE = 16;
+  public static final int FIRE_RANGE = 100;
 }
 

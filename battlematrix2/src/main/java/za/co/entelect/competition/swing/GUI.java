@@ -44,7 +44,7 @@ public class GUI extends JFrame implements Runnable {
   private Map map = Map.USER;
   private Font arial = new Font("Arial", Font.BOLD, 10);
 
-  private int frameSleep = 10;
+  private int frameSleep = 33;
   private int frameSleepMultiplier = 1;
 
   public GUI(GameState gameState, double zoomFactor) {

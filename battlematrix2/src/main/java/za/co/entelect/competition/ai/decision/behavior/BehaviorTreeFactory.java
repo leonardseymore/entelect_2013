@@ -6,15 +6,37 @@ public class BehaviorTreeFactory {
 
   public static final Logger logger = Logger.getLogger(BehaviorTreeFactory.class);
 
+  private static Task avoidFire;
+  static {
+    avoidFire = new Sequence()
+      .a(new InFireLine())
+      .a(new SetClosestBullet())
+      .a(
+        new Selector()
+          .a(
+            new Sequence()
+              .a(new InLine())
+              .a(new LookAt())
+              .a(new Fire())
+          )
+          .a(new DodgeBullet())
+        // TODO: FIRE BACK
+      );
+    logger.debug("AvoidFire behavior branch\n" + avoidFire.toDot("AvoidFire"));
+  }
+
   private static Task defendBase;
   static {
-    defendBase = new MoveToClosest();
+    defendBase = new Selector()
+      .a(avoidFire)
+      .a(new MoveToClosest());
     logger.debug("DefendBase behavior tree\n" + defendBase.toDot("DefendBase"));
   }
 
   private static Task attackBase;
   static {
     attackBase = new Selector()
+      .a(avoidFire)
       .a(
         new Sequence()
           .a(new CanFireAt())
@@ -34,6 +56,7 @@ public class BehaviorTreeFactory {
   private static Task attackTank;
   static {
     attackTank = new Selector()
+      .a(avoidFire)
       .a(
         new Sequence()
           .a(new CanFireAt())
