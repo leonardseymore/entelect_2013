@@ -72,12 +72,36 @@ public class TacticsManager {
     }
     return closestTank;
   }
+
+  private Tank getClosestEnemyTank(Entity target) {
+    Map<String, Tank> otanks = gameState.getOpponentTanks();
+    Tank closestTank = null;
+    int closestDist = 0;
+    for (Tank ot : otanks.values()) {
+      int dist = Util.manhattanDist(ot, target);
+      if (closestTank == null || dist < closestDist) {
+        closestTank = ot;
+        closestDist = dist;
+      }
+    }
+    return closestTank;
+  }
+
   private Tank getOtherTank(Tank tank) {
     Map<String, Tank> ytanks = gameState.getYourTanks();
     if (tank.getId() == Ids.Y1) {
       return ytanks.get(Ids.Y2);
     } else {
       return ytanks.get(Ids.Y1);
+    }
+  }
+
+  private Tank getOtherEnemyTank(Tank tank) {
+    Map<String, Tank> otanks = gameState.getOpponentTanks();
+    if (tank.getId() == Ids.O1) {
+      return otanks.get(Ids.O2);
+    } else {
+      return otanks.get(Ids.O1);
     }
   }
 
@@ -110,18 +134,23 @@ public class TacticsManager {
   }
 
   private void attackBothTanks() {
-    Map<String, Tank> otanks = gameState.getOpponentTanks();
-    Tank o1 = otanks.get(Ids.O1);
-    Tank closestTank = getClosestTank(o1);
-    closestTank.getBlackboard().setTarget(o1);
-    Task y1tree = BehaviorTreeFactory.attackTank;
-    y1tree.run(gameState, closestTank);
-
-    Tank o2 = otanks.get(Ids.O2);
-    Tank otherTank = getOtherTank(closestTank);
-    otherTank.getBlackboard().setTarget(o2);
-    Task y2tree = BehaviorTreeFactory.attackTank;
-    y2tree.run(gameState, otherTank);
+    Map<String, Tank> ytanks = gameState.getYourTanks();
+    Tank y1 = ytanks.get(Ids.Y1);
+    Tank y2 = ytanks.get(Ids.Y2);
+    Tank o1 = getClosestEnemyTank(y1);
+    Tank o2 = getClosestEnemyTank(y2);
+    if (o1.getId().equals(o2.getId())) {
+      if (Util.manhattanDist(y1, o1) > Util.manhattanDist(y2, o2)) {
+        attackTank(y2, o1);
+        attackTank(y1, o2);
+      } else {
+        attackTank(y1, o1);
+        attackTank(y2, o2);
+      }
+    } else {
+      attackTank(y1, o1);
+      attackTank(y2, o2);
+    }
   }
 
   private Tank attackTank(Tank ot) {
@@ -154,11 +183,7 @@ public class TacticsManager {
       Tank yt = attackTank(threats.get(0));
       defendBase(getOtherTank(yt));
     } else {
-      Tank yt = defendBaseWithClosestTank();
-      // TODO: pick closest tank
-      Tank ot = gameState.getOpponentTanks().get(Ids.O1);
-      Tank y2 = getOtherTank(yt);
-      attackTank(ot);
+      attackBothTanks();
     }
   }
 

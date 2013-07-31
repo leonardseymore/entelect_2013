@@ -121,6 +121,9 @@ public class InfluenceMapRenderer implements GameElementVisitor {
         g.fillRect(x, y, 1, 1);
       }
     }
+    int[] maxVulnerability = imap.getMaxVulnerability();
+    g.setColor(Color.YELLOW);
+    g.fillRect(maxVulnerability[0], maxVulnerability[1], 1, 1);
   }
 
   @Override

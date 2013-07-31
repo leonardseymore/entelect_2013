@@ -50,7 +50,6 @@ public class Game {
     tacticsManager.update();
     for (Tank tank : gameState.getTanks().values()) {
       tank.performAction(gameState);
-      // TODO: do ai
     }
   }
 
