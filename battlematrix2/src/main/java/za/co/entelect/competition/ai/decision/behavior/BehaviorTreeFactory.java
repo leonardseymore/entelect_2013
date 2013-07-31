@@ -52,6 +52,7 @@ public class BehaviorTreeFactory {
           .a(
             new Sequence()
               .a(new DodgeBullet())
+              .a(new IsSafeMove())
               .a(new Move())
           )
           // Fire at bullet
