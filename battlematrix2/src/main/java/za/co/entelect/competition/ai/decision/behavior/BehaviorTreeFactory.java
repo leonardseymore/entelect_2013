@@ -48,15 +48,31 @@ public class BehaviorTreeFactory {
       .a(new SetClosestBullet())
       .a(
         new Selector()
+          // Move out of the way
+          .a(
+            new Sequence()
+              .a(new DodgeBullet())
+              .a(new Move())
+          )
+          // Fire at bullet
           .a(
             new Sequence()
               .a(new IsFurtherThan(Constants.MIN_TIME_TO_FACE_AND_DESTROY_INLINE_BULLET))
               .a(new InLine())
               .a(new Inverse(new LookAt()))
           )
-          .a(fireAt)
-          .a(new DodgeBullet())
-        // TODO: FIRE BACK
+          .a(
+            new Sequence()
+              .a(new CanFireAt())
+              .a(new Fire())
+          )
+          // TODO: can escape through the wall?
+          // Spite by firing at the tank that owns the bullet
+          .a(
+            new Sequence()
+              .a(new SetTargetFromBullet())
+              .a(fireAt)
+          )
       );
     logger.debug("AvoidFire behavior branch\n" + avoidFire.toDot("AvoidFire"));
   }

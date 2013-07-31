@@ -1,5 +1,6 @@
 package za.co.entelect.competition.ai.decision.behavior;
 
+import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.RayCast;
 import za.co.entelect.competition.Util;
 import za.co.entelect.competition.ai.blackboard.Blackboard;
@@ -20,7 +21,7 @@ public class InFireLine extends Task {
       int x = bullet.getX();
       int y = bullet.getY();
 
-      if (RayCast.castRay(gameState, new RayCast.RayCaseTestTarget(tank), direction, x, y)) {
+      if (RayCast.castRay(gameState, new RayCast.RayCaseTestTarget(tank), direction, x, y, Constants.FIRE_RANGE)) {
         bullets.add(bullet);
       }
     }

@@ -15,19 +15,63 @@ public class DodgeBullet extends Task {
     int bulletY = closestBullet.getY();
     Direction direction = closestBullet.getDirection();
     if (direction == Direction.UP || direction == Direction.DOWN) {
-      if (tankX <= bulletX) {
-        tank.setNextAction(TankAction.LEFT);
+      if (bulletX < tankX) {
+        if (bulletX == tankX + 2) {
+          if (gameState.canMoveInDirection(tank, Direction.RIGHT)
+            && gameState.canTankBeMovedTo(tank, tankX + 2, tankY)) {
+            blackboard.setNextTankAction(TankAction.RIGHT);
+            return true;
+          }
+        } else if (bulletX == tankX + 1) {
+          if (gameState.canMoveInDirection(tank, Direction.RIGHT)) {
+            blackboard.setNextTankAction(TankAction.RIGHT);
+            return true;
+          }
+        }
       } else {
-        tank.setNextAction(TankAction.RIGHT);
+        if (bulletX == tankX - 2) {
+          if (gameState.canMoveInDirection(tank, Direction.LEFT)
+            && gameState.canTankBeMovedTo(tank, tankX - 2, tankY)) {
+            blackboard.setNextTankAction(TankAction.LEFT);
+            return true;
+          }
+        } else if (bulletX == tankX - 1) {
+          if (gameState.canMoveInDirection(tank, Direction.LEFT)) {
+            blackboard.setNextTankAction(TankAction.LEFT);
+            return true;
+          }
+        }
       }
     } else {
-      if (tankY <= bulletY) {
-        tank.setNextAction(TankAction.UP);
+      if (bulletY < tankY) {
+        if (bulletY == tankY + 2) {
+          if (gameState.canMoveInDirection(tank, Direction.DOWN)
+            && gameState.canTankBeMovedTo(tank, tankX, tankY + 2)) {
+            blackboard.setNextTankAction(TankAction.DOWN);
+            return true;
+          }
+        } else if (bulletY == tankY + 1) {
+          if (gameState.canMoveInDirection(tank, Direction.DOWN)) {
+            blackboard.setNextTankAction(TankAction.DOWN);
+            return true;
+          }
+        }
       } else {
-        tank.setNextAction(TankAction.DOWN);
+        if (bulletY == tankY - 2) {
+          if (gameState.canMoveInDirection(tank, Direction.UP)
+            && gameState.canTankBeMovedTo(tank, tankX, tankY - 2)) {
+            blackboard.setNextTankAction(TankAction.UP);
+            return true;
+          }
+        } else if (bulletY == tankY - 1) {
+          if (gameState.canMoveInDirection(tank, Direction.UP)) {
+            blackboard.setNextTankAction(TankAction.UP);
+            return true;
+          }
+        }
       }
     }
-    return true;
+    return false;
   }
 
   @Override

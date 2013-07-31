@@ -24,11 +24,11 @@ public class TacticsManager {
     Map<String, Tank> yTanks = gameState.getYourTanks();
     Map<String, Tank> oTanks = gameState.getOpponentTanks();
 
-    if (oTanks.size() == 0) {
+    if (yTanks.size() == 0) {
+      // cry silently
+    } else if (oTanks.size() == 0) {
       strategy = Strategy.FATALITY;
       fatality();
-    } else if (yTanks.size() == 0) {
-      // cry silently
     } else if (yTanks.size() > oTanks.size()) {
       strategy = Strategy.AGGRESSIVE;
       aggressive();

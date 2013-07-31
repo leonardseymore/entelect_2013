@@ -28,10 +28,10 @@ public class RayCast {
     }
   }
   
-  public static boolean castRay(GameState gameState, RayCastTest rayCastTest, Direction direction, int startX, int startY) {
+  public static boolean castRay(GameState gameState, RayCastTest rayCastTest, Direction direction, int startX, int startY, int dist) {
     switch (direction) {
       case UP:
-        for (int i = startY - 1; i > startY - Constants.FIRE_RANGE && i >= 0; i--) {
+        for (int i = startY - 1; i > startY - dist && i >= 0; i--) {
           GameElement gameElement = gameState.getElementAt(startX, i);
           if (gameElement != null) {
             Entity entity = gameState.getEntityAt(startX, i);
@@ -40,7 +40,7 @@ public class RayCast {
         }
         break;
       case RIGHT:
-        for (int i = startX + 1; i < startX + Constants.FIRE_RANGE && i < gameState.getW() - 1; i++) {
+        for (int i = startX + 1; i < startX + dist && i < gameState.getW() - 1; i++) {
           GameElement gameElement = gameState.getElementAt(i, startY);
           if (gameElement != null) {
             Entity entity = gameState.getEntityAt(i, startY);
@@ -49,7 +49,7 @@ public class RayCast {
         }
         break;
       case DOWN:
-        for (int i = startY + 1; i < startY + Constants.FIRE_RANGE && i < gameState.getH() - 1; i++) {
+        for (int i = startY + 1; i < startY + dist && i < gameState.getH() - 1; i++) {
           GameElement gameElement = gameState.getElementAt(startX, i);
           if (gameElement != null) {
             Entity entity = gameState.getEntityAt(startX, i);
@@ -58,7 +58,7 @@ public class RayCast {
         }
         break;
       case LEFT:
-        for (int i = startX - 1; i > startX - Constants.FIRE_RANGE && i > 0; i--) {
+        for (int i = startX - 1; i > startX - dist && i > 0; i--) {
           GameElement gameElement = gameState.getElementAt(i, startY);
           if (gameElement != null) {
             Entity entity = gameState.getEntityAt(i, startY);
@@ -70,10 +70,10 @@ public class RayCast {
     return false;
   }
 
-  public static boolean castRay(GameState gameState, Rectangle rect, Direction direction, int startX, int startY) {
+  public static boolean castRay(GameState gameState, Rectangle rect, Direction direction, int startX, int startY, int dist) {
     switch (direction) {
       case UP:
-        for (int i = startY - 1; i > startY - Constants.FIRE_RANGE && i >= 0; i--) {
+        for (int i = startY - 1; i > startY - dist && i >= 0; i--) {
           GameElement gameElement = gameState.getElementAt(startX, i);
           if (rect.contains(startX, i)) {
             return true;
@@ -84,7 +84,7 @@ public class RayCast {
         }
         break;
       case RIGHT:
-        for (int i = startX + 1; i < startX + Constants.FIRE_RANGE && i < gameState.getW() - 1; i++) {
+        for (int i = startX + 1; i < startX + dist && i < gameState.getW() - 1; i++) {
           GameElement gameElement = gameState.getElementAt(i, startY);
           if (rect.contains(i, startY)) {
             return true;
@@ -95,7 +95,7 @@ public class RayCast {
         }
         break;
       case DOWN:
-        for (int i = startY + 1; i < startY + Constants.FIRE_RANGE && i < gameState.getH() - 1; i++) {
+        for (int i = startY + 1; i < startY + dist && i < gameState.getH() - 1; i++) {
           GameElement gameElement = gameState.getElementAt(startX, i);
           if (rect.contains(startX, i)) {
             return true;
@@ -106,7 +106,7 @@ public class RayCast {
         }
         break;
       case LEFT:
-        for (int i = startX - 1; i > startX - Constants.FIRE_RANGE && i > 0; i--) {
+        for (int i = startX - 1; i > startX - dist && i > 0; i--) {
           GameElement gameElement = gameState.getElementAt(i, startY);
           if (rect.contains(i, startY)) {
             return true;

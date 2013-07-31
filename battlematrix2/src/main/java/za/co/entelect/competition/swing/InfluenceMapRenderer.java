@@ -112,7 +112,10 @@ public class InfluenceMapRenderer implements GameElementVisitor {
             break;
         }
         if (frontLine[x][y] == 1) {
-          color = new Color(255, 255, 255, 80);
+          color = new Color(179, 246, 64, 80);
+          if ((x + y) % 2 == 0) {
+            color = color.darker();
+          }
         }
         g.setColor(color);
         g.fillRect(x, y, 1, 1);

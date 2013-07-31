@@ -1,5 +1,6 @@
 package za.co.entelect.competition.ai.decision.behavior;
 
+import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.RayCast;
 import za.co.entelect.competition.ai.blackboard.Blackboard;
 import za.co.entelect.competition.domain.*;
@@ -32,7 +33,7 @@ public class IsSafeMove extends Task {
       int x = bullet.getX();
       int y = bullet.getY();
 
-      if (RayCast.castRay(gameState, rect, direction, x, y)) {
+      if (RayCast.castRay(gameState, rect, direction, x, y, Constants.FIRE_RANGE)) {
         return false;
       }
     }
