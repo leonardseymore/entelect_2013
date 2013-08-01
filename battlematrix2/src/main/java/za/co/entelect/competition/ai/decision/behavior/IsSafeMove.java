@@ -37,6 +37,14 @@ public class IsSafeMove extends Task {
         return false;
       }
     }
+
+    Base base = tank.isYourTank() ? gameState.getYourBase() : gameState.getOpponentBase();
+    if (rect.contains(base.getX(), base.getY())) {
+      return false;
+    }
+
+    // TODO: don't move directly infront of an enemy tank, maybe include in pathfinding
+
     return true;
   }
 

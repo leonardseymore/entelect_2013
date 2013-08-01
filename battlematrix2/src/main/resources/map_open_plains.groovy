@@ -26,22 +26,22 @@ def getType() {
 def getMap() {
   return """wwwwwwwwwwwwww o www
 w            wwwww w
-w  w          w    w
-w  w         www   w
-w  wwwwww  w  w3   w
-w          w       w
-www wwwwwwwwwwww www
-w             4    w
-w  wwww w  w    w  w
-w  w    w  w    w  w
-w  w 1  w  w    w  w
-w  w    w  w wwww  w
 w                  w
-www wwwwwwwwwwww www
-w       w          w
-w    w  w  wwwwww  w
-w   www         w  w
-w    w 2        w  w
+w    4             w
+w                  w
+w             3    w
+w                  w
+w                  w
+w                  w
+w                  w
+w                  w
+w                  w
+w                  w
+w                  w
+w                  w
+w   1              w
+w                  w
+w            2     w
 w wwwww            w
 www y wwwwwwwwwwwwww"""
 }

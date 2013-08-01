@@ -15,14 +15,16 @@ public class TacticsManager {
 
   private GameState gameState;
   private Strategy strategy;
+  private Player player;
 
-  public TacticsManager(GameState gameState) {
+  public TacticsManager(GameState gameState, Player player) {
     this.gameState = gameState;
+    this.player = player;
   }
 
   public void update() {
-    Map<String, Tank> yTanks = gameState.getYourTanks();
-    Map<String, Tank> oTanks = gameState.getOpponentTanks();
+    Map<String, Tank> yTanks = gameState.getPlayerTanks(player);
+    Map<String, Tank> oTanks = gameState.getEnemyTanks(player);
 
     if (yTanks.size() == 0) {
       // cry silently
@@ -47,12 +49,12 @@ public class TacticsManager {
   }
 
   private List<Tank> getYbaseThreats() {
-    Map<String, Tank> oTanks = gameState.getOpponentTanks();
+    Map<String, Tank> oTanks = gameState.getEnemyTanks(player);
     DirichletDomains dirichletDomains = gameState.getDirichletDomains();
     List<Tank> ybaseThreats = new ArrayList<>();
     for (Tank ot : oTanks.values()) {
       Base base = dirichletDomains.getBase(ot);
-      if (base != null && base.isYourBase()) {
+      if (base != null && base.getOwner() == player) {
         ybaseThreats.add(ot);
       }
     }
@@ -60,7 +62,7 @@ public class TacticsManager {
   }
 
   private Tank getClosestTank(Entity target) {
-    Map<String, Tank> ytanks = gameState.getYourTanks();
+    Map<String, Tank> ytanks = gameState.getPlayerTanks(player);
     Tank closestTank = null;
     int closestDist = 0;
     for (Tank yt : ytanks.values()) {
@@ -74,7 +76,7 @@ public class TacticsManager {
   }
 
   private Tank getClosestEnemyTank(Entity target) {
-    Map<String, Tank> otanks = gameState.getOpponentTanks();
+    Map<String, Tank> otanks = gameState.getEnemyTanks(player);
     Tank closestTank = null;
     int closestDist = 0;
     for (Tank ot : otanks.values()) {
@@ -88,56 +90,75 @@ public class TacticsManager {
   }
 
   private Tank getOtherTank(Tank tank) {
-    Map<String, Tank> ytanks = gameState.getYourTanks();
-    if (tank.getId() == Ids.Y1) {
-      return ytanks.get(Ids.Y2);
+    Map<String, Tank> ytanks = gameState.getPlayerTanks(player);
+    if (player == Player.YOU) {
+      if (tank.getId() == Ids.Y1) {
+        return ytanks.get(Ids.Y2);
+      } else {
+        return ytanks.get(Ids.Y1);
+      }
     } else {
-      return ytanks.get(Ids.Y1);
+      if (tank.getId() == Ids.O1) {
+        return ytanks.get(Ids.O2);
+      } else {
+        return ytanks.get(Ids.O1);
+      }
     }
   }
 
   private Tank getOtherEnemyTank(Tank tank) {
-    Map<String, Tank> otanks = gameState.getOpponentTanks();
-    if (tank.getId() == Ids.O1) {
-      return otanks.get(Ids.O2);
+    Map<String, Tank> otanks = gameState.getEnemyTanks(player);
+    if (player == Player.OPPONENT) {
+      if (tank.getId() == Ids.Y1) {
+        return otanks.get(Ids.Y2);
+      } else {
+        return otanks.get(Ids.Y1);
+      }
     } else {
-      return otanks.get(Ids.O1);
+      if (tank.getId() == Ids.O1) {
+        return otanks.get(Ids.O2);
+      } else {
+        return otanks.get(Ids.O1);
+      }
     }
   }
 
   private Tank defendBaseWithClosestTank() {
-    Base ybase = gameState.getYourBase();
+    Base ybase = gameState.getPlayerBase(player);
     Tank closestTank = getClosestTank(ybase);
     defendBase(closestTank);
     return closestTank;
   }
 
   private void defendBase(Tank yt) {
-    Base ybase = gameState.getYourBase();
+    Base ybase = gameState.getPlayerBase(player);
     yt.getBlackboard().setTarget(ybase);
     Task tree = BehaviorTreeFactory.defendBase;
     tree.run(gameState, yt);
   }
 
   private Tank attackBaseWithClosestTank() {
-    Base obase = gameState.getOpponentBase();
+    Base obase = gameState.getEnemyBase(player);
     Tank closestTank = getClosestTank(obase);
     attackBase(closestTank);
     return closestTank;
   }
 
   private void attackBase(Tank yt) {
-    Base obase = gameState.getOpponentBase();
+    Base obase = gameState.getEnemyBase(player);
     yt.getBlackboard().setTarget(obase);
     Task tree = BehaviorTreeFactory.attackBase;
     tree.run(gameState, yt);
   }
 
   private void attackBothTanks() {
-    Map<String, Tank> ytanks = gameState.getYourTanks();
-    Tank y1 = ytanks.get(Ids.Y1);
-    Tank y2 = ytanks.get(Ids.Y2);
+    Map<String, Tank> ytanks = gameState.getPlayerTanks(player);
+    Iterator<Tank> tankIterator = ytanks.values().iterator();
+    Tank y1 = tankIterator.next();
+    Tank y2 = tankIterator.next();
     Tank o1 = getClosestEnemyTank(y1);
+
+    // TODO: try to stick with your target to avoid ... the wiggles
     Tank o2 = getClosestEnemyTank(y2);
     if (o1.getId().equals(o2.getId())) {
       if (Util.manhattanDist(y1, o1) > Util.manhattanDist(y2, o2)) {
@@ -170,7 +191,7 @@ public class TacticsManager {
   }
 
   private void aggressive() {
-    Tank ot = gameState.getOpponentTanks().values().iterator().next();
+    Tank ot = gameState.getEnemyTanks(player).values().iterator().next();
     Tank yt = attackTank(ot);
     attackBase(getOtherTank(yt));
   }
@@ -188,7 +209,7 @@ public class TacticsManager {
   }
 
   private void weary() {
-    Tank ot = gameState.getOpponentTanks().values().iterator().next();
+    Tank ot = gameState.getEnemyTanks(player).values().iterator().next();
     attackTank(ot);
   }
 
@@ -200,6 +221,15 @@ public class TacticsManager {
   public String toString() {
     final StringBuilder sb = new StringBuilder("{");
     sb.append("strategy=").append(strategy);
+
+    for (Tank tank : gameState.getTanks().values()) {
+      sb.append(", ");
+      Entity target = tank.getBlackboard().getTarget();
+      sb.append(tank.getId())
+        .append("->")
+        .append(target == null ? null : target.getId());
+    }
+
     sb.append('}');
     return sb.toString();
   }

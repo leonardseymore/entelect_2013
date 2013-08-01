@@ -24,40 +24,46 @@ def getType() {
 }
 
 def getMap() {
-  return """wwwwwwwwwwwwww o www
-w            wwwww w
-w  w          w    w
-w  w         www   w
-w  wwwwww  w  w3   w
+  return """w3      w o w     4w
+w       wwwww      w
+w  w               w
+w  w               w
+w  wwwwww  w       w
 w          w       w
-www wwwwwwwwwwww www
-w             4    w
-w  wwww w  w    w  w
-w  w    w  w    w  w
-w  w 1  w  w    w  w
-w  w    w  w wwww  w
+www wwww wwwwwww www
 w                  w
-www wwwwwwwwwwww www
+w  wwww w       w  w
+w  w    w  www  w  w
+w  w  www  w    w  w
+w  w       w wwww  w
+w                  w
+www wwwwwww wwww www
 w       w          w
-w    w  w  wwwwww  w
-w   www         w  w
-w    w 2        w  w
-w wwwww            w
-www y wwwwwwwwwwwwww"""
+w       w  wwwwww  w
+w               w  w
+w               w  w
+w       wwwww      w
+        w1y w  2    """
 }
 
+t1 = new Tank(Ids.Y1, Player.YOU, Direction.UP, new SquadTankOperator())
+t2 = new Tank(Ids.Y2, Player.YOU, Direction.UP, new SquadTankOperator())
+t3 = new Tank(Ids.O1, Player.OPPONENT, Direction.DOWN, new SquadTankOperator())
+t4 = new Tank(Ids.O2, Player.OPPONENT, Direction.RIGHT, new SquadTankOperator())
+
 def getTank1() {
-  return new Tank(Ids.Y1, Player.YOU, Direction.UP, new SquadTankOperator())
+  return t1
 }
 
 def getTank2() {
-  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new SquadTankOperator())
+  return t2
 }
 
 def getTank3() {
-  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new KeyboardTankOperator())
+  t3.getBlackboard().setTarget(t2)
+  return t3
 }
 
 def getTank4() {
-  return new Tank(Ids.O2, Player.OPPONENT, Direction.LEFT, new KeyboardTankOperator())
+  return t4
 }

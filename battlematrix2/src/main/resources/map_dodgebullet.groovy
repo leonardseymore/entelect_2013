@@ -37,8 +37,8 @@ w                                      w
 w                                      w
 w                                      w
 w                                      w
-w        1                             w
-w                             3        w
+w   1                                  w
+w                                   3  w
 w                                      w
 w                                      w
 w                                      w

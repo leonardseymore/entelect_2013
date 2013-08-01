@@ -28,6 +28,8 @@ public class Constants {
   public static final float TANK_INFLUENCE = 5f;
   public static final float BULLET_INFLUENCE = 0f;
   public static final int FIRE_RANGE = 16;
+  public static final int FRIENDLY_FIRE_RANGE = 20;
   public static final int MIN_TIME_TO_FACE_AND_DESTROY_INLINE_BULLET = 4;
+  public static final int PATH_FIND_TANK_DIST = 10;
 }
 

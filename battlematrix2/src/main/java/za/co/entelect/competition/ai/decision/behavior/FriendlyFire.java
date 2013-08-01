@@ -35,7 +35,7 @@ public class FriendlyFire extends Task {
 
     int x = tank.turretPos()[0];
     int y = tank.turretPos()[1];
-    return RayCast.castRay(gameState, new RayCaseTestFriendlyFire(tank), direction, x, y, Integer.MAX_VALUE);
+    return RayCast.castRay(gameState, new RayCaseTestFriendlyFire(tank), direction, x, y, Constants.FRIENDLY_FIRE_RANGE);
   }
 
   @Override

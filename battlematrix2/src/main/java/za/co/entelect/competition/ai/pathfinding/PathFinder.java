@@ -98,13 +98,13 @@ public class PathFinder {
   }
 
   private static boolean canTankBeMovedTo(GameState gameState, Tank tank, int x, int y) {
-    Walls walls = gameState.getWalls();
     for (int j = y - Constants.TANK_HALF_SIZE; j <= y + Constants.TANK_HALF_SIZE; j++) {
       for (int i = x - Constants.TANK_HALF_SIZE; i <= x + Constants.TANK_HALF_SIZE; i++) {
         if (!gameState.isInBounds(i, j)) {
           return false;
         }
-        if (walls.hasWall(i, j)) {
+
+        if (gameState.getWalls().hasWall(i, j)) {
           return false;
         }
       }

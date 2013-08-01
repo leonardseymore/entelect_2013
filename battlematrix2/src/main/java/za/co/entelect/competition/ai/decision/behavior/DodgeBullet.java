@@ -16,26 +16,26 @@ public class DodgeBullet extends Task {
     Direction direction = closestBullet.getDirection();
     if (direction == Direction.UP || direction == Direction.DOWN) {
       if (bulletX < tankX) {
-        if (bulletX == tankX + 2) {
+        if (bulletX == tankX - 2) {
           if (gameState.canMoveInDirection(tank, Direction.RIGHT)
-            && gameState.canTankBeMovedTo(tank, tankX + 2, tankY)) {
+            && gameState.canTankBeMovedTo(tank, tankX - 2, tankY)) {
             blackboard.setNextTankAction(TankAction.RIGHT);
             return true;
           }
-        } else if (bulletX == tankX + 1) {
+        } else if (bulletX == tankX - 1) {
           if (gameState.canMoveInDirection(tank, Direction.RIGHT)) {
             blackboard.setNextTankAction(TankAction.RIGHT);
             return true;
           }
         }
       } else {
-        if (bulletX == tankX - 2) {
+        if (bulletX == tankX + 2) {
           if (gameState.canMoveInDirection(tank, Direction.LEFT)
-            && gameState.canTankBeMovedTo(tank, tankX - 2, tankY)) {
+            && gameState.canTankBeMovedTo(tank, tankX + 2, tankY)) {
             blackboard.setNextTankAction(TankAction.LEFT);
             return true;
           }
-        } else if (bulletX == tankX - 1) {
+        } else if (bulletX == tankX + 1) {
           if (gameState.canMoveInDirection(tank, Direction.LEFT)) {
             blackboard.setNextTankAction(TankAction.LEFT);
             return true;
@@ -44,26 +44,26 @@ public class DodgeBullet extends Task {
       }
     } else {
       if (bulletY < tankY) {
-        if (bulletY == tankY + 2) {
+        if (bulletY == tankY - 2) {
           if (gameState.canMoveInDirection(tank, Direction.DOWN)
-            && gameState.canTankBeMovedTo(tank, tankX, tankY + 2)) {
+            && gameState.canTankBeMovedTo(tank, tankX, tankY - 2)) {
             blackboard.setNextTankAction(TankAction.DOWN);
             return true;
           }
-        } else if (bulletY == tankY + 1) {
+        } else if (bulletY == tankY - 1) {
           if (gameState.canMoveInDirection(tank, Direction.DOWN)) {
             blackboard.setNextTankAction(TankAction.DOWN);
             return true;
           }
         }
       } else {
-        if (bulletY == tankY - 2) {
+        if (bulletY == tankY + 2) {
           if (gameState.canMoveInDirection(tank, Direction.UP)
-            && gameState.canTankBeMovedTo(tank, tankX, tankY - 2)) {
+            && gameState.canTankBeMovedTo(tank, tankX, tankY + 2)) {
             blackboard.setNextTankAction(TankAction.UP);
             return true;
           }
-        } else if (bulletY == tankY - 1) {
+        } else if (bulletY == tankY + 1) {
           if (gameState.canMoveInDirection(tank, Direction.UP)) {
             blackboard.setNextTankAction(TankAction.UP);
             return true;

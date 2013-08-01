@@ -11,17 +11,19 @@ public class Game {
   private static final Logger logger = Logger.getLogger(Game.class);
 
   private GameState gameState;
-  private TacticsManager tacticsManager;
+  private TacticsManager ytacticsManager;
+  private TacticsManager otacticsManager;
 
   public Game(GameState gameState) {
     this.gameState = gameState;
     gameState.regenerateDirichletDomains();
     gameState.updateInfluenceMap();
-    this.tacticsManager = new TacticsManager(gameState);
+    this.ytacticsManager = new TacticsManager(gameState, Player.YOU);
+    this.otacticsManager = new TacticsManager(gameState, Player.OPPONENT);
   }
 
-  public TacticsManager getTacticsManager() {
-    return tacticsManager;
+  public TacticsManager getYtacticsManager() {
+    return ytacticsManager;
   }
 
   /**
@@ -47,7 +49,11 @@ public class Game {
   }
 
   private void performAi() {
-    tacticsManager.update();
+    for (Tank tank : gameState.getTanks().values()) {
+      tank.getBlackboard().reset();
+    }
+    otacticsManager.update();
+    ytacticsManager.update();
     for (Tank tank : gameState.getTanks().values()) {
       tank.performAction(gameState);
     }

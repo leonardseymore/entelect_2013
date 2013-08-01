@@ -6,7 +6,7 @@ import za.co.entelect.competition.domain.TankAction;
 
 public class Fire extends Task {
   public boolean run(GameState gameState, Tank tank) {
-    tank.setNextAction(TankAction.FIRE);
+    tank.getBlackboard().setNextOrder(TankAction.FIRE);
     return true;
   }
 

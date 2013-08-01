@@ -9,10 +9,20 @@ public class Blackboard {
 
   private TankAction nextTankAction;
   private Entity target;
-  private Collection<Bullet> threatBullets = new ArrayList<>();
+  private Collection<Bullet> threatBullets;
   private Trackable moveToPos;
+  private TankAction nextOrder;
 
   public Blackboard() {
+    reset();
+  }
+
+  public void reset() {
+    nextTankAction = null;
+    target = null;
+    threatBullets = new ArrayList<>();
+    moveToPos = null;
+    nextOrder = null;
   }
 
   public Entity getTarget() {
@@ -45,5 +55,13 @@ public class Blackboard {
 
   public void setMoveToPos(Trackable moveToPos) {
     this.moveToPos = moveToPos;
+  }
+
+  public void setNextOrder(TankAction nextOrder) {
+    this.nextOrder = nextOrder;
+  }
+
+  public TankAction getNextOrder() {
+    return nextOrder;
   }
 }

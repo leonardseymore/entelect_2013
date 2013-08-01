@@ -4,8 +4,6 @@ import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.domain.Game;
 import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Ids;
-import za.co.entelect.competition.domain.Tank;
 
 import javax.swing.*;
 import java.awt.*;
@@ -174,11 +172,11 @@ public class GUI extends JFrame implements Runnable {
           int x = 10;
           int y = 10;
           g.drawString("p=pause, u=user map (default), c=clearance, d=dirichlet, i=influence", x, y += 12);
-          g.drawString(game.getTacticsManager().toString(), x, y += 12);
+          g.drawString(game.getYtacticsManager().toString(), x, y += 12);
         }
 
         if (gameState.isGameOver()) {
-          g.setColor(new Color(123,123,123,190));
+          g.setColor(new Color(120, 174, 255, 100));
           g.fillRect(0, 0, getWidth(), getHeight());
           int x = 10;
           int y = 10;

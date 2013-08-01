@@ -120,16 +120,32 @@ public class GameState {
     return yourBase;
   }
 
+  public Base getPlayerBase(Player player) {
+    return player == Player.YOU ? yourBase : opponentBase;
+  }
+
   public Map<String, Tank> getYourTanks() {
     return yourTanks;
+  }
+
+  public Map<String, Tank> getPlayerTanks(Player player) {
+    return player == Player.YOU ? yourTanks : opponentTanks;
   }
 
   public Map<String, Tank> getOpponentTanks() {
     return opponentTanks;
   }
 
+  public Map<String, Tank> getEnemyTanks(Player player) {
+    return player == Player.YOU ? opponentTanks : yourTanks;
+  }
+
   public Base getOpponentBase() {
     return opponentBase;
+  }
+
+  public Base getEnemyBase(Player player) {
+    return player == Player.YOU ? opponentBase : yourBase;
   }
 
   public Map<String, Tank> getTanks() {

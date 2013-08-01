@@ -13,7 +13,7 @@ public class BehaviorTreeFactory {
       .a(new CanFireAt())
       .a(new Inverse(new FriendlyFire()))
       .a(new Fire());
-    logger.debug("FireAt behavior branch\n" + fireAt.toDot("FireAt"));
+    logger.debug("FireAt behavior branch:\n" + fireAt.toDot("FireAt"));
   }
 
   public static Task move;
@@ -22,7 +22,7 @@ public class BehaviorTreeFactory {
       .a(new IsSafeMove())
       .a(new Move()
       );
-    logger.debug("Move behavior branch\n" + move.toDot("Move"));
+    logger.debug("Move behavior branch:\n" + move.toDot("Move"));
   }
 
   public static Task closestMove;
@@ -30,7 +30,7 @@ public class BehaviorTreeFactory {
     closestMove = new Sequence()
       .a(new SetClosestMove())
       .a(move);
-    logger.debug("ClosestMove behavior branch\n" + closestMove.toDot("Closest"));
+    logger.debug("ClosestMove behavior branch:\n" + closestMove.toDot("Closest"));
   }
 
   public static Task moveToPos;
@@ -38,7 +38,7 @@ public class BehaviorTreeFactory {
     moveToPos = new Sequence()
       .a(new SetMove())
       .a(move);
-    logger.debug("MoveToPos behavior branch\n" + moveToPos.toDot("MoveToPos"));
+    logger.debug("MoveToPos behavior branch:\n" + moveToPos.toDot("MoveToPos"));
   }
 
   public static Task avoidFire;
@@ -52,7 +52,6 @@ public class BehaviorTreeFactory {
           .a(
             new Sequence()
               .a(new DodgeBullet())
-              .a(new IsSafeMove())
               .a(new Move())
           )
           // Fire at bullet
@@ -75,7 +74,15 @@ public class BehaviorTreeFactory {
               .a(fireAt)
           )
       );
-    logger.debug("AvoidFire behavior branch\n" + avoidFire.toDot("AvoidFire"));
+    logger.debug("AvoidFire behavior branch:\n" + avoidFire.toDot("AvoidFire"));
+  }
+
+  public static Task frontLine;
+  static {
+    frontLine = new Selector()
+      .a(avoidFire)
+      .a(moveToPos);
+    logger.debug("MoveToFrontLine behavior tree:\n" + frontLine.toDot("MoveToFrontLine"));
   }
 
   public static Task defendBase;
@@ -83,7 +90,7 @@ public class BehaviorTreeFactory {
     defendBase = new Selector()
       .a(avoidFire)
       .a(closestMove);
-    logger.debug("DefendBase behavior tree\n" + defendBase.toDot("DefendBase"));
+    logger.debug("DefendBase behavior tree:\n" + defendBase.toDot("DefendBase"));
   }
 
   public static Task attackBase;
@@ -93,6 +100,7 @@ public class BehaviorTreeFactory {
       .a(
         new Sequence()
           .a(new CanFireAt())
+          .a(new Inverse(new FriendlyFire()))
           .a(new Fire())
       )
       .a(
@@ -106,15 +114,7 @@ public class BehaviorTreeFactory {
               .a(new Fire())
           )
       );
-    logger.debug("AttackBase behavior tree\n" + attackBase.toDot("AttackBase"));
-  }
-
-  public static Task frontLine;
-  static {
-    frontLine = new Selector()
-      .a(avoidFire)
-      .a(moveToPos);
-    logger.debug("MoveToFrontLine behavior tree\n" + frontLine.toDot("MoveToFrontLine"));
+    logger.debug("AttackBase behavior tree:\n" + attackBase.toDot("AttackBase"));
   }
 
   public static Task attackTank;
@@ -135,6 +135,6 @@ public class BehaviorTreeFactory {
               .a(new LookAt())
             )
       );
-    logger.debug("AttackTank behavior tree\n" + attackTank.toDot("AttackTank"));
+    logger.debug("AttackTank behavior tree:\n" + attackTank.toDot("AttackTank"));
   }
 }

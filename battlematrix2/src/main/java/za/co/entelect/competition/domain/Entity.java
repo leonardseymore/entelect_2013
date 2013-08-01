@@ -99,9 +99,6 @@ public abstract class Entity implements Trackable {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder();
-    sb.append("id=").append(id);
-    sb.append(", type=").append(gameElement);
-    return sb.toString();
+    return id;
   }
 }

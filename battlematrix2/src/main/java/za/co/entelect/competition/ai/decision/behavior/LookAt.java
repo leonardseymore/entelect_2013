@@ -13,16 +13,16 @@ public class LookAt extends Task {
     int tankY = tank.getY();
     Direction direction = tank.getDirection();
     if (targetY < tankY && direction != Direction.UP) {
-      tank.setNextAction(TankAction.UP);
+      tank.getBlackboard().setNextOrder(TankAction.UP);
       return false;
     } else if (targetX > tankX && direction != Direction.RIGHT) {
-      tank.setNextAction(TankAction.RIGHT);
+      tank.getBlackboard().setNextOrder(TankAction.RIGHT);
       return false;
     } else if (targetY > tankY && direction != Direction.DOWN) {
-      tank.setNextAction(TankAction.DOWN);
+      tank.getBlackboard().setNextOrder(TankAction.DOWN);
       return false;
     } else if (targetX < tankX && direction != Direction.LEFT) {
-      tank.setNextAction(TankAction.LEFT);
+      tank.getBlackboard().setNextOrder(TankAction.LEFT);
       return false;
     }
     return true;

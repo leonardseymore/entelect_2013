@@ -14,7 +14,7 @@ public class Move extends Task {
   public boolean run(GameState gameState, Tank tank) {
     Blackboard blackboard = tank.getBlackboard();
     TankAction tankAction = blackboard.getNextTankAction();
-    tank.setNextAction(tankAction);
+    blackboard.setNextOrder(tankAction);
     return true;
   }
 
