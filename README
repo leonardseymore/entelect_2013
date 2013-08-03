@@ -1,0 +1,32 @@
+Ideas
+-----
+* See if tank can fire at enemy before it can dodge
+* Escape through wall if nowhere else to go
+
+Research links
+--------------
+
+Planning
+--------
+* World Model
+  * Simplified view of the world state, relevant to the AI planner
+* Operator
+  * Something that changes the world model
+  * Pre-Conditions
+    * Determines if operator can be applied to the model
+  * Side-Effects
+    * Approximate the effect on the model after the operator has been applied
+* Goal
+  * Interested in particular characteristics of the state
+  * The state of the world we would like to arrive at
+
+Links:
+http://stavros.lostre.org/2011/09/12/simplefps-int4-2011/
+http://web.media.mit.edu/~jorkin/goap.html
+http://pekalicious.com/blog/introducing-my-dissertation-starplanner/
+
+Tactics
+-------
+
+Links:
+http://gameschoolgems.blogspot.com/2009/12/influence-maps-i.html
