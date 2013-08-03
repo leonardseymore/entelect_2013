@@ -8,7 +8,7 @@ import za.co.entelect.competition.domain.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class IsSafeMove extends Task {
+public class IsMoveIntoFire extends Task {
   public boolean run(GameState gameState, Tank tank) {
     Blackboard blackboard = tank.getBlackboard();
     TankAction tankAction = blackboard.getNextTankAction();
@@ -34,22 +34,22 @@ public class IsSafeMove extends Task {
       int y = bullet.getY();
 
       if (RayCast.castRay(gameState, rect, direction, x, y, Constants.FIRE_RANGE)) {
-        return false;
+        return true;
       }
     }
 
     Base base = tank.isYourTank() ? gameState.getYourBase() : gameState.getOpponentBase();
     if (rect.contains(base.getX(), base.getY())) {
-      return false;
+      return true;
     }
 
     // TODO: don't move directly infront of an enemy tank, maybe include in pathfinding
 
-    return true;
+    return false;
   }
 
   @Override
   protected String getLabel() {
-    return "IsSafeMove?";
+    return "IsMoveIntoFire?";
   }
 }

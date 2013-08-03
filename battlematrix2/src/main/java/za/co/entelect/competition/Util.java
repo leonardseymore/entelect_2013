@@ -71,4 +71,18 @@ public class Util {
     }
     return buffer.toString();
   }
+
+  public static String toAscii(Walls walls) {
+    int w = walls.getW();
+    int h = walls.getH();
+    StringBuilder buffer = new StringBuilder();
+    buffer.append(w + " " + h);
+    for (int y = 0; y < h; y++) {
+      for (int x = 0; x < w; x++) {
+        buffer.append(walls.hasWall(x, y) ? "w" : " ");
+      }
+      buffer.append("\n");
+    }
+    return buffer.toString();
+  }
 }

@@ -133,7 +133,7 @@ public class TacticsManager {
   private void defendBase(Tank yt) {
     Base ybase = gameState.getPlayerBase(player);
     yt.getBlackboard().setTarget(ybase);
-    Task tree = BehaviorTreeFactory.defendBase;
+    Task tree = BehaviorTreeFactory.DEFEND_BASE;
     tree.run(gameState, yt);
   }
 
@@ -147,7 +147,7 @@ public class TacticsManager {
   private void attackBase(Tank yt) {
     Base obase = gameState.getEnemyBase(player);
     yt.getBlackboard().setTarget(obase);
-    Task tree = BehaviorTreeFactory.attackBase;
+    Task tree = BehaviorTreeFactory.ATTACK_BASE;
     tree.run(gameState, yt);
   }
 
@@ -182,7 +182,7 @@ public class TacticsManager {
 
   private void attackTank(Tank yt, Tank ot) {
     yt.getBlackboard().setTarget(ot);
-    Task y1tree = BehaviorTreeFactory.attackTank;
+    Task y1tree = BehaviorTreeFactory.ATTACK_TANK;
     y1tree.run(gameState, yt);
   }
 

@@ -15,6 +15,7 @@ import java.util.Stack;
 public class InfluenceMapRenderer implements GameElementVisitor {
 
   public static final Logger logger = Logger.getLogger(InfluenceMapRenderer.class);
+  private static final float MULTIPLIER = 5f;
 
   private Graphics2D g;
 
@@ -71,17 +72,17 @@ public class InfluenceMapRenderer implements GameElementVisitor {
         switch (mapType) {
           case YINFLUENCE:
             influenceMap = imap.getyInfluenceMap();
-            val = influenceMap[x][y];
+            val = influenceMap[x][y] * MULTIPLIER;
             color = Color.getHSBColor(0.66f, 1, Math.min(1f, Math.abs(val)));
             break;
           case OINFLUENCE:
             influenceMap = imap.getoInfluenceMap();
-            val = influenceMap[x][y];
+            val = influenceMap[x][y] * MULTIPLIER;
             color = Color.getHSBColor(1f, 1, Math.min(1f, Math.abs(val)));
             break;
           case INFLUENCEY:
             influenceMap = imap.getInfluenceYMap();
-            val = influenceMap[x][y];
+            val = influenceMap[x][y] * MULTIPLIER;
             if (val > 0) {
               color = Color.getHSBColor(0.66f, 1, Math.min(1f, val));
             } else if (val < 0) {
@@ -90,7 +91,7 @@ public class InfluenceMapRenderer implements GameElementVisitor {
             break;
           case INFLUENCEO:
             influenceMap = imap.getInfluenceOMap();
-            val = influenceMap[x][y];
+            val = influenceMap[x][y] * MULTIPLIER;
             if (val > 0) {
               color = Color.getHSBColor(0.66f, 1, Math.min(1f, val));
             } else if (val < 0) {
@@ -99,16 +100,16 @@ public class InfluenceMapRenderer implements GameElementVisitor {
             break;
           case TENSION:
             influenceMap = imap.getTensionMap();
-            val = influenceMap[x][y];
+            val = influenceMap[x][y] * MULTIPLIER;
             color = Color.getHSBColor(0.8f, 0.5f, Math.min(1f, Math.abs(val)));
             break;
           case VULNERABILITY:
             influenceMap = imap.getVulnerabilityMap();
-            val = influenceMap[x][y];
+            val = influenceMap[x][y] * MULTIPLIER;
             color = Color.getHSBColor(0.2f, 0.0f, Math.min(1f, Math.abs(val)));
             break;
           default:
-            color = new Color(Math.min(1f, oInfluenceMap[x][y]), 0, Math.min(1f, yInfluenceMap[x][y]));
+            color = new Color(Math.min(1f, oInfluenceMap[x][y] * MULTIPLIER), 0, Math.min(1f, yInfluenceMap[x][y] * MULTIPLIER));
             break;
         }
         if (frontLine[x][y] == 1) {

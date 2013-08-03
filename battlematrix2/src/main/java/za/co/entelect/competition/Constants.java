@@ -25,8 +25,8 @@ public class Constants {
   public static final String COLOR_PPM3_TANK_OPPONENT = COLOR_SWING_TANK_OPPONENT.getRed() + " " + COLOR_SWING_TANK_OPPONENT.getGreen() + " " + COLOR_SWING_TANK_OPPONENT.getBlue();
   public static final String COLOR_PPM3_WALL = "120 120 120";
 
-  public static final float TANK_INFLUENCE = 5f;
-  public static final float BULLET_INFLUENCE = 0f;
+  public static final float TANK_INFLUENCE = 1f;
+  public static final float BULLET_INFLUENCE = 10f;
   public static final int FIRE_RANGE = 16;
   public static final int FRIENDLY_FIRE_RANGE = 20;
   public static final int MIN_TIME_TO_FACE_AND_DESTROY_INLINE_BULLET = 4;
