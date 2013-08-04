@@ -2,7 +2,6 @@ package za.co.entelect.competition.ai.decision.behavior;
 
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.RayCast;
-import za.co.entelect.competition.Util;
 import za.co.entelect.competition.ai.blackboard.Blackboard;
 import za.co.entelect.competition.domain.*;
 
@@ -12,9 +11,8 @@ public class CanFireAt extends Task {
     final Entity target = blackboard.getTarget();
     Direction direction = tank.getDirection();
 
-    int x = tank.turretPos()[0];
-    int y = tank.turretPos()[1];
-    return RayCast.castRay(gameState, new RayCast.RayCaseTestTarget(target), direction, x, y, Constants.FIRE_RANGE);
+    Point turretPos = tank.getTurretPos();
+    return RayCast.castRay(gameState, new RayCast.RayCaseTestTarget(target), direction, turretPos.getX(), turretPos.getY(), Constants.FIRE_RANGE);
   }
 
   @Override

@@ -3,6 +3,7 @@ package za.co.entelect.competition.ai.tankoperator;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.ai.movement.Seek;
 import za.co.entelect.competition.ai.pathfinding.PathFinder;
+import za.co.entelect.competition.ai.tactics.TacticalPathFinder;
 import za.co.entelect.competition.domain.*;
 import za.co.entelect.competition.swing.Mouse;
 
@@ -26,8 +27,7 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
       int targetX = (int)(mouse.getPosition().getX() / mouse.getZoomFactor());
       int targetY = (int)(mouse.getPosition().getY() / mouse.getZoomFactor());
       logger.debug("New target set (" + targetX + "," + targetY + ")");
-
-      path = PathFinder.closestPathAStar(gameState, tank, targetX, targetY, true);
+      path = TacticalPathFinder.getBestPath(gameState, tank, targetX, targetY);
     }
     if (path != null && path.size() > 0) {
       tank.setNextAction(Seek.seekPath(gameState, tank, path));

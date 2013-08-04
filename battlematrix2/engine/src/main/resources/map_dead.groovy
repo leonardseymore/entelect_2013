@@ -31,9 +31,9 @@ w  w         www   w
 w  wwwwww  w  w3   w
 w          w       w
 www wwwwwwwwwwww www
-w                  w
+w             4    w
 w  wwww w  w    w  w
-w  w    w  w  4 w  w
+w  w    w  w    w  w
 w  w 1  w  w    w  w
 w  w    w  w wwww  w
 w                  w
@@ -41,23 +41,23 @@ www wwwwwwwwwwww www
 w       w          w
 w    w  w  wwwwww  w
 w   www         w  w
-w    w2         w  w
+w    w 2        w  w
 w wwwww            w
 www y wwwwwwwwwwwwww"""
 }
 
 def getTank1() {
-  return new Tank(Ids.Y1, Player.YOU, Direction.UP, new SquadTankOperator())
+  return new Tank(Ids.Y1, Player.YOU, Direction.UP, new DummyTankOperator())
 }
 
 def getTank2() {
-  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new SquadTankOperator())
+  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new DummyTankOperator())
 }
 
 def getTank3() {
-  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new SquadTankOperator())
+  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new MouseControlledTankOperator())
 }
 
 def getTank4() {
-  return new Tank(Ids.O2, Player.OPPONENT, Direction.LEFT, new SquadTankOperator())
+  return new Tank(Ids.O2, Player.OPPONENT, Direction.LEFT, new KeyboardTankOperator())
 }

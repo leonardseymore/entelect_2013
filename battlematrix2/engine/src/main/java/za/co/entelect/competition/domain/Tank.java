@@ -64,28 +64,50 @@ public class Tank extends Entity {
     return owner == Player.YOU;
   }
 
-  public int[] turretPos() {
-    int[] bulletPos = new int[2];
-
+  public Point getTurretPos() {
+    Point pos = new Point();
     switch (direction) {
       case UP:
-        bulletPos[0] = this.x;
-        bulletPos[1] = this.y - Constants.TANK_HALF_SIZE;
+        pos.setX(this.x);
+        pos.setY(this.y - Constants.TANK_HALF_SIZE);
         break;
       case RIGHT:
-        bulletPos[0] = this.x + Constants.TANK_HALF_SIZE;
-        bulletPos[1] = this.y;
+        pos.setX(this.x + Constants.TANK_HALF_SIZE);
+        pos.setY(this.y);
         break;
       case DOWN:
-        bulletPos[0] = this.x;
-        bulletPos[1] = this.y + Constants.TANK_HALF_SIZE;
+        pos.setX(this.x);
+        pos.setY(this.y + Constants.TANK_HALF_SIZE);
         break;
       case LEFT:
-        bulletPos[0] = this.x - Constants.TANK_HALF_SIZE;
-        bulletPos[1] = this.y;
+        pos.setX(this.x - Constants.TANK_HALF_SIZE);
+        pos.setY(this.y);
         break;
     }
-    return bulletPos;
+    return pos;
+  }
+
+  public Point getInFrontPos() {
+    Point pos = new Point();
+    switch (direction) {
+      case UP:
+        pos.setX(this.x);
+        pos.setY(this.y - Constants.TANK_HALF_SIZE - 1);
+        break;
+      case RIGHT:
+        pos.setX(this.x + Constants.TANK_HALF_SIZE + 1);
+        pos.setY(this.y);
+        break;
+      case DOWN:
+        pos.setX(this.x);
+        pos.setY(this.y + Constants.TANK_HALF_SIZE + 1);
+        break;
+      case LEFT:
+        pos.setX(this.x - Constants.TANK_HALF_SIZE - 1);
+        pos.setY(this.y);
+        break;
+    }
+    return pos;
   }
 
   public TankAction getNextAction() {
@@ -105,8 +127,8 @@ public class Tank extends Entity {
   }
 
   public Bullet createBullet() {
-    int[] bulletPos = turretPos();
-    Bullet bullet = new Bullet("BULLET" + id, bulletPos[0], bulletPos[1], this, direction);
+    Point bulletPos = getTurretPos();
+    Bullet bullet = new Bullet("BULLET" + id, bulletPos.getX(), bulletPos.getY(), this, direction);
     int newX = bullet.getX();
     int newY = bullet.getY();
     switch (direction) {

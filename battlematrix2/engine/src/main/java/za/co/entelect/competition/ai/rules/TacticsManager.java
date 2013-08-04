@@ -182,8 +182,13 @@ public class TacticsManager {
 
   private void attackTank(Tank yt, Tank ot) {
     yt.getBlackboard().setTarget(ot);
-    Task y1tree = BehaviorTreeFactory.ATTACK_TANK;
-    y1tree.run(gameState, yt);
+    if (yt.getOwner() == Player.YOU) {
+      Task y1tree = BehaviorTreeFactory.ATTACK_TANK_CLOSEST_MOVE;
+      y1tree.run(gameState, yt);
+    } else {
+      Task y1tree = BehaviorTreeFactory.ATTACK_TANK_CLOSEST_MOVE;
+      y1tree.run(gameState, yt);
+    }
   }
 
   private void fatality() {

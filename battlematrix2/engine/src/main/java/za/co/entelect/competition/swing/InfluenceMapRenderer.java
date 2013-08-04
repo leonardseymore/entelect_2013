@@ -3,9 +3,9 @@ package za.co.entelect.competition.swing;
 import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.Util;
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.ai.tankoperator.PathAware;
 import za.co.entelect.competition.domain.*;
+import za.co.entelect.competition.domain.Point;
 import za.co.entelect.competition.domain.Rectangle;
 
 import java.awt.*;
@@ -158,8 +158,8 @@ public class InfluenceMapRenderer implements GameElementVisitor {
     g.setColor(tankColor);
     g.fillRect(rect.getLeft(), rect.getTop(), tank.getW(), tank.getH());
     g.setColor(tankColor.darker());
-    int [] turretPos = tank.turretPos();
-    g.fillRect(turretPos[0], turretPos[1], 1, 1);
+    Point turretPos = tank.getTurretPos();
+    g.fillRect(turretPos.getX(), turretPos.getY(), 1, 1);
 
     if (tank.getTankOperator() instanceof PathAware) {
       Stack<Trackable> path = ((PathAware)tank.getTankOperator()).getPath();

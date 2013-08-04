@@ -29,10 +29,17 @@ public class BehaviorTreeFactory {
     Task tree = new Sequence()
       .a(new SetClosestMove())
       .a(move());
-    logger.debug("ClosestMove behavior branch:\n" + tree.toDot("Closest"));
+    logger.debug("SetClosestMove behavior branch:\n" + tree.toDot("SetClosestMove"));
     return tree;
   }
 
+  public static Task bestTacticalMove() {
+    Task tree = new Sequence()
+      .a(new SetBestTacticalMove())
+      .a(move());
+    logger.debug("SetBestTacticalMove behavior branch:\n" + tree.toDot("SetBestTacticalMove"));
+    return tree;
+  }
 
   public static Task moveToPos() {
     Task tree = new Sequence()
@@ -112,7 +119,7 @@ public class BehaviorTreeFactory {
   }
   public static final Task ATTACK_BASE = attackBase();
 
-  public static Task attackTank() {
+  public static Task attackTank(Task moveType) {
     Task tree = new Selector()
       .a(avoidFire())
       .a(
@@ -122,7 +129,7 @@ public class BehaviorTreeFactory {
       )
       .a(
         new Selector()
-          .a(closestMove())
+          .a(moveType)
           .a(
             new Sequence()
               .a(new InLine())
@@ -132,5 +139,6 @@ public class BehaviorTreeFactory {
     logger.debug("AttackTank behavior tree:\n" + tree.toDot("AttackTank"));
     return tree;
   }
-  public static final Task ATTACK_TANK = attackTank();
+  public static final Task ATTACK_TANK_CLOSEST_MOVE = attackTank(closestMove());
+  public static final Task ATTACK_TANK_TACTICAL_MOVE = attackTank(bestTacticalMove());
 }

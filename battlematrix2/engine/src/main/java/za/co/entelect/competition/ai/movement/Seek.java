@@ -1,6 +1,5 @@
 package za.co.entelect.competition.ai.movement;
 
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
 import za.co.entelect.competition.domain.*;
 
 import java.util.Stack;

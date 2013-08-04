@@ -1,10 +1,7 @@
 package za.co.entelect.competition.ai.tactics;
 
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.domain.GameState;
-import za.co.entelect.competition.domain.Tank;
-import za.co.entelect.competition.domain.Trackable;
-import za.co.entelect.competition.domain.Walls;
+import za.co.entelect.competition.domain.*;
 
 import java.util.*;
 
@@ -17,8 +14,13 @@ public class TacticalPathFinder {
     Node currentNode = null;
     while (!open.isEmpty()) {
       currentNode = open.poll();
+
+      if (currentNode.getX() == endX && currentNode.getY() == endY) {
+        break;
+      }
+
       for (Node node : getAvailableNeighbors(gameState, tank, currentNode)) {
-        int estRunningCost = currentNode.runningCost + node.runningCost;
+        float estRunningCost = currentNode.runningCost + node.runningCost;
         if (closed.contains(node)) {
           assert node.runningCost <= estRunningCost;
           continue;
@@ -38,8 +40,6 @@ public class TacticalPathFinder {
     if (currentNode != null && currentNode.getX() == endX && currentNode.getY() == endY) {
       return pathToNode(currentNode);
     }
-
-    assert currentNode != null;
     return null;
   }
 
@@ -64,13 +64,30 @@ public class TacticalPathFinder {
   }
 
   private static void testNeighbor(GameState gameState, Tank tank, Node node, int x, int y, Collection<Node> neighbors) {
-    boolean canMoveTo = canTankBeMovedTo(gameState, tank, x, y);
-    if (canMoveTo) {
-      Node toNode = new Node(x, y);
-      toNode.parent = node;
-      toNode.runningCost = 1;
-      neighbors.add(toNode);
+    if (!gameState.isInBounds(x, y)) {
+      return;
     }
+
+    DirichletDomains dirichletDomains = gameState.getDirichletDomains();
+    boolean yourRegion = dirichletDomains.getOwner(x, y) == tank.getOwner();
+
+    boolean canMoveTo = canTankBeMovedTo(gameState, tank, x, y);
+    Node toNode = new Node(x, y);
+    toNode.parent = node;
+    toNode.runningCost = canMoveTo ? 1 : (yourRegion ? 200 : 5);
+
+    if (node.parent != null) {
+      Node grandParent = node.parent;
+      if (!((grandParent.getX() == node.getX() && grandParent.getX() == x)
+         || (grandParent.getY() == node.getY() && grandParent.getY() == y))) {
+         toNode.runningCost += 2;
+      }
+    }
+
+    InfluenceMap influenceMap = gameState.getInfluenceMap();
+    float[][] enemyInfluence = influenceMap.getEnemyInfluence(tank);
+    toNode.runningCost += enemyInfluence[x][y] * 20;
+    neighbors.add(toNode);
   }
 
   private static boolean canTankBeMovedTo(GameState gameState, Tank tank, int x, int y) {
@@ -91,7 +108,7 @@ public class TacticalPathFinder {
   public static class Node implements Trackable, Comparable<Node> {
     int x;
     int y;
-    int runningCost;
+    float runningCost;
     Node parent;
 
     public Node(int x, int y) {
@@ -115,7 +132,7 @@ public class TacticalPathFinder {
       this.y = y;
     }
 
-    public int getRunningCost() {
+    public float getRunningCost() {
       return runningCost;
     }
 

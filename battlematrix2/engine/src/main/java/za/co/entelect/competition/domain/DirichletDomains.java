@@ -16,6 +16,14 @@ public class DirichletDomains {
     return dirichletDomains[x][y];
   }
 
+  public Player getOwner(int x, int y) {
+    Base base = getBase(x, y);
+    if (base == null) {
+      return null;
+    }
+    return base.getOwner();
+  }
+
   public Base getBase(Tank tank) {
     return getBase(tank.getX(), tank.getY());
   }
