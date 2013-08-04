@@ -95,6 +95,12 @@ public class PathFinder {
         if (gameState.getWalls().hasWall(i, j)) {
           return false;
         }
+        Entity entity = gameState.getEntityAt(i, j);
+        if (entity != null
+          && !tank.equals(entity)
+          && entity.getGameElement() == GameElement.TANK) {
+          return false;
+        }
       }
     }
     return true;

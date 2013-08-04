@@ -51,13 +51,13 @@ def getTank1() {
 }
 
 def getTank2() {
-  return new Tank(Ids.Y2, Player.YOU, Direction.DOWN, new SquadTankOperator())
+  return new Tank(Ids.Y2, Player.YOU, Direction.UP, new SquadTankOperator())
 }
 
 def getTank3() {
-  return new Tank(Ids.O1, Player.OPPONENT, Direction.RIGHT, new SquadTankOperator())
+  return new Tank(Ids.O1, Player.OPPONENT, Direction.DOWN, new SquadTankOperator())
 }
 
 def getTank4() {
-  return new Tank(Ids.O2, Player.OPPONENT, Direction.LEFT, new SquadTankOperator())
+  return new Tank(Ids.O2, Player.OPPONENT, Direction.DOWN, new SquadTankOperator())
 }
