@@ -18,6 +18,10 @@ public class FloodFillInfluence {
         if (closed.contains(node)) {
           assert node.runningCost <= estRunningCost;
           continue;
+        } else if (open.contains(node)) {
+          if (node.runningCost <= estRunningCost) {
+            continue;
+          }
         } else {
           node.runningCost = estRunningCost;
           if (!open.contains(node)) {
@@ -25,6 +29,7 @@ public class FloodFillInfluence {
           }
         }
       }
+      open.remove(currentNode);
       closed.add(currentNode);
     }
     return closed;

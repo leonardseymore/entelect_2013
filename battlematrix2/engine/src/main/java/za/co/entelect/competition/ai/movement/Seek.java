@@ -7,7 +7,7 @@ import java.util.Stack;
 
 public class Seek {
 
-  public static TankAction seekPath(GameState gameState, Tank tank, Stack<PathFinder.Node> path) {
+  public static TankAction seekPath(GameState gameState, Tank tank, Stack<Trackable> path) {
     if (path == null || path.isEmpty()) {
       return TankAction.NONE;
     }

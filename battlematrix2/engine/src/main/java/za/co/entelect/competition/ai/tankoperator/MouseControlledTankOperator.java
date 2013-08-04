@@ -12,10 +12,10 @@ public class MouseControlledTankOperator implements TankOperator, PathAware {
 
   private static final Logger logger = Logger.getLogger(MouseControlledTankOperator.class);
 
-  private Stack<PathFinder.Node> path;
+  private Stack<Trackable> path;
 
   @Override
-  public Stack<PathFinder.Node> getPath() {
+  public Stack<Trackable> getPath() {
     return path;
   }
 

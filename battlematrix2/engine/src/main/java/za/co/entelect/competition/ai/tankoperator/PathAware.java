@@ -1,10 +1,10 @@
 package za.co.entelect.competition.ai.tankoperator;
 
-import za.co.entelect.competition.ai.pathfinding.PathFinder;
+import za.co.entelect.competition.domain.Trackable;
 
 import java.util.Stack;
 
 public interface PathAware {
 
-  Stack<PathFinder.Node> getPath();
+  Stack<Trackable> getPath();
 }

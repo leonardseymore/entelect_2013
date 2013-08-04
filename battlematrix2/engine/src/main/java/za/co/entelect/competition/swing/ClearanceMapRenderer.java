@@ -101,7 +101,7 @@ public class ClearanceMapRenderer implements GameElementVisitor {
     }
     Color tankColor = Util.getColor(tank);
     if (tank.getTankOperator() instanceof PathAware) {
-      Stack<PathFinder.Node> path = ((PathAware)tank.getTankOperator()).getPath();
+      Stack<Trackable> path = ((PathAware)tank.getTankOperator()).getPath();
       g.setColor(tankColor);
       drawPath(g, path);
     }
@@ -112,9 +112,9 @@ public class ClearanceMapRenderer implements GameElementVisitor {
       g.drawRect(rect.getLeft(), rect.getTop(), tank.getW(), tank.getH());
     }
   }
-  private void drawPath(Graphics2D g, Stack<PathFinder.Node> path) {
+  private void drawPath(Graphics2D g, Stack<Trackable> path) {
     if (path != null) {
-      for (PathFinder.Node node : (Stack<PathFinder.Node>)path.clone()) {
+      for (Trackable node : (Stack<Trackable>)path.clone()) {
         g.fillRect(node.getX(), node.getY(), 1, 1);
       }
     }

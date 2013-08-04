@@ -14,7 +14,7 @@ public class SetMove extends Task {
     if (target == null) {
       target = blackboard.getTarget();
     }
-    Stack<PathFinder.Node> path = PathFinder.closestPathAStar(gameState, tank, target.getX(), target.getY(), false);
+    Stack<Trackable> path = PathFinder.closestPathAStar(gameState, tank, target.getX(), target.getY(), false);
     if (path != null && path.size() > 0) {
       TankAction tankAction = Seek.seekPath(gameState, tank, path);
       if (tankAction != TankAction.NONE) {

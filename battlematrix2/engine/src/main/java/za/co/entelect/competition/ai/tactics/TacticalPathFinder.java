@@ -1,68 +1,55 @@
-package za.co.entelect.competition.ai.pathfinding;
+package za.co.entelect.competition.ai.tactics;
 
 import za.co.entelect.competition.Constants;
-import za.co.entelect.competition.Util;
-import za.co.entelect.competition.domain.*;
+import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.domain.Tank;
+import za.co.entelect.competition.domain.Trackable;
+import za.co.entelect.competition.domain.Walls;
 
 import java.util.*;
 
-public class PathFinder {
+public class TacticalPathFinder {
 
-  public static Stack<Trackable> closestPathAStar(GameState gameState, Tank tank, int endX, int endY, boolean closest) {
+  public static Stack<Trackable> getBestPath(GameState gameState, Tank tank, int endX, int endY) {
     Queue<Node> open = new PriorityQueue<>();
+    open.add(new Node(tank.getX(), tank.getY()));
     Collection<Node> closed = new HashSet<>();
-
-    Node start = new Node(tank.getX(), tank.getY());
-    start.goalCost = heuristic(start, endX, endY);
-    open.add(start);
-
-    Node closestNode = start;
-
+    Node currentNode = null;
     while (!open.isEmpty()) {
-      Node currentNode = open.poll();
-
-      if (currentNode.goalCost < closestNode.goalCost) {
-        closestNode = currentNode;
-      }
-
-      if (currentNode.x == endX && currentNode.y == endY) {
-        return pathToNode(currentNode);
-      }
-
-      open.remove(currentNode);
-      closed.add(currentNode);
-      for (Node toNode : getAvailableNeighbors(gameState, tank, currentNode)) {
-        toNode.goalCost = heuristic(toNode, endX, endY);
-        int goalCost = currentNode.goalCost;
-        float estGoalCost = goalCost + toNode.goalCost;
-        assert estGoalCost >= 0;
-        if (closed.contains(toNode)) {
-          if (toNode.runningCost > estGoalCost) {
-            closed.remove(toNode);
-            toNode.parent = currentNode;
-            toNode.runningCost = estGoalCost;
-          } else {
+      currentNode = open.poll();
+      for (Node node : getAvailableNeighbors(gameState, tank, currentNode)) {
+        int estRunningCost = currentNode.runningCost + node.runningCost;
+        if (closed.contains(node)) {
+          assert node.runningCost <= estRunningCost;
+          continue;
+        } else if (open.contains(node)) {
+          if (node.runningCost <= estRunningCost) {
             continue;
           }
-        }
-
-        if (!open.contains(toNode)) {
-          toNode.runningCost = estGoalCost;
-          open.add(toNode);
         } else {
-          if (toNode.runningCost < estGoalCost) {
-            toNode.runningCost = estGoalCost;
-            toNode.parent = currentNode;
-          }
+          node.runningCost = estRunningCost;
+          open.add(node);
         }
       }
+      open.remove(currentNode);
+      closed.add(currentNode);
     }
 
-    if (closest) {
-      return pathToNode(closestNode);
+    if (currentNode != null && currentNode.getX() == endX && currentNode.getY() == endY) {
+      return pathToNode(currentNode);
     }
 
+    assert currentNode != null;
     return null;
+  }
+
+  private static Stack<Trackable> pathToNode(Node currentNode) {
+    Stack<Trackable> path = new Stack<>();
+    do {
+      path.add(currentNode);
+      currentNode = currentNode.parent;
+    } while (currentNode != null);
+    return path;
   }
 
   private static Collection<Node> getAvailableNeighbors(GameState gameState, Tank tank, Node node) {
@@ -81,18 +68,19 @@ public class PathFinder {
     if (canMoveTo) {
       Node toNode = new Node(x, y);
       toNode.parent = node;
+      toNode.runningCost = 1;
       neighbors.add(toNode);
     }
   }
 
   private static boolean canTankBeMovedTo(GameState gameState, Tank tank, int x, int y) {
+    Walls walls = gameState.getWalls();
     for (int j = y - Constants.TANK_HALF_SIZE; j <= y + Constants.TANK_HALF_SIZE; j++) {
       for (int i = x - Constants.TANK_HALF_SIZE; i <= x + Constants.TANK_HALF_SIZE; i++) {
         if (!gameState.isInBounds(i, j)) {
           return false;
         }
-
-        if (gameState.getWalls().hasWall(i, j)) {
+        if (walls.hasWall(i, j)) {
           return false;
         }
       }
@@ -100,27 +88,10 @@ public class PathFinder {
     return true;
   }
 
-
-  public static int heuristic(PathFinder.Node node, int endX, int endY) {
-    int dist = Util.manhattanDist(node.x, node.y, endX, endY);
-    return dist;
-  }
-
-  private static Stack<Trackable> pathToNode(Node currentNode) {
-    Stack<Trackable> path = new Stack<>();
-    do {
-      path.add(currentNode);
-      currentNode = currentNode.parent;
-    } while (currentNode != null);
-    return path;
-  }
-
   public static class Node implements Trackable, Comparable<Node> {
     int x;
     int y;
-    int goalCost;
-    float runningCost;
-
+    int runningCost;
     Node parent;
 
     public Node(int x, int y) {
@@ -128,14 +99,24 @@ public class PathFinder {
       this.y = y;
     }
 
-    @Override
     public int getX() {
       return x;
     }
 
-    @Override
+    public void setX(int x) {
+      this.x = x;
+    }
+
     public int getY() {
       return y;
+    }
+
+    public void setY(int y) {
+      this.y = y;
+    }
+
+    public int getRunningCost() {
+      return runningCost;
     }
 
     @Override
@@ -165,10 +146,9 @@ public class PathFinder {
 
     @Override
     public String toString() {
-      final StringBuilder sb = new StringBuilder("Node{");
+      final StringBuilder sb = new StringBuilder("{");
       sb.append("x=").append(x);
       sb.append(", y=").append(y);
-      sb.append(", goalCost=").append(goalCost);
       sb.append(", runningCost=").append(runningCost);
       sb.append('}');
       return sb.toString();
