@@ -8,9 +8,7 @@ import za.co.entelect.competition.groovy.GameFactory;
 
 public class AppSwing {
   public static void main(String [] args) throws Exception {
-    GameState gameState = GameFactory.fromFile(args[0]);
-    //System.out.println(Util.toAscii(gameState.getWalls()));
-    GUI app = new GUI(gameState, 5);
+    GUI app = new GUI(args[0], 5);
     app.setVisible(true);
     Thread gameThread = new Thread(app);
     gameThread.start();

@@ -4,7 +4,9 @@ import org.apache.log4j.Logger;
 import za.co.entelect.competition.Constants;
 import za.co.entelect.competition.domain.Game;
 import za.co.entelect.competition.domain.GameState;
+import za.co.entelect.competition.groovy.GameFactory;
 
+import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,6 +30,7 @@ public class GUI extends JFrame implements Runnable {
     USER, CLEARANCE, INFLUENCE, DIRICHLET
   }
 
+  private String filename;
   private GameState gameState;
   private Game game;
   private Canvas canvas;
@@ -37,7 +40,7 @@ public class GUI extends JFrame implements Runnable {
   private Keyboard keyboard;
   private Mouse mouse;
   private boolean paused = false;
-  private boolean drawPreviews = true;
+  private boolean drawPreviews = false;
 
   private Map map = Map.USER;
   private Font arial = new Font("Arial", Font.BOLD, 10);
@@ -45,9 +48,9 @@ public class GUI extends JFrame implements Runnable {
   private int frameSleep = 10;
   private int frameSleepMultiplier = 1;
 
-  public GUI(GameState gameState, double zoomFactor) {
-    this.gameState = gameState;
-    this.game = new Game(gameState);
+  public GUI(String filename, double zoomFactor) {
+    this.filename = filename;
+    restart();
     this.zoomFactor = zoomFactor;
 
     setIgnoreRepaint(true);
@@ -70,6 +73,15 @@ public class GUI extends JFrame implements Runnable {
     addMouseMotionListener(mouse);
     canvas.addMouseListener(mouse);
     canvas.addMouseMotionListener(mouse);
+  }
+
+  private void restart() {
+    try {
+      this.gameState = GameFactory.fromFile(filename);
+      this.game = new Game(gameState);
+    } catch (ScriptException | NoSuchMethodException ex) {
+      ex.printStackTrace();
+    }
   }
 
   public void run() {
@@ -103,6 +115,12 @@ public class GUI extends JFrame implements Runnable {
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
           map = Map.DIRICHLET;
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_M)) {
+          drawPreviews = !drawPreviews;
+        }
+        if (keyboard.keyDownOnce(KeyEvent.VK_R)) {
+          restart();
         }
         if (keyboard.keyDownOnce(KeyEvent.VK_P)) {
           paused = !paused;
@@ -171,7 +189,8 @@ public class GUI extends JFrame implements Runnable {
 
           int x = 10;
           int y = 10;
-          g.drawString("p=pause, u=user map (default), c=clearance, d=dirichlet, i=influence", x, y += 12);
+          g.drawString("p=pause, r=restart", x, y += 12);
+          g.drawString("m=previews, u=user map (default), c=clearance, d=dirichlet, i=influence", x, y += 12);
           g.drawString(game.getYtacticsManager().toString(), x, y += 12);
         }
 
